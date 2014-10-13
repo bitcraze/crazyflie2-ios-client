@@ -1,0 +1,489 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A00393E198AE038001799A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393D198AE038001799A4 /* Foundation.framework */; };
+		3A003940198AE038001799A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393F198AE038001799A4 /* CoreGraphics.framework */; };
+		3A003942198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
+		3A003948198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003946198AE038001799A4 /* InfoPlist.strings */; };
+		3A00394A198AE038001799A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003949198AE038001799A4 /* main.m */; };
+		3A00394E198AE038001799A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A00394D198AE038001799A4 /* AppDelegate.m */; };
+		3A003951198AE038001799A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A00394F198AE038001799A4 /* Main.storyboard */; };
+		3A003954198AE038001799A4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003953198AE038001799A4 /* ViewController.m */; };
+		3A003956198AE038001799A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A003955198AE038001799A4 /* Images.xcassets */; };
+		3A00395D198AE038001799A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00395C198AE038001799A4 /* XCTest.framework */; };
+		3A00395E198AE038001799A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393D198AE038001799A4 /* Foundation.framework */; };
+		3A00395F198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
+		3A003967198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003965198AE038001799A4 /* InfoPlist.strings */; };
+		3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003968198AE038001799A4 /* Crazyflie_clientTests.m */; };
+		3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003973198B5A7F001799A4 /* BCJoystick.m */; };
+		3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFD046199632B900FDF11A /* CoreBluetooth.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3A003960198AE038001799A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A003932198AE038001799A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A003939198AE038001799A4;
+			remoteInfo = "Crazyflie client";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3A00393A198AE038001799A4 /* Crazyflie client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazyflie client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A00393D198AE038001799A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3A00393F198AE038001799A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3A003941198AE038001799A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3A003945198AE038001799A4 /* Crazyflie client-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crazyflie client-Info.plist"; sourceTree = "<group>"; };
+		3A003947198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A003949198AE038001799A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Prefix.pch"; sourceTree = "<group>"; };
+		3A00394C198AE038001799A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3A00394D198AE038001799A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3A003950198AE038001799A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3A003952198AE038001799A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3A003953198AE038001799A4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3A003955198AE038001799A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A00395C198AE038001799A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3A003964198AE038001799A4 /* Crazyflie clientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crazyflie clientTests-Info.plist"; sourceTree = "<group>"; };
+		3A003966198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A003968198AE038001799A4 /* Crazyflie_clientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crazyflie_clientTests.m; sourceTree = "<group>"; };
+		3A003972198B5A7F001799A4 /* BCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCJoystick.h; path = lib/BCJoystick.h; sourceTree = "<group>"; };
+		3A003973198B5A7F001799A4 /* BCJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCJoystick.m; path = lib/BCJoystick.m; sourceTree = "<group>"; };
+		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3A003937198AE038001799A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */,
+				3A003940198AE038001799A4 /* CoreGraphics.framework in Frameworks */,
+				3A003942198AE038001799A4 /* UIKit.framework in Frameworks */,
+				3A00393E198AE038001799A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A003958198AE038001799A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A00395D198AE038001799A4 /* XCTest.framework in Frameworks */,
+				3A00395F198AE038001799A4 /* UIKit.framework in Frameworks */,
+				3A00395E198AE038001799A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A003931198AE038001799A4 = {
+			isa = PBXGroup;
+			children = (
+				3A003943198AE038001799A4 /* Crazyflie client */,
+				3A003962198AE038001799A4 /* Crazyflie clientTests */,
+				3A00393C198AE038001799A4 /* Frameworks */,
+				3A00393B198AE038001799A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A00393B198AE038001799A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A00393A198AE038001799A4 /* Crazyflie client.app */,
+				3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A00393C198AE038001799A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3ACFD046199632B900FDF11A /* CoreBluetooth.framework */,
+				3A00393D198AE038001799A4 /* Foundation.framework */,
+				3A00393F198AE038001799A4 /* CoreGraphics.framework */,
+				3A003941198AE038001799A4 /* UIKit.framework */,
+				3A00395C198AE038001799A4 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A003943198AE038001799A4 /* Crazyflie client */ = {
+			isa = PBXGroup;
+			children = (
+				3A00394C198AE038001799A4 /* AppDelegate.h */,
+				3A00394D198AE038001799A4 /* AppDelegate.m */,
+				3A00394F198AE038001799A4 /* Main.storyboard */,
+				3A003973198B5A7F001799A4 /* BCJoystick.m */,
+				3A003972198B5A7F001799A4 /* BCJoystick.h */,
+				3A003953198AE038001799A4 /* ViewController.m */,
+				3A003955198AE038001799A4 /* Images.xcassets */,
+				3A003944198AE038001799A4 /* Supporting Files */,
+			);
+			path = "Crazyflie client";
+			sourceTree = "<group>";
+		};
+		3A003944198AE038001799A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A003945198AE038001799A4 /* Crazyflie client-Info.plist */,
+				3A003946198AE038001799A4 /* InfoPlist.strings */,
+				3A003952198AE038001799A4 /* ViewController.h */,
+				3A003949198AE038001799A4 /* main.m */,
+				3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3A003962198AE038001799A4 /* Crazyflie clientTests */ = {
+			isa = PBXGroup;
+			children = (
+				3A003968198AE038001799A4 /* Crazyflie_clientTests.m */,
+				3A003963198AE038001799A4 /* Supporting Files */,
+			);
+			path = "Crazyflie clientTests";
+			sourceTree = "<group>";
+		};
+		3A003963198AE038001799A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A003964198AE038001799A4 /* Crazyflie clientTests-Info.plist */,
+				3A003965198AE038001799A4 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3A003939198AE038001799A4 /* Crazyflie client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A00396C198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie client" */;
+			buildPhases = (
+				3A003936198AE038001799A4 /* Sources */,
+				3A003937198AE038001799A4 /* Frameworks */,
+				3A003938198AE038001799A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Crazyflie client";
+			productName = "Crazyflie client";
+			productReference = 3A00393A198AE038001799A4 /* Crazyflie client.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3A00395A198AE038001799A4 /* Crazyflie clientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A00396F198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */;
+			buildPhases = (
+				3A003957198AE038001799A4 /* Sources */,
+				3A003958198AE038001799A4 /* Frameworks */,
+				3A003959198AE038001799A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A003961198AE038001799A4 /* PBXTargetDependency */,
+			);
+			name = "Crazyflie clientTests";
+			productName = "Crazyflie clientTests";
+			productReference = 3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A003932198AE038001799A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Bitcraze;
+				TargetAttributes = {
+					3A00395A198AE038001799A4 = {
+						TestTargetID = 3A003939198AE038001799A4;
+					};
+				};
+			};
+			buildConfigurationList = 3A003935198AE038001799A4 /* Build configuration list for PBXProject "Crazyflie client" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3A003931198AE038001799A4;
+			productRefGroup = 3A00393B198AE038001799A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3A003939198AE038001799A4 /* Crazyflie client */,
+				3A00395A198AE038001799A4 /* Crazyflie clientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3A003938198AE038001799A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A003956198AE038001799A4 /* Images.xcassets in Resources */,
+				3A003948198AE038001799A4 /* InfoPlist.strings in Resources */,
+				3A003951198AE038001799A4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A003959198AE038001799A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A003967198AE038001799A4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A003936198AE038001799A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
+				3A003954198AE038001799A4 /* ViewController.m in Sources */,
+				3A00394E198AE038001799A4 /* AppDelegate.m in Sources */,
+				3A00394A198AE038001799A4 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A003957198AE038001799A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3A003961198AE038001799A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A003939198AE038001799A4 /* Crazyflie client */;
+			targetProxy = 3A003960198AE038001799A4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3A003946198AE038001799A4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A003947198AE038001799A4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3A00394F198AE038001799A4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A003950198AE038001799A4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3A003965198AE038001799A4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A003966198AE038001799A4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3A00396A198AE038001799A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3A00396B198AE038001799A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3A00396D198AE038001799A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
+				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3A00396E198AE038001799A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
+				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3A003970198AE038001799A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3A003971198AE038001799A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
+				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A003935198AE038001799A4 /* Build configuration list for PBXProject "Crazyflie client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A00396A198AE038001799A4 /* Debug */,
+				3A00396B198AE038001799A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A00396C198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A00396D198AE038001799A4 /* Debug */,
+				3A00396E198AE038001799A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A00396F198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A003970198AE038001799A4 /* Debug */,
+				3A003971198AE038001799A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3A003932198AE038001799A4 /* Project object */;
+}
