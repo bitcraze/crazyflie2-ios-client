@@ -23,6 +23,8 @@
 		3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003968198AE038001799A4 /* Crazyflie_clientTests.m */; };
 		3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003973198B5A7F001799A4 /* BCJoystick.m */; };
 		3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFD046199632B900FDF11A /* CoreBluetooth.framework */; };
+		5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */; };
+		5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		3A003972198B5A7F001799A4 /* BCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCJoystick.h; path = lib/BCJoystick.h; sourceTree = "<group>"; };
 		3A003973198B5A7F001799A4 /* BCJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCJoystick.m; path = lib/BCJoystick.m; sourceTree = "<group>"; };
 		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		5113D6B41A04C8B1008A33E0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +127,8 @@
 				3A00394C198AE038001799A4 /* AppDelegate.h */,
 				3A00394D198AE038001799A4 /* AppDelegate.m */,
 				3A00394F198AE038001799A4 /* Main.storyboard */,
+				5113D6B41A04C8B1008A33E0 /* SettingsViewController.h */,
+				5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */,
 				3A003973198B5A7F001799A4 /* BCJoystick.m */,
 				3A003972198B5A7F001799A4 /* BCJoystick.h */,
 				3A003953198AE038001799A4 /* ViewController.m */,
@@ -139,6 +146,7 @@
 				3A003952198AE038001799A4 /* ViewController.h */,
 				3A003949198AE038001799A4 /* main.m */,
 				3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */,
+				5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A003956198AE038001799A4 /* Images.xcassets in Resources */,
+				5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */,
 				3A003948198AE038001799A4 /* InfoPlist.strings in Resources */,
 				3A003951198AE038001799A4 /* Main.storyboard in Resources */,
 			);
@@ -260,6 +269,7 @@
 			files = (
 				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
 				3A003954198AE038001799A4 /* ViewController.m in Sources */,
+				5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */,
 				3A00394E198AE038001799A4 /* AppDelegate.m in Sources */,
 				3A00394A198AE038001799A4 /* main.m in Sources */,
 			);

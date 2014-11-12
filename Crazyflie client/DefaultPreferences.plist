@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>controlMode</key>
+	<integer>2</integer>
+	<key>sensitivitySetting</key>
+	<string>slow</string>
+	<key>sensitivities</key>
+	<dict>
+		<key>custom</key>
+		<dict>
+			<key>pitchRate</key>
+			<integer>60</integer>
+			<key>yawRate</key>
+			<integer>400</integer>
+			<key>maxThrust</key>
+			<integer>90</integer>
+		</dict>
+		<key>fast</key>
+		<dict>
+			<key>pitchRate</key>
+			<integer>50</integer>
+			<key>yawRate</key>
+			<integer>200</integer>
+			<key>maxThrust</key>
+			<integer>90</integer>
+		</dict>
+		<key>slow</key>
+		<dict>
+			<key>pitchRate</key>
+			<integer>25</integer>
+			<key>yawRate</key>
+			<integer>100</integer>
+			<key>maxThrust</key>
+			<integer>80</integer>
+		</dict>
+	</dict>
+</dict>
+</plist>

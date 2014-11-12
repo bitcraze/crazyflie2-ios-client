@@ -26,7 +26,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "SettingsViewController.h"
 
-@interface ViewController : UIViewController <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface ViewController : UIViewController <CBCentralManagerDelegate,
+                                              CBPeripheralDelegate,
+                                              SettingsProtocolDelegate>
 
 @end

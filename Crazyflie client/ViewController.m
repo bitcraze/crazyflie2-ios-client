@@ -38,11 +38,18 @@
     bool isScanning;
     bool sent;
     
+    float pitchRate;
+    
     enum {stateIdle, stateScanning, stateConnecting, stateConnected} state;
     
     CBPeripheral *crazyflie;
     
     CBCentralManager *centralManager;
+    
+    SettingsViewController *settingsViewController;
+    
+    NSDictionary *sensitivities;
+    NSString *sensitivitySetting;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
@@ -81,7 +88,28 @@
     rightJoystick.deadbandX = 0.1;  //Some deadband for the yaw
     rightJoystick.vLabelLeft = YES;
     
+    [self loadDefault];
+    
     centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+}
+
+- (void) loadDefault
+{
+    NSURL *defaultPrefsFile = [[NSBundle mainBundle] URLForResource:@"DefaultPreferences" withExtension:@"plist"];
+    NSDictionary *defaultPrefs = [NSDictionary dictionaryWithContentsOfURL:defaultPrefsFile];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults registerDefaults:defaultPrefs];
+    
+    sensitivities = [defaults dictionaryForKey:@"sensitivities"];
+    sensitivitySetting = [defaults stringForKey:@"sensitivitySettings"];
+}
+
+- (void) saveDefault
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:sensitivities forKey:@"sensitivities"];
+    [defaults setObject:sensitivitySetting forKey:@"sensitivitySettings"];
 }
 
 - (void) joystickMoved: (BCJoystick*)joystick
@@ -143,7 +171,15 @@
 }
 
 - (IBAction)settingsClick:(id)sender {
-    [_connectProgress setProgress:0.84 animated:YES];
+    //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //settingsViewController = [sb instantiateViewControllerWithIdentifier:@"settings"];
+    //settingsViewController.delegate = self;
+    //[self presentViewController:settingsViewController animated:YES completion:nil];
+    
+    [self performSegueWithIdentifier:@"settings" sender:nil];
+    
+    //settingsViewController.sensitivitySelector.selectedSegmentIndex = 2;
+    //settingsViewController.pitchrollSensitivity.text = @"10";
 }
 
 - (void) scanningTimeout:(NSTimer*)timer
@@ -288,10 +324,7 @@
     sent  = YES;
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral
-
-didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
-             error:(NSError *)error {
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
     if (error) {
         NSLog(@"Error changing notification state: %@",
               [error localizedDescription]);
@@ -322,6 +355,32 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 - (BOOL) prefersStatusBarHidden
 {
     return YES;
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"Prepare for segue %@", segue.identifier);
+    
+    if ([segue.identifier  isEqual: @"settings"]) {
+        settingsViewController = [segue destinationViewController];
+        settingsViewController.delegate = self;
+        
+        settingsViewController.sensitivities = sensitivities;
+        settingsViewController.sensitivitySetting = sensitivitySetting;
+    }
+}
+
+
+#pragma mark - SettingsControllerDelegate
+- (void) closeButtonPressed
+{
+    if (settingsViewController) {
+        pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
+        [self saveDefault];
+    }
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end
