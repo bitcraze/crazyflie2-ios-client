@@ -39,6 +39,8 @@
     bool sent;
     
     float pitchRate;
+    float yawRate;
+    float maxThrust;
     
     enum {stateIdle, stateScanning, stateConnecting, stateConnected} state;
     
@@ -48,7 +50,7 @@
     
     SettingsViewController *settingsViewController;
     
-    NSDictionary *sensitivities;
+    NSMutableDictionary *sensitivities;
     NSString *sensitivitySetting;
 }
 
@@ -100,8 +102,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults registerDefaults:defaultPrefs];
     
-    sensitivities = [defaults dictionaryForKey:@"sensitivities"];
-    sensitivitySetting = [defaults stringForKey:@"sensitivitySettings"];
+    [self updateSettings:defaults];
 }
 
 - (void) saveDefault
@@ -110,6 +111,19 @@
     
     [defaults setObject:sensitivities forKey:@"sensitivities"];
     [defaults setObject:sensitivitySetting forKey:@"sensitivitySettings"];
+    
+    [self updateSettings:defaults];
+}
+
+- (void) updateSettings: (NSUserDefaults*) defaults
+{
+    sensitivities = (NSMutableDictionary*)[defaults dictionaryForKey:@"sensitivities"];
+    sensitivitySetting = [defaults stringForKey:@"sensitivitySettings"];
+    
+    NSDictionary *sensitivity = (NSDictionary*)[sensitivities valueForKey:sensitivitySetting];
+    pitchRate = [(NSNumber*)[sensitivity valueForKey:@"pitchRate"] floatValue];
+    yawRate = [(NSNumber*)[sensitivity valueForKey:@"yawRate"] floatValue];
+    maxThrust = [(NSNumber*)[sensitivity valueForKey:@"maxThrust"] floatValue];
 }
 
 - (void) joystickMoved: (BCJoystick*)joystick
@@ -171,15 +185,7 @@
 }
 
 - (IBAction)settingsClick:(id)sender {
-    //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    //settingsViewController = [sb instantiateViewControllerWithIdentifier:@"settings"];
-    //settingsViewController.delegate = self;
-    //[self presentViewController:settingsViewController animated:YES completion:nil];
-    
     [self performSegueWithIdentifier:@"settings" sender:nil];
-    
-    //settingsViewController.sensitivitySelector.selectedSegmentIndex = 2;
-    //settingsViewController.pitchrollSensitivity.text = @"10";
 }
 
 - (void) scanningTimeout:(NSTimer*)timer
@@ -293,12 +299,12 @@
         
         commanderPacket.header = 0x30;
         
-        commanderPacket.pitch = pow(leftJoystick.y, 2) * -50 * ((leftJoystick.y>0)?1:-1);
-        commanderPacket.roll = pow(leftJoystick.x, 2) * 50 * ((leftJoystick.x>0)?1:-1);
+        commanderPacket.pitch = pow(leftJoystick.y, 2) * -1 * pitchRate * ((leftJoystick.y>0)?1:-1);
+        commanderPacket.roll = pow(leftJoystick.x, 2) * pitchRate * ((leftJoystick.x>0)?1:-1);
         
-        commanderPacket.yaw = rightJoystick.x * 200;
+        commanderPacket.yaw = rightJoystick.x * yawRate;
         
-        int thrust = sqrt(rightJoystick.y)*65535*0.8;
+        int thrust = sqrt(rightJoystick.y)*65535*(maxThrust/100);
         //int thrust = rightJoystick.y*65535*0.8;
         if (thrust>65535) thrust = 65535;
         if (thrust < 0) thrust = 0;
@@ -378,6 +384,7 @@
 {
     if (settingsViewController) {
         pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
+        sensitivitySetting = settingsViewController.sensitivitySetting;
         [self saveDefault];
     }
     [self dismissViewControllerAnimated:true completion:nil];

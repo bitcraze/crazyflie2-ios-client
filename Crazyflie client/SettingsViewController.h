@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *yawSensitivity;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sensitivitySelector;
 
-@property (weak, nonatomic) NSDictionary *sensitivities;
+@property (weak, nonatomic) NSMutableDictionary *sensitivities;
 @property (weak, nonatomic) NSString *sensitivitySetting;
 
 @end

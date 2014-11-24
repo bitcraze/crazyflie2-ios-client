@@ -88,6 +88,14 @@
         self.pitchrollSensitivity.text = [NSString stringWithFormat:@"%ld", (long)pitchRate];
         self.yawSensitivity.text = [NSString stringWithFormat:@"%ld", (long)yawRate];
         self.thrustSensitivity.text = [NSString stringWithFormat:@"%ld", (long)maxThrust];
+        
+        NSDictionary * customSensitivity = @{@"pitchRate": [NSNumber numberWithLong:pitchRate],
+                                             @"yawRate": [NSNumber numberWithLong:yawRate],
+                                             @"maxThrust": [NSNumber numberWithLong:maxThrust]};
+        //[[NSDictionary alloc] init];
+        //[customSensitivity setValue:[NSNumber numberWithFloat:pitchRate] forKey:@"pitchRate"];
+        
+        [self.sensitivities setValue:customSensitivity forKey:@"custom"];
     }
 }
 
