@@ -396,7 +396,7 @@
         settingsViewController.delegate = self;
         
         settingsViewController.controlMode = controlMode;
-        settingsViewController.sensitivities = sensitivities;
+        settingsViewController.sensitivities = [sensitivities mutableCopy];
         settingsViewController.sensitivitySetting = sensitivitySetting;
     }
 }
@@ -409,6 +409,7 @@
         pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
         sensitivitySetting = settingsViewController.sensitivitySetting;
         controlMode = (int)settingsViewController.controlModeSelector.selectedSegmentIndex+1;
+        sensitivities = [settingsViewController.sensitivities mutableCopy];
         [self saveDefault];
     }
     [self dismissViewControllerAnimated:true completion:nil];

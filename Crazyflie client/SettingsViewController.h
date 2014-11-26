@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *controlModeSelector;
 
 @property () NSInteger controlMode;
-@property (weak, nonatomic) NSMutableDictionary *sensitivities;
+@property (strong, nonatomic) NSMutableDictionary *sensitivities;
 @property (weak, nonatomic) NSString *sensitivitySetting;
 
 @end
