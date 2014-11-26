@@ -41,6 +41,7 @@
     float pitchRate;
     float yawRate;
     float maxThrust;
+    int controlMode;
     
     enum {stateIdle, stateScanning, stateConnecting, stateConnected} state;
     
@@ -109,6 +110,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    [defaults setObject:[NSNumber numberWithInt:controlMode] forKey:@"controlMode"];
     [defaults setObject:sensitivities forKey:@"sensitivities"];
     [defaults setObject:sensitivitySetting forKey:@"sensitivitySettings"];
     
@@ -117,6 +119,8 @@
 
 - (void) updateSettings: (NSUserDefaults*) defaults
 {
+    controlMode = [defaults doubleForKey:@"controlMode"];
+    NSLog(@"controlMode %d", controlMode);
     sensitivities = (NSMutableDictionary*)[defaults dictionaryForKey:@"sensitivities"];
     sensitivitySetting = [defaults stringForKey:@"sensitivitySettings"];
     
@@ -292,6 +296,24 @@
         float yaw;
         uint16_t thrust;
     } commanderPacket;
+    enum {jsLeftX=0, jsLrftY, jsRightX, jsRightY};
+    // Mode sorted by pitch, roll, yaw, thrust versus lx, ly, rx, ry
+    static const int mode2axis[4][4] = {{1, 2, 0, 3},
+                                        {3, 2, 0, 1},
+                                        {1, 0, 2, 3},
+                                        {3, 0, 2, 1}};
+    float joysticks[4];
+    float jsPitch, jsRoll, jsYaw, jsThrust;
+    
+    joysticks[0] = leftJoystick.x;
+    joysticks[1] = leftJoystick.y;
+    joysticks[2] = rightJoystick.x;
+    joysticks[3] = rightJoystick.y;
+    
+    jsPitch  = joysticks[mode2axis[controlMode-1][0]];
+    jsRoll   = joysticks[mode2axis[controlMode-1][1]];
+    jsYaw    = joysticks[mode2axis[controlMode-1][2]];
+    jsThrust = joysticks[mode2axis[controlMode-1][3]];
     
     if (sent) {
         NSLog(@"Send commander!");
@@ -299,12 +321,12 @@
         
         commanderPacket.header = 0x30;
         
-        commanderPacket.pitch = pow(leftJoystick.y, 2) * -1 * pitchRate * ((leftJoystick.y>0)?1:-1);
-        commanderPacket.roll = pow(leftJoystick.x, 2) * pitchRate * ((leftJoystick.x>0)?1:-1);
+        commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((leftJoystick.y>0)?1:-1);
+        commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((leftJoystick.x>0)?1:-1);
         
-        commanderPacket.yaw = rightJoystick.x * yawRate;
+        commanderPacket.yaw = jsYaw * yawRate;
         
-        int thrust = sqrt(rightJoystick.y)*65535*(maxThrust/100);
+        int thrust = sqrt(jsThrust)*65535*(maxThrust/100);
         //int thrust = rightJoystick.y*65535*0.8;
         if (thrust>65535) thrust = 65535;
         if (thrust < 0) thrust = 0;
@@ -373,6 +395,7 @@
         settingsViewController = [segue destinationViewController];
         settingsViewController.delegate = self;
         
+        settingsViewController.controlMode = controlMode;
         settingsViewController.sensitivities = sensitivities;
         settingsViewController.sensitivitySetting = sensitivitySetting;
     }
@@ -385,6 +408,7 @@
     if (settingsViewController) {
         pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
         sensitivitySetting = settingsViewController.sensitivitySetting;
+        controlMode = (int)settingsViewController.controlModeSelector.selectedSegmentIndex+1;
         [self saveDefault];
     }
     [self dismissViewControllerAnimated:true completion:nil];

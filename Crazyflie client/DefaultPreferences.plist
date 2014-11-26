@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>controlMode</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>sensitivitySetting</key>
 	<string>slow</string>
 	<key>sensitivities</key>

@@ -26,6 +26,8 @@
     
     [self sensitivityChanged:self.sensitivitySelector];
     
+    self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
+    
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
 }
 
@@ -63,6 +65,9 @@
             break;
     }
 }
+- (IBAction)modeChanged:(id)sender {
+    self.controlMode = (int)self.controlModeSelector.selectedSegmentIndex+1;
+}
 
 - (IBAction)endEditing:(id)sender {
     if ([self.sensitivitySetting isEqualToString:@"custom"]) {
@@ -92,9 +97,7 @@
         NSDictionary * customSensitivity = @{@"pitchRate": [NSNumber numberWithLong:pitchRate],
                                              @"yawRate": [NSNumber numberWithLong:yawRate],
                                              @"maxThrust": [NSNumber numberWithLong:maxThrust]};
-        //[[NSDictionary alloc] init];
-        //[customSensitivity setValue:[NSNumber numberWithFloat:pitchRate] forKey:@"pitchRate"];
-        
+
         [self.sensitivities setValue:customSensitivity forKey:@"custom"];
     }
 }

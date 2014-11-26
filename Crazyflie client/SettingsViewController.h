@@ -22,7 +22,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *thrustSensitivity;
 @property (weak, nonatomic) IBOutlet UITextField *yawSensitivity;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sensitivitySelector;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *controlModeSelector;
 
+@property () NSInteger controlMode;
 @property (weak, nonatomic) NSMutableDictionary *sensitivities;
 @property (weak, nonatomic) NSString *sensitivitySetting;
 

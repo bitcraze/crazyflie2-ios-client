@@ -170,6 +170,9 @@
                                     <segment title="Mode 3"/>
                                     <segment title="Mode 4"/>
                                 </segments>
+                                <connections>
+                                    <action selector="modeChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="Oln-Hh-YQp"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thrust (%)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFb-Nf-8vW">
                                 <rect key="frame" x="244" y="85" width="80" height="21"/>
@@ -251,6 +254,7 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="controlModeSelector" destination="vR0-g5-k3n" id="Y7K-oN-NZE"/>
                         <outlet property="pitchrollSensitivity" destination="Mcv-GC-oy1" id="vp9-Kw-dF5"/>
                         <outlet property="sensitivitySelector" destination="DAc-qy-Vle" id="UcL-dm-S0h"/>
                         <outlet property="thrustSensitivity" destination="KG7-5N-8dT" id="Sm5-eG-eQV"/>
