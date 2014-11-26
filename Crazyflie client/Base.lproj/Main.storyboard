@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -52,9 +52,15 @@
                                     <action selector="connectClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Etd-nj-wiH"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place both thumbs to enable control" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4K-nN-6na">
+                                <rect key="frame" x="145" y="111" width="279" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="M4K-nN-6na" secondAttribute="centerX" constant="-0.5" id="6WK-k2-o82"/>
                             <constraint firstItem="zUR-3g-aLF" firstAttribute="top" secondItem="ax9-lF-Vx6" secondAttribute="bottom" constant="-2" id="6gd-WA-22v"/>
                             <constraint firstItem="ax9-lF-Vx6" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="15:32" id="AWL-c6-pD4"/>
                             <constraint firstItem="eY8-VG-3Hc" firstAttribute="leading" secondItem="cqv-t8-690" secondAttribute="trailing" constant="9" id="IXD-Y1-6NC"/>
@@ -65,6 +71,7 @@
                             <constraint firstAttribute="centerY" secondItem="cqv-t8-690" secondAttribute="centerY" constant="-145" id="Uw9-b6-dop"/>
                             <constraint firstItem="eY8-VG-3Hc" firstAttribute="top" secondItem="BBt-Ae-QU0" secondAttribute="bottom" id="aYh-nM-6jR"/>
                             <constraint firstItem="zUR-3g-aLF" firstAttribute="leading" secondItem="Ta2-ZF-aps" secondAttribute="trailing" constant="17" id="bR6-nA-ZQZ"/>
+                            <constraint firstItem="M4K-nN-6na" firstAttribute="top" secondItem="zUR-3g-aLF" secondAttribute="bottom" constant="41" id="cCc-En-cMW"/>
                             <constraint firstItem="Ta2-ZF-aps" firstAttribute="bottom" secondItem="uYX-Ot-m4w" secondAttribute="top" id="mCk-wo-l9b"/>
                             <constraint firstAttribute="centerX" secondItem="ax9-lF-Vx6" secondAttribute="centerX" id="r2C-Gf-qTu"/>
                             <constraint firstItem="Ta2-ZF-aps" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="rxx-fR-34N"/>
@@ -79,6 +86,7 @@
                         <outlet property="connectProgress" destination="ax9-lF-Vx6" id="VCb-4D-6O6"/>
                         <outlet property="leftView" destination="Ta2-ZF-aps" id="WLu-gg-T9d"/>
                         <outlet property="rightView" destination="eY8-VG-3Hc" id="d1v-FG-2fg"/>
+                        <outlet property="unlockLabel" destination="M4K-nN-6na" id="6C6-1n-91b"/>
                         <segue destination="yUo-2Y-gx5" kind="modal" identifier="settings" id="Elg-lL-7c2"/>
                     </connections>
                 </viewController>

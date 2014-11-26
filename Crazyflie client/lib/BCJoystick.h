@@ -35,4 +35,10 @@
 @property float deadbandX;
 @property float deadbandY;
 
+@property (strong) UILabel *vLabel;
+@property (strong) UILabel *hLabel;
+
+@property BOOL activated;
+
+- (void) cancel;
 @end

@@ -38,6 +38,8 @@
     bool isScanning;
     bool sent;
     
+    bool locked;
+    
     float pitchRate;
     float yawRate;
     float maxThrust;
@@ -55,6 +57,7 @@
     NSString *sensitivitySetting;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *unlockLabel;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *connectProgress;
 
@@ -85,9 +88,11 @@
     //Init joysticks
     leftJoystick = [[BCJoystick alloc] initWithFrame:[_leftView frame]];
     [_leftView addSubview:leftJoystick];
+    [leftJoystick addTarget:self action:@selector(joystickTouch:) forControlEvents:UIControlEventAllTouchEvents];
     
     rightJoystick = [[BCJoystick alloc] initWithFrame:[_leftView frame]];
     [_rightView addSubview:rightJoystick];
+    [rightJoystick addTarget:self action:@selector(joystickTouch:) forControlEvents:UIControlEventAllTouchEvents];
     rightJoystick.deadbandX = 0.1;  //Some deadband for the yaw
     rightJoystick.vLabelLeft = YES;
     
@@ -119,6 +124,11 @@
 
 - (void) updateSettings: (NSUserDefaults*) defaults
 {
+    static const NSString *mode2str[4][4] = {{@"Roll", @"Thrust", @"Yaw",  @"Pitch"},
+                                             {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
+                                             {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
+                                             {@"Yaw",  @"Pitch",  @"Roll", @"Thrust"}};
+    
     controlMode = [defaults doubleForKey:@"controlMode"];
     NSLog(@"controlMode %d", controlMode);
     sensitivities = (NSMutableDictionary*)[defaults dictionaryForKey:@"sensitivities"];
@@ -128,11 +138,33 @@
     pitchRate = [(NSNumber*)[sensitivity valueForKey:@"pitchRate"] floatValue];
     yawRate = [(NSNumber*)[sensitivity valueForKey:@"yawRate"] floatValue];
     maxThrust = [(NSNumber*)[sensitivity valueForKey:@"maxThrust"] floatValue];
+    
+    leftJoystick.hLabel.text = [mode2str[controlMode-1][0] copy];
+    leftJoystick.vLabel.text = [mode2str[controlMode-1][1] copy];
+    rightJoystick.hLabel.text = [mode2str[controlMode-1][2] copy];
+    rightJoystick.vLabel.text = [mode2str[controlMode-1][3] copy];
+    
+    leftJoystick.deadbandX = 0;
+    rightJoystick.deadbandX = 0;
+    if ([leftJoystick.hLabel.text isEqualToString:@"Yaw"]) {
+        leftJoystick.deadbandX = 0.1;
+    } else {
+        rightJoystick.deadbandX = 0.1;
+    }
 }
 
 - (void) joystickMoved: (BCJoystick*)joystick
 {
     NSLog(@"Joystick moved to %f,%f.", joystick.x, joystick.y);
+}
+
+-(void) joystickTouch:(BCJoystick *)jostick
+{
+    if (leftJoystick.activated && rightJoystick.activated) {
+        self.unlockLabel.hidden = true;
+    } else if (!leftJoystick.activated && !rightJoystick.activated) {
+        self.unlockLabel.hidden = false;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -398,6 +430,9 @@
         settingsViewController.controlMode = controlMode;
         settingsViewController.sensitivities = [sensitivities mutableCopy];
         settingsViewController.sensitivitySetting = sensitivitySetting;
+        
+        [leftJoystick cancel];
+        [rightJoystick cancel];
     }
 }
 

@@ -62,13 +62,30 @@
         _vProgress.transform = CGAffineTransformMakeRotation( M_PI * -0.5 );
         _vProgress.hidden = YES;
         
+        _vLabel = [[UILabel alloc] initWithFrame:frame];
+        _vLabel.text = @"Pitch";
+        _vLabel.textColor = [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0 alpha:0.75];
+        _vLabel.textAlignment = NSTextAlignmentCenter;
+        _vLabel.center = CGPointMake(0, 0);
+        _vLabel.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
+        _vLabel.hidden = YES;
+        
         _hProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
         _hProgress.hidden = YES;
+        
+        _hLabel = [[UILabel alloc] initWithFrame:frame];
+        _hLabel.text = @"Roll";
+        _hLabel.textColor = [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0 alpha:0.75];
+        _hLabel.textAlignment = NSTextAlignmentCenter;
+        _hLabel.center = CGPointMake(0, 0);
+        _hLabel.hidden = YES;
         
         _vLabelLeft = NO;
         
         [self addSubview:_vProgress];
         [self addSubview:_hProgress];
+        [self addSubview:_vLabel];
+        [self addSubview:_hLabel];
     }
     return self;
 }
@@ -96,9 +113,10 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    _activated = true;
+    
     UITouch *touch= [[event touchesForView:self] anyObject];
     center = [touch locationInView:self];
-    
     
     UIBezierPath * startPath;
     UIBezierPath * endPath;
@@ -121,17 +139,24 @@
     
     if (_vLabelLeft == YES) {
         _vProgress.center = CGPointMake(center.x-JSIZE-3, center.y);
+        _vLabel.center = CGPointMake(center.x-JSIZE-12, center.y);
+        _vLabel.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
     } else {
         _vProgress.center = CGPointMake(center.x+JSIZE+3, center.y);
+        _vLabel.center = CGPointMake(center.x+JSIZE+12, center.y);
+        _vLabel.transform = CGAffineTransformMakeRotation(M_PI * 0.5);
     }
     _vProgress.progress = 0.5;
     
     [_hProgress setFrame:CGRectMake(center.x-JSIZE, center.y-JSIZE-4, 2*JSIZE, 2*JSIZE)];
     _hProgress.progress = 0.5;
     
+    _hLabel.center = CGPointMake(center.x, center.y-JSIZE-12);
+    
     _path = [UIBezierPath bezierPathWithRect:rect];
     _shapeLayer.path = [_path CGPath];
     
+    [self sendActionsForControlEvents:UIControlEventAllTouchEvents];
 }
 
 - (CGFloat) applyDeadband:(CGFloat)deadband toValue:(CGFloat)value
@@ -173,8 +198,18 @@
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self cancel];
+}
+
+- (void) cancel
+{
+    if (_activated == NO)
+        return;
+    
     _x = 0;
     _y = 0;
+    
+    _activated = false;
     
     UIBezierPath * startPath;
     UIBezierPath * endPath;
@@ -198,13 +233,16 @@
     
     _vProgress.hidden = YES;
     _hProgress.hidden = YES;
+    _vLabel.hidden = YES;
+    _hLabel.hidden = YES;
     
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+    [self sendActionsForControlEvents:UIControlEventAllTouchEvents];
 }
 
 - (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
+    [self cancel];
 }
 
 - (void) animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -212,6 +250,8 @@
     if (_shapeLayer.path != nil) {
         _vProgress.hidden = NO;
         _hProgress.hidden = NO;
+        _vLabel.hidden = NO;
+        _hLabel.hidden = NO;
     }
 }
 
