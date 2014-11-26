@@ -35,6 +35,8 @@
 @property float deadbandX;
 @property float deadbandY;
 
+@property BOOL positiveY;
+
 @property (strong) UILabel *vLabel;
 @property (strong) UILabel *hLabel;
 

@@ -156,6 +156,14 @@
     } else {
         rightJoystick.deadbandX = 0.1;
     }
+    
+    leftJoystick.positiveY = NO;
+    rightJoystick.positiveY = NO;
+    if ([leftJoystick.vLabel.text isEqualToString:@"Thrust"]) {
+        leftJoystick.positiveY = YES;
+    } else {
+        rightJoystick.positiveY = YES;
+    }
 }
 
 - (void) joystickMoved: (BCJoystick*)joystick

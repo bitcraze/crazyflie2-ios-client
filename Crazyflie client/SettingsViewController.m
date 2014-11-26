@@ -28,10 +28,10 @@
     else if ([self.sensitivitySetting isEqualToString:@"custom"])
         self.sensitivitySelector.selectedSegmentIndex = 2;
     
+    self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
+    
     [self sensitivityChanged:self.sensitivitySelector];
     [self modeChanged:self.controlModeSelector];
-    
-    self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
 }

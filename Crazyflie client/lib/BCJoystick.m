@@ -116,7 +116,11 @@
     _activated = true;
     
     UITouch *touch= [[event touchesForView:self] anyObject];
+    
     center = [touch locationInView:self];
+    
+    if (_positiveY)
+        center.y -= JSIZE;
     
     UIBezierPath * startPath;
     UIBezierPath * endPath;
@@ -146,7 +150,7 @@
         _vLabel.center = CGPointMake(center.x+JSIZE+12, center.y);
         _vLabel.transform = CGAffineTransformMakeRotation(M_PI * 0.5);
     }
-    _vProgress.progress = 0.5;
+    _vProgress.progress = (_positiveY)?0:0.5;;
     
     [_hProgress setFrame:CGRectMake(center.x-JSIZE, center.y-JSIZE-4, 2*JSIZE, 2*JSIZE)];
     _hProgress.progress = 0.5;
@@ -183,15 +187,18 @@
     x = ((CGFloat)(point.x-center.x))/JSIZE;
     if (x>1) x=1;
     if (x<-1) x=-1;
-    self.x = [self applyDeadband:self.deadbandX toValue:x];
+    x = [self applyDeadband:self.deadbandX toValue:x];
     
     y = -1*(point.y-center.y)/JSIZE;
     if (y>1) y=1;
     if (y<-1) y=-1;
-    self.y = [self applyDeadband:self.deadbandY toValue:y];
+    y = [self applyDeadband:self.deadbandY toValue:y];
 
-    _hProgress.progress = (_x+1)/2.0;
-    _vProgress.progress = (_y+1)/2.0;
+    _hProgress.progress = (x+1)/2.0;
+    _vProgress.progress = (y+1)/2.0;
+    
+    self.x = x;
+    self.y = (_positiveY==NO)?y:(y+1)/2;
     
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
