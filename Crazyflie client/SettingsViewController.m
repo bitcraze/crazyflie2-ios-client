@@ -9,6 +9,10 @@
 #import "SettingsViewController.h"
 
 @interface SettingsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *leftYLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leftXLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightYLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightXLabel;
 
 @end
 
@@ -25,6 +29,7 @@
         self.sensitivitySelector.selectedSegmentIndex = 2;
     
     [self sensitivityChanged:self.sensitivitySelector];
+    [self modeChanged:self.controlModeSelector];
     
     self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
     
@@ -66,7 +71,17 @@
     }
 }
 - (IBAction)modeChanged:(id)sender {
+    static const NSString *mode2str[4][4] = {{@"Roll", @"Thrust", @"Yaw",  @"Pitch"},
+        {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
+        {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
+        {@"Yaw",  @"Pitch",  @"Roll", @"Thrust"}};
+    
     self.controlMode = (int)self.controlModeSelector.selectedSegmentIndex+1;
+    
+    _leftXLabel.text = [mode2str[_controlMode-1][0] copy];
+    _leftYLabel.text = [mode2str[_controlMode-1][1] copy];
+    _rightXLabel.text = [mode2str[_controlMode-1][2] copy];
+    _rightYLabel.text = [mode2str[_controlMode-1][3] copy];
 }
 
 - (IBAction)endEditing:(id)sender {

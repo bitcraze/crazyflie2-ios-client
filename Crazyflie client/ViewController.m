@@ -84,6 +84,7 @@
     isScanning = NO;
     sent = NO;
     state = stateIdle;
+    locked = YES;
     
     //Init joysticks
     leftJoystick = [[BCJoystick alloc] initWithFrame:[_leftView frame]];
@@ -162,8 +163,10 @@
 {
     if (leftJoystick.activated && rightJoystick.activated) {
         self.unlockLabel.hidden = true;
+        locked = NO;
     } else if (!leftJoystick.activated && !rightJoystick.activated) {
         self.unlockLabel.hidden = false;
+        locked = YES;
     }
 }
 
@@ -328,7 +331,6 @@
         float yaw;
         uint16_t thrust;
     } commanderPacket;
-    enum {jsLeftX=0, jsLrftY, jsRightX, jsRightY};
     // Mode sorted by pitch, roll, yaw, thrust versus lx, ly, rx, ry
     static const int mode2axis[4][4] = {{1, 2, 0, 3},
                                         {3, 2, 0, 1},
@@ -337,10 +339,17 @@
     float joysticks[4];
     float jsPitch, jsRoll, jsYaw, jsThrust;
     
-    joysticks[0] = leftJoystick.x;
-    joysticks[1] = leftJoystick.y;
-    joysticks[2] = rightJoystick.x;
-    joysticks[3] = rightJoystick.y;
+    if (locked == NO) {
+        joysticks[0] = leftJoystick.x;
+        joysticks[1] = leftJoystick.y;
+        joysticks[2] = rightJoystick.x;
+        joysticks[3] = rightJoystick.y;
+    } else {
+        joysticks[0] = 0;
+        joysticks[1] = 0;
+        joysticks[2] = 0;
+        joysticks[3] = 0;
+    }
     
     jsPitch  = joysticks[mode2axis[controlMode-1][0]];
     jsRoll   = joysticks[mode2axis[controlMode-1][1]];
