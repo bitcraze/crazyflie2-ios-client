@@ -353,8 +353,8 @@
         
         commanderPacket.header = 0x30;
         
-        commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((leftJoystick.y>0)?1:-1);
-        commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((leftJoystick.x>0)?1:-1);
+        commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((jsPitch>0)?1:-1);
+        commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((jsRoll>0)?1:-1);
         
         commanderPacket.yaw = jsYaw * yawRate;
         
