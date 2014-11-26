@@ -31,6 +31,10 @@
 #define CRAZYFLIE_SERVICE @"00000201-1C7F-4F9E-947B-43B7C00A9A08"
 #define CRTP_CHARACTERISTIC @"00000202-1C7F-4F9E-947B-43B7C00A9A08"
 
+
+#define LINEAR_PR YES
+#define LINEAR_THRUST YES
+
 @interface ViewController () {
     BCJoystick *leftJoystick;
     BCJoystick *rightJoystick;
@@ -362,13 +366,22 @@
         
         commanderPacket.header = 0x30;
         
-        commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((jsPitch>0)?1:-1);
-        commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((jsRoll>0)?1:-1);
+        if (LINEAR_PR) {
+            commanderPacket.pitch = jsPitch*-1*pitchRate;
+            commanderPacket.roll = jsRoll*pitchRate;
+        } else {
+            commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((jsPitch>0)?1:-1);
+            commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((jsRoll>0)?1:-1);
+        }
         
         commanderPacket.yaw = jsYaw * yawRate;
         
-        int thrust = sqrt(jsThrust)*65535*(maxThrust/100);
-        //int thrust = rightJoystick.y*65535*0.8;
+        int thrust;
+        if (LINEAR_THRUST) {
+            thrust = jsThrust*65535*(maxThrust/100);
+        } else {
+            thrust = sqrt(jsThrust)*65535*(maxThrust/100);
+        }
         if (thrust>65535) thrust = 65535;
         if (thrust < 0) thrust = 0;
         commanderPacket.thrust = thrust;
