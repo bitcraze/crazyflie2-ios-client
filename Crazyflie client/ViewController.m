@@ -473,7 +473,7 @@
     if (settingsViewController) {
         pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
         sensitivitySetting = settingsViewController.sensitivitySetting;
-        controlMode = settingsViewController.controlMode;
+        controlMode = (int)settingsViewController.controlMode;
         sensitivities = [settingsViewController.sensitivities mutableCopy];
         [self saveDefault];
     }
