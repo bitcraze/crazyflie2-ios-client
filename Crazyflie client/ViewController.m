@@ -91,11 +91,12 @@
     locked = YES;
     
     //Init joysticks
-    leftJoystick = [[BCJoystick alloc] initWithFrame:[_leftView frame]];
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    leftJoystick = [[BCJoystick alloc] initWithFrame:frame];
     [_leftView addSubview:leftJoystick];
     [leftJoystick addTarget:self action:@selector(joystickTouch:) forControlEvents:UIControlEventAllTouchEvents];
     
-    rightJoystick = [[BCJoystick alloc] initWithFrame:[_leftView frame]];
+    rightJoystick = [[BCJoystick alloc] initWithFrame:frame];
     [_rightView addSubview:rightJoystick];
     [rightJoystick addTarget:self action:@selector(joystickTouch:) forControlEvents:UIControlEventAllTouchEvents];
     rightJoystick.deadbandX = 0.1;  //Some deadband for the yaw

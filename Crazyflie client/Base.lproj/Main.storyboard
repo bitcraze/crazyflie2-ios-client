@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -20,19 +20,19 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ta2-ZF-aps">
-                                <rect key="frame" x="16" y="20" width="221" height="300"/>
+                                <rect key="frame" x="0.0" y="20" width="244" height="300"/>
                                 <connections>
                                     <segue destination="dRo-kH-fQ7" kind="embed" id="6iU-VE-nJE"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eY8-VG-3Hc">
-                                <rect key="frame" x="322" y="20" width="230" height="300"/>
+                                <rect key="frame" x="324" y="20" width="244" height="300"/>
                                 <connections>
                                     <segue destination="A5f-oB-Glj" kind="embed" id="dXr-yG-2fM"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqv-t8-690">
-                                <rect key="frame" x="256" y="290" width="57" height="30"/>
+                                <rect key="frame" x="256" y="282" width="57" height="30"/>
                                 <state key="normal" title="Settings">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -60,23 +60,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="uYX-Ot-m4w" firstAttribute="top" secondItem="Ta2-ZF-aps" secondAttribute="bottom" id="5TC-Jp-58p"/>
                             <constraint firstAttribute="centerX" secondItem="M4K-nN-6na" secondAttribute="centerX" constant="-0.5" id="6WK-k2-o82"/>
                             <constraint firstItem="zUR-3g-aLF" firstAttribute="top" secondItem="ax9-lF-Vx6" secondAttribute="bottom" constant="-2" id="6gd-WA-22v"/>
                             <constraint firstItem="ax9-lF-Vx6" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="15:32" id="AWL-c6-pD4"/>
-                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="leading" secondItem="cqv-t8-690" secondAttribute="trailing" constant="9" id="IXD-Y1-6NC"/>
+                            <constraint firstAttribute="centerX" secondItem="cqv-t8-690" secondAttribute="centerX" constant="-0.5" id="GP9-vk-c9r"/>
+                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="width" secondItem="Ta2-ZF-aps" secondAttribute="width" id="Hh7-Wu-PJk"/>
                             <constraint firstItem="ax9-lF-Vx6" firstAttribute="top" secondItem="BBt-Ae-QU0" secondAttribute="bottom" constant="20" id="J7N-Q2-gzo"/>
-                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="bottom" secondItem="uYX-Ot-m4w" secondAttribute="top" id="Ngk-mr-GOx"/>
-                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="Pfk-1g-iWV"/>
-                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="top" secondItem="Ta2-ZF-aps" secondAttribute="top" id="Rjp-9Z-gAm"/>
-                            <constraint firstAttribute="centerY" secondItem="cqv-t8-690" secondAttribute="centerY" constant="-145" id="Uw9-b6-dop"/>
-                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="top" secondItem="BBt-Ae-QU0" secondAttribute="bottom" id="aYh-nM-6jR"/>
-                            <constraint firstItem="zUR-3g-aLF" firstAttribute="leading" secondItem="Ta2-ZF-aps" secondAttribute="trailing" constant="17" id="bR6-nA-ZQZ"/>
+                            <constraint firstItem="uYX-Ot-m4w" firstAttribute="top" secondItem="cqv-t8-690" secondAttribute="bottom" constant="8" id="Mpf-Gl-daS"/>
+                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="top" secondItem="BBt-Ae-QU0" secondAttribute="bottom" id="RhX-RI-kGn"/>
+                            <constraint firstItem="uYX-Ot-m4w" firstAttribute="top" secondItem="eY8-VG-3Hc" secondAttribute="bottom" id="Soy-3a-5TR"/>
+                            <constraint firstItem="Ta2-ZF-aps" firstAttribute="top" secondItem="BBt-Ae-QU0" secondAttribute="bottom" id="Y5F-Ct-jjf"/>
                             <constraint firstItem="M4K-nN-6na" firstAttribute="top" secondItem="zUR-3g-aLF" secondAttribute="bottom" constant="41" id="cCc-En-cMW"/>
-                            <constraint firstItem="Ta2-ZF-aps" firstAttribute="bottom" secondItem="uYX-Ot-m4w" secondAttribute="top" id="mCk-wo-l9b"/>
+                            <constraint firstItem="eY8-VG-3Hc" firstAttribute="leading" secondItem="Ta2-ZF-aps" secondAttribute="trailing" constant="80" id="fto-Cd-7E9"/>
+                            <constraint firstAttribute="trailing" secondItem="eY8-VG-3Hc" secondAttribute="trailing" id="jfl-sp-xBb"/>
                             <constraint firstAttribute="centerX" secondItem="ax9-lF-Vx6" secondAttribute="centerX" id="r2C-Gf-qTu"/>
-                            <constraint firstItem="Ta2-ZF-aps" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="rxx-fR-34N"/>
-                            <constraint firstAttribute="centerX" secondItem="cqv-t8-690" secondAttribute="centerX" constant="-0.5" id="wkt-Uu-qtn"/>
                             <constraint firstItem="zUR-3g-aLF" firstAttribute="centerX" secondItem="ax9-lF-Vx6" secondAttribute="centerX" constant="-0.5" id="x96-Dx-28Z"/>
+                            <constraint firstItem="Ta2-ZF-aps" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ybZ-F3-0cS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="P9X-at-VK1"/>
@@ -103,7 +103,7 @@
                         <viewControllerLayoutGuide type="bottom" id="veD-63-cfG"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="tUF-qh-DOo">
-                        <rect key="frame" x="0.0" y="0.0" width="221" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="244" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -122,7 +122,7 @@
                         <viewControllerLayoutGuide type="bottom" id="IWh-Gl-9Gv"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="oq0-3A-AKf">
-                        <rect key="frame" x="0.0" y="0.0" width="230" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="244" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
