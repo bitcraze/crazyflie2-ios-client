@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftXLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightYLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightXLabel;
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 @end
 
@@ -20,6 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Init button border color
+    _closeButton.layer.borderColor = [_closeButton tintColor].CGColor;
     
     if ([self.sensitivitySetting isEqualToString:@"slow"])
         self.sensitivitySelector.selectedSegmentIndex = 0;

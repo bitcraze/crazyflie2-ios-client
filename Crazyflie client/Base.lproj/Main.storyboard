@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -32,10 +32,19 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqv-t8-690">
-                                <rect key="frame" x="256" y="282" width="57" height="30"/>
+                                <rect key="frame" x="247" y="288" width="75" height="24"/>
+                                <inset key="contentEdgeInsets" minX="9" minY="3" maxX="9" maxY="3"/>
                                 <state key="normal" title="Settings">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="settingsClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="goA-dy-w78"/>
                                 </connections>
@@ -44,16 +53,28 @@
                                 <rect key="frame" x="209" y="40" width="150" height="2"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUR-3g-aLF">
-                                <rect key="frame" x="254" y="40" width="59" height="30"/>
+                                <rect key="frame" x="234" y="52" width="100" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="aGk-VK-ypr"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="9" minY="3" maxX="9" maxY="3"/>
                                 <state key="normal" title="Connect">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="connectClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Etd-nj-wiH"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place both thumbs to enable control" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4K-nN-6na">
-                                <rect key="frame" x="145" y="111" width="279" height="21"/>
+                                <rect key="frame" x="145" y="117" width="279" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -62,7 +83,7 @@
                         <constraints>
                             <constraint firstItem="uYX-Ot-m4w" firstAttribute="top" secondItem="Ta2-ZF-aps" secondAttribute="bottom" id="5TC-Jp-58p"/>
                             <constraint firstAttribute="centerX" secondItem="M4K-nN-6na" secondAttribute="centerX" constant="-0.5" id="6WK-k2-o82"/>
-                            <constraint firstItem="zUR-3g-aLF" firstAttribute="top" secondItem="ax9-lF-Vx6" secondAttribute="bottom" constant="-2" id="6gd-WA-22v"/>
+                            <constraint firstItem="zUR-3g-aLF" firstAttribute="top" secondItem="ax9-lF-Vx6" secondAttribute="bottom" constant="10" id="6gd-WA-22v"/>
                             <constraint firstItem="ax9-lF-Vx6" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="15:32" id="AWL-c6-pD4"/>
                             <constraint firstAttribute="centerX" secondItem="cqv-t8-690" secondAttribute="centerX" constant="-0.5" id="GP9-vk-c9r"/>
                             <constraint firstItem="eY8-VG-3Hc" firstAttribute="width" secondItem="Ta2-ZF-aps" secondAttribute="width" id="Hh7-Wu-PJk"/>
@@ -86,6 +107,7 @@
                         <outlet property="connectProgress" destination="ax9-lF-Vx6" id="VCb-4D-6O6"/>
                         <outlet property="leftView" destination="Ta2-ZF-aps" id="WLu-gg-T9d"/>
                         <outlet property="rightView" destination="eY8-VG-3Hc" id="d1v-FG-2fg"/>
+                        <outlet property="settingsButton" destination="cqv-t8-690" id="8l6-Ds-9hC"/>
                         <outlet property="unlockLabel" destination="M4K-nN-6na" id="6C6-1n-91b"/>
                         <segue destination="yUo-2Y-gx5" kind="modal" identifier="settings" id="Elg-lL-7c2"/>
                     </connections>
@@ -155,15 +177,6 @@
                                     <action selector="sensitivityChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="SOR-pH-2UM"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIQ-OS-LEN">
-                                <rect key="frame" x="264" y="282" width="40" height="30"/>
-                                <state key="normal" title="Close">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="Uzi-di-edx"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Control mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkH-py-9oS">
                                 <rect key="frame" x="232" y="152" width="105" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -266,6 +279,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIQ-OS-LEN">
+                                <rect key="frame" x="255" y="288" width="58" height="24"/>
+                                <inset key="contentEdgeInsets" minX="9" minY="3" maxX="9" maxY="3"/>
+                                <state key="normal" title="Close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="closeClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="Uzi-di-edx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -310,6 +341,7 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="closeButton" destination="bIQ-OS-LEN" id="S7d-r9-o2W"/>
                         <outlet property="controlModeSelector" destination="vR0-g5-k3n" id="Y7K-oN-NZE"/>
                         <outlet property="leftXLabel" destination="Idf-eF-rSY" id="hvT-p5-UdB"/>
                         <outlet property="leftYLabel" destination="Wjo-sc-lqq" id="073-k1-Wp8"/>

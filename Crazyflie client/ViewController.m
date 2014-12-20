@@ -63,6 +63,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *unlockLabel;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *connectProgress;
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
@@ -89,6 +90,10 @@
     sent = NO;
     state = stateIdle;
     locked = YES;
+    
+    //Init button border color
+    _connectButton.layer.borderColor = [_connectButton tintColor].CGColor;
+    _settingsButton.layer.borderColor = [_settingsButton tintColor].CGColor;
     
     //Init joysticks
     CGRect frame = [[UIScreen mainScreen] bounds];
