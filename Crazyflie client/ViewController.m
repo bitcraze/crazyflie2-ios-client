@@ -28,9 +28,7 @@
 #import "BCJoystick.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
-#define CRAZYFLIE_SERVICE @"00000201-1C7F-4F9E-947B-43B7C00A9A08"
-#define CRTP_CHARACTERISTIC @"00000202-1C7F-4F9E-947B-43B7C00A9A08"
-
+#import <Crazyflie_client-Swift.h>
 
 #define LINEAR_PR YES
 #define LINEAR_THRUST YES
@@ -38,8 +36,6 @@
 @interface ViewController () {
     BCJoystick *leftJoystick;
     BCJoystick *rightJoystick;
-    bool canBluetooth;
-    bool isScanning;
     bool sent;
     
     bool locked;
@@ -50,10 +46,6 @@
     int controlMode;
     
     enum {stateIdle, stateScanning, stateConnecting, stateConnected} state;
-    
-    CBPeripheral *crazyflie;
-    
-    CBCentralManager *centralManager;
     
     SettingsViewController *settingsViewController;
     
@@ -69,12 +61,9 @@
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *rightView;
 
-@property (strong) CBPeripheral *connectingPeritheral;
-@property (strong) CBCharacteristic *crtpCharacteristic;
+@property (strong) BluetoothLink *bluetoothLink;
 
 @property (strong) NSTimer *commanderTimer;
-@property (strong) NSTimer *scanTimer;
-
 @end
 
 @implementation ViewController
@@ -85,8 +74,6 @@
 	// Init instance variables
     self.connectProgress.progress = 0;
     
-    canBluetooth = NO;
-    isScanning = NO;
     sent = NO;
     state = stateIdle;
     locked = YES;
@@ -109,7 +96,30 @@
     
     [self loadDefault];
     
-    centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    self.bluetoothLink = [[BluetoothLink alloc] init];
+
+    // Update GUI when connection state changes
+    [_bluetoothLink onStateUpdated: ^(NSString *newState) {
+        if ([newState isEqualToString:@"idle"]) {
+            [self.connectProgress setProgress:0 animated:NO];
+            [self.connectButton setTitle:@"Connect" forState:UIControlStateNormal];
+        } else if ([newState isEqualToString:@"scanning"]) {
+            [self.connectProgress setProgress:0 animated:NO];
+            [self.connectButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        } else if ([newState isEqualToString:@"connecting"]) {
+            [self.connectProgress setProgress:0.25 animated:YES];
+            [self.connectButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        } else if ([newState isEqualToString:@"services"]) {
+            [self.connectProgress setProgress:0.5 animated:YES];
+            [self.connectButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        } else if ([newState isEqualToString:@"characteristics"]) {
+            [self.connectProgress setProgress:0.75 animated:YES];
+            [self.connectButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        } else if ([newState isEqualToString:@"connected"]) {
+            [self.connectProgress setProgress:1 animated:YES];
+            [self.connectButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+        }
+    }];
 }
 
 - (void) loadDefault
@@ -195,149 +205,54 @@
 }
 
 - (IBAction)connectClick:(id)sender {
-    if (canBluetooth) {
-        if (state == stateIdle) {
-            NSArray * connectedPeritheral = [centralManager retrieveConnectedPeripheralsWithServices:@[ [CBUUID UUIDWithString:CRAZYFLIE_SERVICE] ]];
-            
-            if (connectedPeritheral.count > 0) {
-                NSLog(@"Found Crazyflie already connected!");
-                _connectingPeritheral = [connectedPeritheral firstObject];
-                [centralManager connectPeripheral:_connectingPeritheral options:nil];
-                [_connectProgress setProgress:0.25 animated:YES];
-                state = stateConnecting;
-            } else {
-                NSLog(@"Start scanning");
-                [centralManager scanForPeripheralsWithServices:nil options:nil];
-                self.scanTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(scanningTimeout:) userInfo:nil repeats:NO];
-                state = stateScanning;
+    if ([[self.bluetoothLink getState]  isEqualToString:@"idle"]) {
+        [self.bluetoothLink connect:nil callback: ^ (BOOL connected) {
+            if (connected) {
+                NSLog(@"Connected!");
+                
+                // Start sending commander update
+                sent = YES;
+                self.commanderTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(sendCommander:) userInfo:nil repeats:YES];
+            } else { // Not connected, connection error!
+                NSString * title;
+                NSString * body;
+                
+                if (self.commanderTimer) {
+                    [self.commanderTimer invalidate];
+                    self.commanderTimer = nil;
+                }
+                
+                // Find the reason and prepare a message
+                if ([[_bluetoothLink getError] isEqualToString:@"Bluetooth disabled"]) {
+                    title = @"Bluetooth disabled";
+                    body = @"Please enable Bluetooth to connect a Crazyflie";
+                } else if ([[_bluetoothLink getError] isEqualToString:@"Timeout"]) {
+                    title = @"Connection timeout";
+                    body = @"Could not find Crazyflie";
+                } else {
+                    title = @"Error";
+                    body = [_bluetoothLink getError];
+                }
+                
+                // Display the message
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                            message:body
+                                                               delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             }
-            
-            [(UIButton *)sender setTitle:@"Cancel" forState:UIControlStateNormal];
-            
-        } else if (state == stateScanning) {
-            NSLog(@"Scanning canceled");
-            [centralManager stopScan];
-            [self.scanTimer invalidate];
-            self.scanTimer = nil;
-            [(UIButton *)sender setTitle:@"Connect" forState:UIControlStateNormal];
-            state = stateIdle;
-        } else if (state == stateConnecting) {
-            NSLog(@"Connection canceled");
-            [centralManager cancelPeripheralConnection:_connectingPeritheral];
-            [(UIButton *)sender setTitle:@"Connect" forState:UIControlStateNormal];
-            state = stateIdle;
-        } else if (state == stateConnected) {
-            NSLog(@"Disconnecting");
-            [_commanderTimer invalidate];
-            [centralManager cancelPeripheralConnection:_connectingPeritheral];
-        }
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bluetooth disabled"
-                                                        message:@"Please enable Bluetooth to connect a Crazyflie"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        }];
+    } else { // Already connected or connecting, disconnecting...
+        [self.bluetoothLink disconnect];
+        
+        [self.commanderTimer invalidate];
+        self.commanderTimer = nil;
     }
 }
 
 - (IBAction)settingsClick:(id)sender {
     [self performSegueWithIdentifier:@"settings" sender:nil];
-}
-
-- (void) scanningTimeout:(NSTimer*)timer
-{
-    NSLog(@"Scan timeout, stop scan");
-    [centralManager stopScan];
-    [self.scanTimer invalidate];
-    self.scanTimer = nil;
-    [[[UIAlertView alloc] initWithTitle:@"Connection timeout"
-                               message:@"Could not find Crazyflie"
-                              delegate:nil
-                     cancelButtonTitle:@"OK"
-                     otherButtonTitles:nil] show];
-    state = stateIdle;
-    [self.connectButton setTitle:@"Connect" forState:UIControlStateNormal];
-}
-
-- (void) centralManagerDidUpdateState:(CBCentralManager *)central
-{
-    if (central.state == CBCentralManagerStatePoweredOn) {
-        NSLog(@"Bluetooth is available!");
-        canBluetooth = YES;
-    } else {
-        NSLog(@"Bluetooth not available");
-        canBluetooth = NO;
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    NSLog(@"Discodered peripheral: %@", peripheral.name);
-    if ([peripheral.name  isEqual: @"Crazyflie"]) {
-        [self.scanTimer invalidate];
-        self.scanTimer = nil;
-        [centralManager stopScan];
-        NSLog(@"Stop scanning");
-        self.connectingPeritheral = peripheral;
-        state = stateConnecting;
-        [centralManager connectPeripheral:peripheral options:nil];
-        
-        [self.connectProgress setProgress:0.25 animated:YES];
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    NSLog(@"Preipheral connected");
-    crazyflie = peripheral;
-    peripheral.delegate = self;
-    
-    [peripheral discoverServices:@[ [CBUUID UUIDWithString:CRAZYFLIE_SERVICE] ]];
-    
-    [self.connectProgress setProgress:0.5 animated:YES];
-}
-
-- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    state = stateIdle;
-    [(UIButton *)_connectButton setTitle:@"Connect" forState:UIControlStateNormal];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection failed"
-                                                    message:@"Connection to Crazyflie failed"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
-{
-    for (CBService *service in peripheral.services) {
-        NSLog(@"Discovered serivce %@", [service.UUID UUIDString]);
-        if ([service.UUID isEqual:[CBUUID UUIDWithString:CRAZYFLIE_SERVICE]]) {
-            [peripheral discoverCharacteristics:@[ [CBUUID UUIDWithString:CRTP_CHARACTERISTIC] ] forService:service];
-        }
-    }
-    
-    [self.connectProgress setProgress:0.75 animated:YES];
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
-{
-    for (CBCharacteristic *characteristic in service.characteristics) {
-        NSLog(@"Discovered characteristic %@", [characteristic.UUID UUIDString]);
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:CRTP_CHARACTERISTIC]]) {
-            self.crtpCharacteristic = characteristic;
-            sent = YES;
-            self.commanderTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(sendCommander:) userInfo:nil repeats:YES];
-            [peripheral setNotifyValue:YES forCharacteristic:self.crtpCharacteristic];
-        }
-        
-    }
-    [self.connectProgress setProgress:1.0 animated:YES];
-    state = stateConnected;
-    [_connectButton setTitle:@"Disconnect" forState:UIControlStateNormal];
 }
 
 -(void) sendCommander: (NSTimer*)timer
@@ -402,50 +317,14 @@
         
         data = [NSData dataWithBytes:&commanderPacket length:sizeof(commanderPacket)];
         
-        [_connectingPeritheral writeValue:data forCharacteristic:_crtpCharacteristic type:CBCharacteristicWriteWithResponse];
         sent = NO;
+        
+        [_bluetoothLink sendPacket:data callback: ^(BOOL success) {
+            sent = YES;
+        }];
     } else {
         NSLog(@"Missed commander update!");
     }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    if (error) {
-        NSLog(@"Error writing characteristic value: %@",
-              [error localizedDescription]);
-        return;
-    }
-    NSLog(@"Value written");
-    sent  = YES;
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-    if (error) {
-        NSLog(@"Error changing notification state: %@",
-              [error localizedDescription]);
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    if (error) {
-        NSLog(@"Error disconnected from peripheral: %@",
-              [error localizedDescription]);
-        [[[UIAlertView alloc] initWithTitle:@"Error disconnected"
-                                   message:[error localizedDescription]
-                                  delegate:nil
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles:nil] show];
-    }
-    NSLog(@"Disconnected!");
-    [_connectProgress setProgress:0 animated:NO];
-    [_commanderTimer invalidate];
-    _commanderTimer = nil;
-    _crtpCharacteristic = nil;
-    _connectingPeritheral = nil;
-    [_connectButton setTitle:@"Connect" forState:UIControlStateNormal];
-    state = stateIdle;
 }
 
 - (BOOL) prefersStatusBarHidden
