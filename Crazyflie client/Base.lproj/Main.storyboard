@@ -412,6 +412,9 @@
                                 <state key="normal" title="Update">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onUpdateClicked:" destination="YBo-1h-R5I" eventType="touchUpInside" id="8gz-Ks-KkU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfL-Qo-Q4l">
                                 <rect key="frame" x="261" y="282" width="40" height="30"/>
@@ -506,8 +509,10 @@
                     <connections>
                         <outlet property="connectButton" destination="7dh-kS-fng" id="pvi-z2-qkG"/>
                         <outlet property="descriptionLabel" destination="Mvh-R2-iJZ" id="p40-oD-xgA"/>
+                        <outlet property="fetchButton" destination="8QK-tr-OSo" id="a2Y-bX-eqw"/>
                         <outlet property="progressBar" destination="ZO4-3O-tE3" id="zVP-Te-1bO"/>
                         <outlet property="progressLabel" destination="0pr-h0-jDE" id="zgB-Fd-NfW"/>
+                        <outlet property="updateButton" destination="ngj-s9-JyR" id="pWO-nJ-P4n"/>
                         <outlet property="versionLabel" destination="5Vp-mj-w1x" id="H57-Xn-ptD"/>
                     </connections>
                 </viewController>

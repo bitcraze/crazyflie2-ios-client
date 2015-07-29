@@ -37,10 +37,13 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     private var connectCallback: (Bool -> ())?
     
+    private var address = "Crazyflie"
+    
     override init() {
         super.init()
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        canBluetooth = centralManager!.state == CBCentralManagerState.PoweredOn;
         
         state = "idle"
     }
@@ -52,15 +55,22 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func connect(address: String?, callback: Bool -> ()) {
         if !canBluetooth || state != "idle" {
-            error = canBluetooth ? "Bluetooth disabled":"Already connected"
+            error = canBluetooth ? "Already connected":"Bluetooth disabled"
             callback(false);
             return;
         }
         
+        if address == nil {
+            self.address = "Crazyflie"
+        } else {
+            self.address = address!
+        }
+        
+        
         if let central = centralManager {
-            var connectedPeripheral = central.retrieveConnectedPeripheralsWithServices([CBUUID(string: crazyflieServiceUuid)]) as! [CBPeripheral];
+            let connectedPeripheral = central.retrieveConnectedPeripheralsWithServices([CBUUID(string: crazyflieServiceUuid)]) as! [CBPeripheral];
             
-            if count(connectedPeripheral) > 0 {
+            if count(connectedPeripheral) > 0  && connectedPeripheral.first!.name != nil && connectedPeripheral.first!.name == self.address {
                 NSLog("Already connected, reusing peripheral");
                 connectingPeripheral = connectedPeripheral.first;
                 central.connectPeripheral(connectingPeripheral, options: nil);
@@ -90,7 +100,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if let name = peripheral.name  {
-            if name == "Crazyflie" {
+            if name == self.address {
                 scanTimer?.invalidate()
                 central.stopScan()
                 NSLog("Stop scanning")
@@ -182,8 +192,8 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return state as NSString
     }
     
-    func getError() -> NSString {
-        return error as NSString
+    func getError() -> String {
+        return error
     }
     
     func onStateUpdated(callback: NSString -> ()) {

@@ -16,10 +16,12 @@ class BootloaderViewController : UIViewController {
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     
+    @IBOutlet weak var fetchButton: UIButton!
     @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet weak var updateButton: UIButton!
     
     enum State {
-        case Idle, ImageFetched, BootloaderConnected
+        case Idle, ImageFetched, BootloaderConnected, Updating
     }
 
     // MARK: - UI handling
@@ -33,17 +35,33 @@ class BootloaderViewController : UIViewController {
     func updateUI() {
         switch state {
         case .Idle:
+            self.fetchButton.enabled = true
             self.connectButton.enabled = false
-            self.connectButton.setTitle("Connect bootloader", forState: UIControlState.Normal)
+            self.updateButton.enabled = false
+            self.connectButton.setTitle("Connect bootloader", forState: .Normal)
+            self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "IDLE"
         case .ImageFetched:
+            self.fetchButton.enabled = true
             self.connectButton.enabled = true
-            self.connectButton.setTitle("Connect bootloader", forState: UIControlState.Normal)
+            self.updateButton.enabled = false
+            self.connectButton.setTitle("Connect bootloader", forState: .Normal)
+            self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "Ready to connect bootloader"
         case .BootloaderConnected:
+            self.fetchButton.enabled = true
             self.connectButton.enabled = true
-            self.connectButton.setTitle("Diconnnect bootloader", forState: UIControlState.Normal)
+            self.updateButton.enabled = true
+            self.connectButton.setTitle("Diconnnect bootloader", forState: .Normal)
+            self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "Ready to update"
+        case .Updating:
+            self.fetchButton.enabled = false
+            self.connectButton.enabled = false
+            self.updateButton.enabled = true
+            self.connectButton.setTitle("Diconnnect bootloader", forState: .Normal)
+            self.updateButton.setTitle("Cancel update", forState: .Normal)
+            self.progressLabel.text = "Updating ..."
         }
     }
     
@@ -89,9 +107,52 @@ class BootloaderViewController : UIViewController {
     // MARK: - Bootloader logic
 
     let bootloaderName = "Crazyflie Loader"
+    var link: BluetoothLink = BluetoothLink()
+    lazy var bootloader: Bootloader = { Bootloader(link: self.link) }()
     
     @IBAction func onConnectClicked(sender: UIButton) {
-        	
+        if self.state == .ImageFetched && self.link.getState() == "idle" {
+            self.progressLabel.text = "Connecting bootloader ..."
+            self.connectButton.enabled = false
+            self.link.connect(self.bootloaderName) { (connected) in
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    if connected {
+                        self.state = .BootloaderConnected
+                    } else {
+                        let errorMessage = "Bootloader connection: \(self.link.getError())"
+                        UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok").show()
+                        self.state = .ImageFetched
+                    }
+                }
+            }
+        } else if self.state == .BootloaderConnected {
+            self.link.disconnect()
+            self.state = .ImageFetched
+        }
+    }
+    
+    @IBAction func onUpdateClicked(sender: UIButton) {
+        if self.state == .BootloaderConnected {
+            self.state = .Updating
+            bootloader.update(self.firmware!) { (done, progress, status, error) in
+                if done && error == nil {
+                    UIAlertView(title: "Success", message: "Crazyflie successfuly updated!", delegate: self, cancelButtonTitle: "Ok").show()
+                    self.state = .BootloaderConnected
+                } else if done && error != nil {
+                    UIAlertView(title: "Error updating", message: error!.localizedDescription, delegate: self, cancelButtonTitle: "Ok").show()
+                    if self.link.getState() == "connected" {
+                        self.state = .BootloaderConnected
+                    } else {
+                        self.state = .ImageFetched
+                    }
+                } else { // Just a state update ...
+                    self.progressLabel.text = status
+                    self.progressBar.progress = progress
+                }
+            }
+        } else if self.state == .Updating {
+            self.bootloader.cancel()
+        }
     }
     
 }

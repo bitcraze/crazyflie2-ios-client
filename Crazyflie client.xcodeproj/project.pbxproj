@@ -27,7 +27,6 @@
 		5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6931B66527900D29911 /* BootloaderViewController.swift */; };
 		5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6951B66C41900D29911 /* FirmwareImage.swift */; };
 		5169E6981B67696500D29911 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6971B67696500D29911 /* SwiftyJSON.swift */; };
-		5169E69D1B67C44D00D29911 /* libZipZap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5169E69B1B67C44D00D29911 /* libZipZap.a */; };
 		5169E69F1B67C54800D29911 /* ZipZap in Resources */ = {isa = PBXBuildFile; fileRef = 5169E69E1B67C54800D29911 /* ZipZap */; };
 		5169E6A11B67C8FC00D29911 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5169E6A01B67C8FC00D29911 /* libz.dylib */; };
 		5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */; };
@@ -41,6 +40,8 @@
 		51E178491A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178411A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png */; };
 		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
 		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
+		51F9501D1B68DACE008A7D8A /* libZipZap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5169E69B1B67C44D00D29911 /* libZipZap.a */; };
+		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		51E178411A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-03-260.png"; path = "images/Default-Portrait@2x 15-46-03-260.png"; sourceTree = "<group>"; };
 		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
 		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
+		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +105,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51F9501D1B68DACE008A7D8A /* libZipZap.a in Frameworks */,
 				5169E6A11B67C8FC00D29911 /* libz.dylib in Frameworks */,
 				3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */,
 				3A003940198AE038001799A4 /* CoreGraphics.framework in Frameworks */,
-				5169E69D1B67C44D00D29911 /* libZipZap.a in Frameworks */,
 				3A003942198AE038001799A4 /* UIKit.framework in Frameworks */,
 				3A00393E198AE038001799A4 /* Foundation.framework in Frameworks */,
 			);
@@ -179,6 +181,7 @@
 				5169E6931B66527900D29911 /* BootloaderViewController.swift */,
 				5169E6951B66C41900D29911 /* FirmwareImage.swift */,
 				5169E6971B67696500D29911 /* SwiftyJSON.swift */,
+				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 			files = (
 				5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
+				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,
 				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
 				3A003954198AE038001799A4 /* ViewController.m in Sources */,
 				5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */,
@@ -490,8 +494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Crazyflie",
-					client,
+					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
@@ -515,8 +518,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Crazyflie",
-					client,
+					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
