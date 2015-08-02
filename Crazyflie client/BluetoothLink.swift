@@ -210,6 +210,10 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if self.crtpCharacteristic != nil && self.crtpUpCharacteristic != nil && crtpDownCharacteristic != nil {
                 state = "connected"
                 connectCallback?(true)
+                // Start the packet polling
+                dispatch_async(self.btQueue) {
+                    self.sendAPacket()
+                }
             }
         }
     }
@@ -294,10 +298,12 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // MARK: Bluetooth queue
     
     // The following variables are modified ONLY from the bluetooth execution queue
-    private var packetQueue: [(NSData, (Bool)->())] = []
+    private var packetQueue: [(NSData, ((Bool)->())?)] = []
     
     private var encodedSecondPacket: NSData! = nil
     private var encoderPid = 0
+    
+    private let nullPacket: NSData = NSData(bytes: [UInt8(0xff)], length: 1)
     
     /**
         Send a packet to Crazyflie
@@ -307,6 +313,23 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 The boolean will be true is the packet has been sent, false otherwise.
     */
     func sendPacket(packet: NSData, callback: ((Bool) -> ())?) {
+        dispatch_async(self.btQueue) {
+            self.packetQueue.append((packet, callback))
+        }
+    }
+    
+    /* Send either a packet from the packetQueue or a NULL packet */
+    private func sendAPacket() {
+        var packet: NSData
+        var callback: ((Bool)->())?
+        
+        if packetQueue.count > 0 {
+            (packet, callback) = self.packetQueue.removeLast()
+        } else {
+            packet = self.nullPacket
+            callback = nil
+        }
+        
         if state != "connected" {
             callback?(false)
             return
@@ -338,6 +361,9 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func peripheral(peripheral: CBPeripheral!, didWriteValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
         if self.encodedSecondPacket == nil {
             txCallback?(true)
+            dispatch_async(self.btQueue) {
+                self.sendAPacket()
+            }
         } else {
             crazyflie!.writeValue(self.encodedSecondPacket, forCharacteristic: crtpUpCharacteristic, type: CBCharacteristicWriteType.WithResponse)
             self.encodedSecondPacket = nil

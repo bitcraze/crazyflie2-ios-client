@@ -70,6 +70,7 @@ class Bootloader {
     
     private func fail(message: String) {
         self.state = .Idle
+        self.wd.stop()
         let error = NSError(domain: "CrazyflieBoorloader", code: -1, userInfo: [NSLocalizedDescriptionKey: message])
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             self.callback?(done: true, progress: 0.0, status: "Canceled", error: error)
@@ -78,6 +79,7 @@ class Bootloader {
     
     private func done() {
         self.state = .Idle
+        self.wd.stop()
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             self.callback?(done: true, progress: 0.0, status: "Done", error: nil)
         }
@@ -213,8 +215,23 @@ class Bootloader {
             self.wd.reset()
             // Start flashing the first image ...
             self.startFlashing(.nrf51)
-        case (.Some, writeFlash, .Flashing):
-            println("Received flash status: ")
+        case (.Some, writeFlash, .Flashing(let target, let pos, let percent)):
+            println("Received flash status: \(packetArray[4])")
+            if packetArray[3] != UInt8(1) {
+                self.fail("Fail to flash. Error code: \(packetArray[4]).")
+            } else {
+                if pos >= self.currentFw.count {
+                    if target == .nrf51 {
+                        state = .Flashing(.stm32, 0, 0.0)
+                        self.startFlashing(.stm32)
+                    } else {
+                        self.done()
+                    }
+                } else {
+                    self.flashState = .Load
+                    self.continueFlashing()
+                }
+            }
         default:
             break
         }
@@ -224,6 +241,7 @@ class Bootloader {
     private func startFlashing(target: Target) {
         
         let data = self.firmware.targetFirmwares["cf2-\(target.name)-fw"]
+        self.flashState = .Load
         
         if data == nil {
             if target == .nrf51 {
@@ -247,7 +265,8 @@ class Bootloader {
             let currentPage = pos / self.infos[target]!.pageSize
             let currentBufferPage = 0
             let posInPage  = pos % self.infos[target]!.pageSize
-            let leftInPage = self.infos[target]!.pageSize - posInPage
+            let currentPageSize = min(self.infos[target]!.pageSize, self.currentFw.count-(currentPage*self.infos[target]!.pageSize))
+            let leftInPage = currentPageSize - posInPage
             let byteToSend = min(leftInPage, 13)
             
             switch self.flashState {
@@ -260,8 +279,9 @@ class Bootloader {
                 packet = packet + Array(self.currentFw[pos..<(pos+byteToSend)])
                 
                 println(packet)
-                
-                self.flashState = .Flash(currentPage)
+                if leftInPage-byteToSend == 0 {
+                    self.flashState = .Flash(currentPage)
+                }
                 
                 let newPos = pos+byteToSend
                 self.state = .Flashing(target, newPos, Double(newPos)/Double(self.currentFw.count))
@@ -275,12 +295,17 @@ class Bootloader {
             case .Flash(let page):
                 let pageToFlash = page + self.infos[target]!.flashStart
                 
+                println("Flashing to page \(page)")
+                
                 var packet: [UInt8] = [0xff, target.rawValue, writeFlash]
                 packet = packet + [0, 0]
                 packet = packet + [UInt8(pageToFlash&0x00ff), UInt8(pageToFlash>>8)]
                 packet = packet + [1, 0]
                 
+                self.wd.reset(period: 2)
                 self.link.sendPacket(NSData(bytes: packet, length: packet.count), callback: nil)
+                
+                self.flashState = .Load
             }
             
         default:
