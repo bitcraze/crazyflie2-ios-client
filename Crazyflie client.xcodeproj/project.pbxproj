@@ -30,6 +30,7 @@
 		5169E69F1B67C54800D29911 /* ZipZap in Resources */ = {isa = PBXBuildFile; fileRef = 5169E69E1B67C54800D29911 /* ZipZap */; };
 		5169E6A11B67C8FC00D29911 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5169E6A01B67C8FC00D29911 /* libz.dylib */; };
 		5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */; };
+		519AB5E51B6B75BB007BDE9B /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519AB5E41B6B75BB007BDE9B /* Watchdog.swift */; };
 		51E178251A27766C00BB2AF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E178241A27766C00BB2AF7 /* Images.xcassets */; };
 		51E1783B1A27796B00BB2AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */; };
 		51E178441A277AE100BB2AF7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783C1A277AE100BB2AF7 /* Default-568h@2x.png */; };
@@ -87,6 +88,7 @@
 		5169E69E1B67C54800D29911 /* ZipZap */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ZipZap; sourceTree = "<group>"; };
 		5169E6A01B67C8FC00D29911 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
+		519AB5E41B6B75BB007BDE9B /* Watchdog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watchdog.swift; sourceTree = "<group>"; };
 		51E178241A27766C00BB2AF7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		51E1783C1A277AE100BB2AF7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "images/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				5169E6951B66C41900D29911 /* FirmwareImage.swift */,
 				5169E6971B67696500D29911 /* SwiftyJSON.swift */,
 				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
+				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
 				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,
+				519AB5E51B6B75BB007BDE9B /* Watchdog.swift in Sources */,
 				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
 				3A003954198AE038001799A4 /* ViewController.m in Sources */,
 				5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */,
