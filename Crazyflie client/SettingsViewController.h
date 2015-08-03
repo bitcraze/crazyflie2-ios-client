@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Crazyflie_client-Swift.h>
 
 @protocol SettingsProtocolDelegate <NSObject>
 
@@ -27,5 +28,7 @@
 @property () NSInteger controlMode;
 @property (strong, nonatomic) NSMutableDictionary *sensitivities;
 @property (weak, nonatomic) NSString *sensitivitySetting;
+
+@property (weak, nonatomic) BluetoothLink *bluetoothLink;
 
 @end

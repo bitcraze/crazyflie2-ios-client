@@ -303,6 +303,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="onBootloaderClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="cvl-bg-PcJ"/>
                                     <segue destination="YBo-1h-R5I" kind="modal" id="Frp-zP-CPI"/>
                                 </connections>
                             </button>
@@ -421,6 +422,9 @@
                                 <state key="normal" title="Close">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onCloseClicked:" destination="YBo-1h-R5I" eventType="touchUpInside" id="IVR-4p-dbP"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z64-Dd-0GD">
                                 <rect key="frame" x="16" y="24" width="15" height="21"/>
@@ -507,6 +511,7 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="closeButton" destination="JfL-Qo-Q4l" id="W01-Lu-HOf"/>
                         <outlet property="connectButton" destination="7dh-kS-fng" id="pvi-z2-qkG"/>
                         <outlet property="descriptionLabel" destination="Mvh-R2-iJZ" id="p40-oD-xgA"/>
                         <outlet property="fetchButton" destination="8QK-tr-OSo" id="a2Y-bX-eqw"/>

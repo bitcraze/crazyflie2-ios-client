@@ -19,6 +19,7 @@ class BootloaderViewController : UIViewController {
     @IBOutlet weak var fetchButton: UIButton!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
     
     enum State {
         case Idle, ImageFetched, BootloaderConnected, Updating
@@ -38,6 +39,7 @@ class BootloaderViewController : UIViewController {
             self.fetchButton.enabled = true
             self.connectButton.enabled = false
             self.updateButton.enabled = false
+            self.closeButton.enabled = true
             self.connectButton.setTitle("Connect bootloader", forState: .Normal)
             self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "IDLE"
@@ -45,6 +47,7 @@ class BootloaderViewController : UIViewController {
             self.fetchButton.enabled = true
             self.connectButton.enabled = true
             self.updateButton.enabled = false
+            self.closeButton.enabled = true
             self.connectButton.setTitle("Connect bootloader", forState: .Normal)
             self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "Ready to connect bootloader"
@@ -52,6 +55,7 @@ class BootloaderViewController : UIViewController {
             self.fetchButton.enabled = true
             self.connectButton.enabled = true
             self.updateButton.enabled = true
+            self.closeButton.enabled = true
             self.connectButton.setTitle("Diconnnect bootloader", forState: .Normal)
             self.updateButton.setTitle("Update", forState: .Normal)
             self.progressLabel.text = "Ready to update"
@@ -59,6 +63,7 @@ class BootloaderViewController : UIViewController {
             self.fetchButton.enabled = false
             self.connectButton.enabled = false
             self.updateButton.enabled = true
+            self.closeButton.enabled = false
             self.connectButton.setTitle("Diconnnect bootloader", forState: .Normal)
             self.updateButton.setTitle("Cancel update", forState: .Normal)
             self.progressLabel.text = "Updating ..."
@@ -155,4 +160,11 @@ class BootloaderViewController : UIViewController {
         }
     }
     
+    @IBAction func onCloseClicked(sender: AnyObject) {
+        if self.link.getState() == "connected" {
+            self.link.disconnect()
+            self.state = .Idle
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

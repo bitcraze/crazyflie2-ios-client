@@ -341,6 +341,7 @@
     if ([segue.identifier  isEqual: @"settings"]) {
         settingsViewController = [segue destinationViewController];
         settingsViewController.delegate = self;
+        settingsViewController.bluetoothLink = self.bluetoothLink;
         
         settingsViewController.controlMode = controlMode;
         settingsViewController.sensitivities = [sensitivities mutableCopy];

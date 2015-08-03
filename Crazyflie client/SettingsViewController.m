@@ -130,5 +130,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)onBootloaderClicked:(id)sender {
+    if (self.bluetoothLink && [[self.bluetoothLink getState] isEqualToString:@"connected"]) {
+        [self.bluetoothLink disconnect];
+    }
+}
 
 @end
