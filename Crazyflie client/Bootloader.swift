@@ -182,7 +182,7 @@ class Bootloader {
     func onLinkRx(packet: NSData) {
         println("Packet received by bootloader \(packet.length) bytes")
         var packetArray = [UInt8](count: packet.length, repeatedValue: 0)
-        packet.getBytes(&packetArray)
+        packet.getBytes(&packetArray, length:packetArray.count)
         println(packetArray)
         
         if packetArray[0] != 255 {
@@ -254,7 +254,7 @@ class Bootloader {
         }
         
         self.currentFw = [UInt8](count: data!.length, repeatedValue: 0)
-        data!.getBytes(&self.currentFw)
+        data!.getBytes(&self.currentFw, length: self.currentFw.count)
         
         self.continueFlashing()
     }

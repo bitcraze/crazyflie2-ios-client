@@ -234,7 +234,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         var data = characteristic.value
         var dataArray = [UInt8](count: data.length, repeatedValue: 0)
-        data.getBytes(&dataArray)
+        data.getBytes(&dataArray, length: dataArray.count)
         var header = ControlByte(Int(dataArray[0]))
         
         if header.start {
@@ -343,7 +343,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             crazyflie!.writeValue(packet, forCharacteristic: crtpCharacteristic, type: CBCharacteristicWriteType.WithResponse)
         } else {
             var packetArray = [UInt8](count: packet.length, repeatedValue: 0)
-            packet.getBytes(&packetArray)
+            packet.getBytes(&packetArray, length: packetArray.count)
             
             var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.length).header)
             let firstPacket = NSData(bytes: [header] + Array(packetArray[0..<19]), length: 20)
