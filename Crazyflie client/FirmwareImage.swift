@@ -12,7 +12,7 @@ import zipzap
 
 class FirmwareImage {
     
-    static let latestVersionUrl = "https://api.github.com/repos/bitcraze/crazyflie-firmware/releases/latest"
+    static let latestVersionUrl = "https://api.github.com/repos/bitcraze/crazyflie-release/releases/latest"
     
     static func fetchLatestWithCallback(callback:(FirmwareImage?)->()) {
         let url = NSURL(string: latestVersionUrl)

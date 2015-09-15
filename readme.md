@@ -5,11 +5,11 @@ Crazyflie 2 client for iPhone.
 
 Functionalities:
 
- - Can connect and control a Crazyflie 2 via Bluetooth Smart
- - Choice of control mode and sensitivity
- - Can update Crazyflie with the latest firmware version (not released yet)
+- Can connect and control a Crazyflie 2 via Bluetooth Smart
+- Choice of control mode and sensitivity
+- Can update Crazyflie with the latest firmware version (not released yet)
 
- This app requires iOS 8 or higher.
+This app requires iOS 8 or higher.
 
 ## How to compile
 
