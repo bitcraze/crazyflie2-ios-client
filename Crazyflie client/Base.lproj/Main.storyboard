@@ -299,9 +299,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-GE-Wiy">
-                                <rect key="frame" x="420" y="288" width="132" height="24"/>
+                                <rect key="frame" x="403" y="288" width="149" height="24"/>
                                 <inset key="contentEdgeInsets" minX="9" minY="3" maxX="9" maxY="3"/>
-                                <state key="normal" title="Update Crazyflie">
+                                <state key="normal" title="Update Crazyflie ...">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

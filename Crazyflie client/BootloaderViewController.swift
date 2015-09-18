@@ -39,14 +39,14 @@ class BootloaderViewController : UIViewController {
         self.updateButton.layer.borderColor = self.closeButton.tintColor?.CGColor
         
         self.state = .Idle;
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.state = .Idle;
         
         self.progressIndicator.startAnimating()
         
         self.fetchFirmware();
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        return
     }
     
     var state:State = .Idle {
@@ -55,13 +55,15 @@ class BootloaderViewController : UIViewController {
         }
     }
     
+    private var errorString = "Error, try again later."
+    
     func updateUI() {
         switch state {
         case .Error:
             self.updateButton.enabled = false
             self.closeButton.enabled = true
             self.updateButton.setTitle("Update", forState: .Normal)
-            self.progressLabel.text = "Error, try again later."
+            self.progressLabel.text = self.errorString
             self.progressIndicator.stopAnimating()
             self.progressIndicator.hidden = true;
         case .Idle:
@@ -95,7 +97,7 @@ class BootloaderViewController : UIViewController {
         
         self.progressLabel.text = "Fetching latest version informations ..."
         
-        FirmwareImage.fetchLatestWithCallback() { (firmware) in
+        FirmwareImage.fetchLatestWithCallback() { (firmware, nozip) in
             self.firmware = firmware
             if let firmware = self.firmware {
                 NSLog("New version fetched!")
@@ -119,7 +121,13 @@ class BootloaderViewController : UIViewController {
                 
             } else {
                 self.versionLabel.text = "N/A"
-                self.descriptionLabel.text =  "Error fetching version from the Internet."
+                self.descriptionLabel.text =  "N/A"
+                
+                if nozip {
+                    self.errorString = "No new firmware available."
+                } else {
+                    self.errorString = "Error fetching version from the Internet."
+                }
                 self.state = .Error
             }
         }
@@ -156,7 +164,9 @@ class BootloaderViewController : UIViewController {
     private func update() {
         bootloader.update(self.firmware!) { (done, progress, status, error) in
             if done && error == nil {
-                UIAlertView(title: "Success", message: "Crazyflie successfuly updated!", delegate: self, cancelButtonTitle: "Ok").show()
+                UIAlertView(title: "Success", message: "Crazyflie successfuly updated!\n" +
+                                                       "Press the ON/OFF switch to start new firmware.",
+                            delegate: self, cancelButtonTitle: "Ok").show()
                 self.link.disconnect()
                 self.state = .ImageFetched
             } else if done && error != nil {

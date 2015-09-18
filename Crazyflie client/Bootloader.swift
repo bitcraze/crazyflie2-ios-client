@@ -15,11 +15,24 @@ func decodeUint16(data:[UInt8], offset:Int) -> Int {
 }
 
 class Bootloader {
+    func formatTimeInterval(var interval: NSTimeInterval) -> String {
+        var result  = ""
+        
+        if interval > 3600 {
+            result += "\(Int(interval/3600)):"
+            interval = interval % 3600
+        }
+        
+        result += NSString(format: "%02d:%02d", Int(interval/60), Int(interval%60)) as String
+        
+        return result
+    }
+    
     enum State {
         case Idle
         case FetchingNrfInfo
         case FetchingStmInfo
-        case Flashing (Target, Int, Double)
+        case Flashing (Target, Int, Double, String, Int, Int)
         
         var description: String {
             get {
@@ -30,9 +43,9 @@ class Bootloader {
                     return "fetching NRF51 Info"
                 case .FetchingStmInfo:
                     return "fetching STM32 Info"
-                case .Flashing(let target, let offset, let progress):
+                case .Flashing(let target, let offset, let progress, let timeleft, let totalfw, let currentfw):
                     let percent = NSString(format: "%.2f", 100*progress)
-                    return "Flashing target \(target.name): \(percent)%"
+                    return "Flashing target \(currentfw)/\(totalfw) \(target.name): \(percent)% Time left: \(timeleft)"
                 }
             }
         }
@@ -45,7 +58,7 @@ class Bootloader {
     var state = State.Idle {
         didSet {
             switch state {
-            case .Flashing(let _, let _, let progress):
+            case .Flashing(let _, let _, let progress, let timeleft, let totalfw, let currentfw):
                 self.callback?(done: false, progress: Float(progress), status: self.state.description, error: nil)
             default:
                 self.callback?(done: false, progress: 0, status: self.state.description, error: nil)
@@ -62,6 +75,25 @@ class Bootloader {
             self.fail("Timeout while \(self.state.description)")
         }
     }()
+    
+    // process state
+    var curr_fw = 0
+    var total_fw = 0
+    var curr_byte = 0
+    var total_byte = 0
+    var start_time = NSDate()
+    
+    private func calculateTimeLeft() -> String {
+        let time = NSDate().timeIntervalSinceDate(self.start_time)
+        
+        if time < 5 {
+            return "Calculating ..."
+        }
+        
+        let totalTime = (time * Double(self.total_byte)) / Double(self.curr_byte)
+        
+        return formatTimeInterval(totalTime - time)
+    }
     
     init(link: BluetoothLink) {
         self.link = link
@@ -172,6 +204,21 @@ class Bootloader {
         self.callback = callback
         self.firmware = firmware
         
+        self.start_time = NSDate()
+        self.total_fw = 0
+        self.total_byte = 0
+        if let fw = firmware.targetFirmwares["cf2-\(Target.nrf51.name)-fw"] {
+            self.total_fw += 1
+            self.total_byte += fw.length
+        }
+        if let fw = firmware.targetFirmwares["cf2-\(Target.stm32.name)-fw"] {
+            self.total_fw += 1
+            self.total_byte += fw.length
+        }
+        
+        self.curr_byte = 0
+        self.curr_fw = 0
+        
         self.state = .FetchingNrfInfo
         let pk: [UInt8] = [0xff, 0xfe, 0x10]
         self.link.sendPacket(NSData(bytes: pk, length: pk.count), callback: nil)
@@ -211,18 +258,22 @@ class Bootloader {
                 self.fail("Malformed protocol answer (stm32 info)")
             }
             
-            self.state = .Flashing(.nrf51, 0, 0.0)
+            self.state = .Flashing(.nrf51, 0, 0.0, calculateTimeLeft(), self.total_fw, self.curr_fw)
             self.wd.reset()
+            
+            // Reset the timer to get an accurate measurement of the flash time
+            self.start_time = NSDate()
+            
             // Start flashing the first image ...
             self.startFlashing(.nrf51)
-        case (.Some, writeFlash, .Flashing(let target, let pos, let percent)):
+        case (.Some, writeFlash, .Flashing(let target, let pos, let percent, let timeleft, let totalfw, let currentfw)):
             println("Received flash status: \(packetArray[4])")
             if packetArray[3] != UInt8(1) {
                 self.fail("Fail to flash. Error code: \(packetArray[4]).")
             } else {
                 if pos >= self.currentFw.count {
                     if target == .nrf51 {
-                        state = .Flashing(.stm32, 0, 0.0)
+                        state = .Flashing(.stm32, 0, 0.0, calculateTimeLeft(), self.total_fw, self.curr_fw)
                         self.startFlashing(.stm32)
                     } else {
                         self.done()
@@ -245,13 +296,15 @@ class Bootloader {
         
         if data == nil {
             if target == .nrf51 {
-                state = .Flashing(.stm32, 0, 0.0)
+                state = .Flashing(.stm32, 0, 0.0, calculateTimeLeft(), self.total_fw, self.curr_fw)
                 self.startFlashing(.stm32)
                 return
             } else {
                 self.done()
             }
         }
+        
+        self.curr_fw += 1
         
         self.currentFw = [UInt8](count: data!.length, repeatedValue: 0)
         data!.getBytes(&self.currentFw, length: self.currentFw.count)
@@ -261,7 +314,7 @@ class Bootloader {
     
     func continueFlashing() {
         switch self.state {
-        case .Flashing(let target, let pos, let percent):
+        case .Flashing(let target, let pos, let percent, let timeleft, let _, let _):
             let currentPage = pos / self.infos[target]!.pageSize
             let currentBufferPage = 0
             let posInPage  = pos % self.infos[target]!.pageSize
@@ -284,7 +337,10 @@ class Bootloader {
                 }
                 
                 let newPos = pos+byteToSend
-                self.state = .Flashing(target, newPos, Double(newPos)/Double(self.currentFw.count))
+                self.state = .Flashing(target, newPos, Double(newPos)/Double(self.currentFw.count),
+                                       calculateTimeLeft(), self.total_fw, self.curr_fw)
+                
+                self.curr_byte += byteToSend
                 
                 self.link.sendPacket(NSData(bytes: packet, length: packet.count)) { (success) in
                     println("Page loaded, continuing")

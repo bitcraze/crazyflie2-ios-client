@@ -14,19 +14,19 @@ class FirmwareImage {
     
     static let latestVersionUrl = "https://api.github.com/repos/bitcraze/crazyflie-release/releases/latest"
     
-    static func fetchLatestWithCallback(callback:(FirmwareImage?)->()) {
+    static func fetchLatestWithCallback(callback:(FirmwareImage?, Bool)->()) {
         let url = NSURL(string: latestVersionUrl)
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
             if error != nil {
                 NSLog("Error requesting latest version from github. Error: \(error.description)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil) }
+                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, false) }
                 return
             }
             let httpResponse = response as! NSHTTPURLResponse
             if httpResponse.statusCode != 200 {
                 NSLog("Error requesting latest version from github. Response code: \(httpResponse.statusCode)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil) }
+                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, false) }
                 return
             }
             
@@ -55,13 +55,13 @@ class FirmwareImage {
             
             if version == nil || description == nil || fileName == nil || fileUrl == nil {
                 NSLog("Error decoding the github latest version json: (\(version), \(description), \(fileName), \(fileUrl)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil) }
+                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, fileName == nil) }
                 return
             }
             
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 let firmware = FirmwareImage(version: version!, description: description!, fileName: fileName!, fileUrl: fileUrl!)
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(firmware) }
+                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(firmware, false) }
             }
         }
         
