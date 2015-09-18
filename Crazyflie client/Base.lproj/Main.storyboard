@@ -423,13 +423,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8m-ou-I8b">
-                                <rect key="frame" x="48" y="40" width="477" height="102"/>
-                                <string key="text">To update the Crazyflie switch it off and then hold the ON/OFF button for about 3 seconds until the blue LED flashes. You are then ready to tap Update! The update will take about 10 minutes. </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xx-4O-JkM">
                                 <rect key="frame" x="248" y="240" width="73" height="30"/>
                                 <constraints>
@@ -452,6 +445,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8m-ou-I8b">
+                                <rect key="frame" x="16" y="40" width="536" height="102"/>
+                                <string key="text">To update the Crazyflie switch it off and then hold the ON/OFF button for about 3 seconds until the blue LED flashes. You are then ready to tap Update! The update will take about 10 minutes. </string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -461,8 +461,10 @@
                             <constraint firstAttribute="centerX" secondItem="4xx-4O-JkM" secondAttribute="centerX" id="Ag8-qK-b6K"/>
                             <constraint firstItem="JfL-Qo-Q4l" firstAttribute="top" secondItem="4xx-4O-JkM" secondAttribute="bottom" constant="12" id="IV2-hu-yk1"/>
                             <constraint firstItem="ZO4-3O-tE3" firstAttribute="top" secondItem="KxD-uH-HEi" secondAttribute="bottom" constant="41" id="Nlc-V9-TKU"/>
-                            <constraint firstAttribute="centerX" secondItem="C8m-ou-I8b" secondAttribute="centerX" constant="-2" id="Rwy-bI-kFP"/>
+                            <constraint firstItem="C8m-ou-I8b" firstAttribute="leading" secondItem="DpC-u7-YZm" secondAttribute="leadingMargin" id="PIa-YI-Wte"/>
+                            <constraint firstAttribute="centerX" secondItem="C8m-ou-I8b" secondAttribute="centerX" id="Rwy-bI-kFP"/>
                             <constraint firstItem="0pr-h0-jDE" firstAttribute="centerY" secondItem="ilo-Zo-XDz" secondAttribute="centerY" id="TAH-im-wM0"/>
+                            <constraint firstItem="C8m-ou-I8b" firstAttribute="trailing" secondItem="DpC-u7-YZm" secondAttribute="trailingMargin" id="UTc-1E-lRK"/>
                             <constraint firstItem="5Vp-mj-w1x" firstAttribute="leading" secondItem="SH0-Sx-f6w" secondAttribute="trailing" constant="8" symbolic="YES" id="XJo-45-JiA"/>
                             <constraint firstItem="Mvh-R2-iJZ" firstAttribute="baseline" secondItem="KxD-uH-HEi" secondAttribute="baseline" id="b22-uU-uWE"/>
                             <constraint firstItem="Mvh-R2-iJZ" firstAttribute="leading" secondItem="KxD-uH-HEi" secondAttribute="trailing" constant="8" symbolic="YES" id="bvg-wX-XYe"/>
