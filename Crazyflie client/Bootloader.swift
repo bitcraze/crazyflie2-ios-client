@@ -137,7 +137,7 @@ class Bootloader {
         /**
             Decode the info packet into an info structure
             
-            :param: packet Raw data packet including CRTP 0xFF and target number
+            - parameter packet: Raw data packet including CRTP 0xFF and target number
         */
         init!(packet: [UInt8]) {
             let headerLength = 2
@@ -152,10 +152,10 @@ class Bootloader {
                 return nil
             }
             
-            self.pageSize = decodeUint16(packet, headerLength + 1)
-            self.nBuffPage = decodeUint16(packet, headerLength + 3)
-            self.nFlashPage = decodeUint16(packet, headerLength + 5)
-            self.flashStart = decodeUint16(packet, headerLength + 7)
+            self.pageSize = decodeUint16(packet, offset: headerLength + 1)
+            self.nBuffPage = decodeUint16(packet, offset: headerLength + 3)
+            self.nFlashPage = decodeUint16(packet, offset: headerLength + 5)
+            self.flashStart = decodeUint16(packet, offset: headerLength + 7)
             self.cpuId = Array(packet[(headerLength+9)..<(headerLength+21)])
             
             if packet.count > 23 {
@@ -227,10 +227,10 @@ class Bootloader {
     }
     
     func onLinkRx(packet: NSData) {
-        println("Packet received by bootloader \(packet.length) bytes")
+        print("Packet received by bootloader \(packet.length) bytes")
         var packetArray = [UInt8](count: packet.length, repeatedValue: 0)
         packet.getBytes(&packetArray, length:packetArray.count)
-        println(packetArray)
+        print(packetArray)
         
         if packetArray[0] != 255 {
             return
@@ -238,7 +238,7 @@ class Bootloader {
         
         switch (Target(rawValue: packetArray[1]), packetArray[2], state) {
         case (.Some(.nrf51), getInfo, .FetchingNrfInfo):
-            println("Got NRF51 info")
+            print("Got NRF51 info")
             
             self.infos[.nrf51] = Info(packet: packetArray)
             if self.infos[.nrf51] == nil {
@@ -251,7 +251,7 @@ class Bootloader {
             let pk: [UInt8] = [0xff, Target.stm32.rawValue, getInfo]
             self.link.sendPacket(NSData(bytes: pk, length: pk.count), callback: nil)
         case (.Some(.stm32), getInfo, .FetchingStmInfo):
-            println("Got STM32 info")
+            print("Got STM32 info")
             
             self.infos[.stm32] = Info(packet: packetArray)
             if self.infos[.stm32] == nil {
@@ -267,7 +267,7 @@ class Bootloader {
             // Start flashing the first image ...
             self.startFlashing(.nrf51)
         case (.Some, writeFlash, .Flashing(let target, let pos, let percent, let timeleft, let totalfw, let currentfw)):
-            println("Received flash status: \(packetArray[4])")
+            print("Received flash status: \(packetArray[4])")
             if packetArray[3] != UInt8(1) {
                 self.fail("Fail to flash. Error code: \(packetArray[4]).")
             } else {
@@ -324,14 +324,14 @@ class Bootloader {
             
             switch self.flashState {
             case .Load:
-                println("Loading page from \(leftInPage)")
+                print("Loading page from \(leftInPage)")
                 
                 var packet: [UInt8] = [0xff, target.rawValue, loadBuffer]
                 packet = packet + [UInt8(currentBufferPage&0x00ff), UInt8(currentBufferPage>>8)]
                 packet = packet + [UInt8(posInPage&0x00ff), UInt8(posInPage>>8)]
                 packet = packet + Array(self.currentFw[pos..<(pos+byteToSend)])
                 
-                println(packet)
+                print(packet)
                 if leftInPage-byteToSend == 0 {
                     self.flashState = .Flash(currentPage)
                 }
@@ -343,7 +343,7 @@ class Bootloader {
                 self.curr_byte += byteToSend
                 
                 self.link.sendPacket(NSData(bytes: packet, length: packet.count)) { (success) in
-                    println("Page loaded, continuing")
+                    print("Page loaded, continuing")
                     
                     self.wd.reset()
                     self.continueFlashing()
@@ -351,14 +351,14 @@ class Bootloader {
             case .Flash(let page):
                 let pageToFlash = page + self.infos[target]!.flashStart
                 
-                println("Flashing to page \(page)")
+                print("Flashing to page \(page)")
                 
                 var packet: [UInt8] = [0xff, target.rawValue, writeFlash]
                 packet = packet + [0, 0]
                 packet = packet + [UInt8(pageToFlash&0x00ff), UInt8(pageToFlash>>8)]
                 packet = packet + [1, 0]
                 
-                self.wd.reset(period: 2)
+                self.wd.reset(2)
                 self.link.sendPacket(NSData(bytes: packet, length: packet.count), callback: nil)
                 
                 self.flashState = .Load

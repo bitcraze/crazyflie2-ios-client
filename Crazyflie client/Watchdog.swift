@@ -59,7 +59,7 @@ class Watchdog : NSObject
         (for example just before running an operation which is known to take longer
         time)
     
-        :param: period Nil to use the default period (configured when creating the 
+        - parameter period: Nil to use the default period (configured when creating the 
                 watchdog and contained in the period property). Otherwise should be
                 the period in seconds
     */

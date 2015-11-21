@@ -291,6 +291,7 @@
 		3A003932198AE038001799A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
