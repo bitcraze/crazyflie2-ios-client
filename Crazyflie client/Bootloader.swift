@@ -43,7 +43,7 @@ class Bootloader {
                     return "fetching NRF51 Info"
                 case .FetchingStmInfo:
                     return "fetching STM32 Info"
-                case .Flashing(let target, let offset, let progress, let timeleft, let totalfw, let currentfw):
+                case .Flashing(let target, _, let progress, let timeleft, let totalfw, let currentfw):
                     let percent = NSString(format: "%.2f", 100*progress)
                     return "Flashing target \(currentfw)/\(totalfw) \(target.name): \(percent)% Time left: \(timeleft)"
                 }
@@ -58,7 +58,7 @@ class Bootloader {
     var state = State.Idle {
         didSet {
             switch state {
-            case .Flashing(let _, let _, let progress, let timeleft, let totalfw, let currentfw):
+            case .Flashing(_,  _, let progress, _, _, _):
                 self.callback?(done: false, progress: Float(progress), status: self.state.description, error: nil)
             default:
                 self.callback?(done: false, progress: 0, status: self.state.description, error: nil)
@@ -266,7 +266,7 @@ class Bootloader {
             
             // Start flashing the first image ...
             self.startFlashing(.nrf51)
-        case (.Some, writeFlash, .Flashing(let target, let pos, let percent, let timeleft, let totalfw, let currentfw)):
+        case (.Some, writeFlash, .Flashing(let target, let pos, _, _, _, _)):
             print("Received flash status: \(packetArray[4])")
             if packetArray[3] != UInt8(1) {
                 self.fail("Fail to flash. Error code: \(packetArray[4]).")
@@ -314,7 +314,7 @@ class Bootloader {
     
     func continueFlashing() {
         switch self.state {
-        case .Flashing(let target, let pos, let percent, let timeleft, let _, let _):
+        case .Flashing(let target, let pos, _, _,  _, _):
             let currentPage = pos / self.infos[target]!.pageSize
             let currentBufferPage = 0
             let posInPage  = pos % self.infos[target]!.pageSize
