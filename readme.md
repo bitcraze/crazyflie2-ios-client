@@ -3,7 +3,7 @@ Crazyflie 2 iOS client
 
 Crazyflie 2 client for iPhone.
 
-Functionalities:
+Features
 
 - Can connect and control a Crazyflie 2 via Bluetooth Smart
 - Choice of control mode and sensitivity
@@ -11,27 +11,15 @@ Functionalities:
 
 This app requires iOS 8 or higher.
 
-## How to compile
+## Getting Started
 
-This project is using [cocoapods](https://cocoapods.org/) to import dependencies.
-It means that you need to have cocoapods installed on your system and install
-the pods to open the project:
+This project uses [cocoapods](https://cocoapods.org/) to manage dependencies. If you do not have it installed follow the [cocoapods getting started guide](https://guides.cocoapods.org/using/getting-started.html).
 
-```
-~ $ cd path/to/crazyflie2-ios-client
-crazyflie2-ios-client $ pod install
-Updating local specs repositories
-Analyzing dependencies
-Downloading dependencies
-Installing zipzap (8.0.4)
-Generating Pods project
-Integrating client project
+Install cocoapod dependencies for the project with command.
 
-[!] Please close any current Xcode sessions and use `Crazyflie client.xcworkspace` for this project from now on.
-crazyflie2-ios-client $ open Crazyflie\ client.xcworkspace
-```
+    pod install
 
-You can then compile and run the app from XCode.
+Open the workspace file `Crazyflie client.xcworkspace` in Xcode 7.1 or above to compile and run the app.
 
 See the [Bitcraze wiki](https://wiki.bitcraze.io) for more information about
 Crazyflie and the communication protocols.

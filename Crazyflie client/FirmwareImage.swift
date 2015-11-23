@@ -18,11 +18,17 @@ class FirmwareImage {
         let url = NSURL(string: latestVersionUrl)
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            if error != nil {
+            guard let data = data else {
+                NSLog("Error no data for firmware.")
+                return
+            }
+            
+            if let error = error  {
                 NSLog("Error requesting latest version from github. Error: \(error.description)")
                 NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, false) }
                 return
             }
+            
             let httpResponse = response as! NSHTTPURLResponse
             if httpResponse.statusCode != 200 {
                 NSLog("Error requesting latest version from github. Response code: \(httpResponse.statusCode)")
@@ -88,14 +94,18 @@ class FirmwareImage {
         let url = NSURL(string: fileUrl)
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            if error != nil {
+            guard let data = data else {
+                NSLog("Error empty firmware data)")
+                return
+            }
+            
+            if let error = error {
                 NSOperationQueue.mainQueue().addOperationWithBlock() { callback(false) }
-                NSLog("Error downloading the firmware: \(error.description)");
+                NSLog("Error downloading the firmware: \(error.description)")
                 return
             }
             
             let path = NSTemporaryDirectory() + self.fileName
-            
             
             if data.writeToFile(path, atomically: false) && self.extractTargets(path) {
                 self.file = path
@@ -110,19 +120,22 @@ class FirmwareImage {
     }
     
     private func extractTargets(path: String) -> Bool {
-        var error: NSError?
-        let archive = ZZArchive(URL: NSURL.fileURLWithPath(path), error: &error)
+
+        guard let archive = try? ZZArchive(URL: NSURL.fileURLWithPath(path)) else {
+            NSLog("Error extracting archive from url \(path)")
+            return false
+        }
+
         var json: JSON = nil
                 
         // Find json and decode it
-        for entrie  in archive.entries {
-            if entrie.fileName != nil && entrie.fileName! == "manifest.json" {
-                var data = entrie.newDataWithError(&error)
-                if data != nil {
-                    json = JSON(data: data)
-                }
-                break
+        let entries = archive.entries.map { $0 as? ZZArchiveEntry }.flatMap { $0 }
+
+        for entry in entries where entry.fileName == "manifest.json" {
+            if let data = try? entry.newData() {
+                json = JSON(data: data)
             }
+            break
         }
         
         if json == nil {
@@ -130,8 +143,8 @@ class FirmwareImage {
             return false
         }
         
-        var version =  json["version"].int
-        var files = json["files"].dictionary
+        let version =  json["version"].int
+        let files = json["files"].dictionary
         
         if version == nil || version! != 1 || files == nil {
             NSLog("Error extracting the image: Wrong version or malformed manifest")
@@ -139,28 +152,23 @@ class FirmwareImage {
         }
         
         for (name, content) in files! {
-            var platform: String! = content["platform"].string
-            var target: String! = content["target"].string
-            var type: String! = content["type"].string
+            let platform: String! = content["platform"].string
+            let target: String! = content["target"].string
+            let type: String! = content["type"].string
             
             if platform == nil || target == nil || type == nil {
                 NSLog("Error extracting the image: Malformed manifest")
                 return false
             }
             
-            for entrie in archive.entries {
-                if entrie.fileName == name {
-                    var data = entrie.newDataWithError(&error)
-                    
-                    if data == nil {
-                        NSLog("Error extracting the image: Malformed firmware for \(name)")
-                        return false
-                    }
-                    self.targetFirmwares["\(platform)-\(target)-\(type)"] = data
+            for entry in entries where entry.fileName == name {
+                guard let data = try? entry.newData() else {
+                    NSLog("Error extracting the image: Malformed firmware for \(name)")
+                    return false
                 }
+                self.targetFirmwares["\(platform)-\(target)-\(type)"] = data
             }
         }
-        
         
         return true
     }
