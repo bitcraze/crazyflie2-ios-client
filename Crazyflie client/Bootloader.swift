@@ -15,15 +15,18 @@ func decodeUint16(data:[UInt8], offset:Int) -> Int {
 }
 
 class Bootloader {
-    func formatTimeInterval(var interval: NSTimeInterval) -> String {
+    func formatTimeInterval(interval: NSTimeInterval) -> String {
         var result  = ""
+        var scaledInterval: NSTimeInterval
         
         if interval > 3600 {
             result += "\(Int(interval/3600)):"
-            interval = interval % 3600
+            scaledInterval = interval % 3600
+        } else {
+            scaledInterval = interval
         }
         
-        result += NSString(format: "%02d:%02d", Int(interval/60), Int(interval%60)) as String
+        result += NSString(format: "%02d:%02d", Int(scaledInterval/60), Int(scaledInterval%60)) as String
         
         return result
     }
