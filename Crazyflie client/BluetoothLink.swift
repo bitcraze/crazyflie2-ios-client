@@ -127,7 +127,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 central.scanForPeripheralsWithServices(nil, options: nil);
                 state = "scanning"
                 
-                scanTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "scanningTimeout:", userInfo: nil, repeats: false)
+                scanTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(BluetoothLink.scanningTimeout(_:)), userInfo: nil, repeats: false)
             }
             
             connectCallback = callback

@@ -291,8 +291,9 @@
 		3A003932198AE038001799A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftMigration = 0710;
-				LastUpgradeCheck = 0510;
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
 					3A003939198AE038001799A4 = {
@@ -484,6 +485,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -553,6 +555,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -578,6 +581,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -601,6 +605,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -619,6 +624,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
