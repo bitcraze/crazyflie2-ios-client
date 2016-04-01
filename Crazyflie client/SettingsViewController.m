@@ -75,10 +75,11 @@
     }
 }
 - (IBAction)modeChanged:(id)sender {
-    static const NSString *mode2str[4][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
+    static const NSString *mode2str[5][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
         {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
         {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
-        {@"Roll", @"Thrust", @"Yaw",  @"Pitch"}};
+        {@"Roll", @"Thrust", @"Yaw",  @"Pitch"},
+        {@"Roll",  @" ",  @" ", @"Thrust"}};
     
     self.controlMode = (int)self.controlModeSelector.selectedSegmentIndex+1;
     
