@@ -32,6 +32,7 @@
 
 #define LINEAR_PR YES
 #define LINEAR_THRUST YES
+//#define TEST YES
 
 @interface ViewController () {
     BCJoystick *leftJoystick;
@@ -62,6 +63,7 @@
 @property (weak, nonatomic) IBOutlet UIView *rightView;
 
 @property (strong) BluetoothLink *bluetoothLink;
+@property (strong) MotionLink *motionLink;
 
 @property (strong) NSTimer *commanderTimer;
 @end
@@ -122,6 +124,21 @@
     }];
 }
 
+- (void) startMotionUpdate
+{
+    if (self.motionLink == nil) {
+        self.motionLink = [[MotionLink alloc] init];
+    }
+    [self.motionLink startDeviceMotionUpdates:nil];
+    [self.motionLink startAccelerometerUpdates:nil];
+}
+
+- (void) stopMotionUpdate
+{
+    [self.motionLink stopDeviceMotionUpdates];
+    [self.motionLink stopAccelerometerUpdates];
+}
+
 - (void) loadDefault
 {
     NSURL *defaultPrefsFile = [[NSBundle mainBundle] URLForResource:@"DefaultPreferences" withExtension:@"plist"];
@@ -145,11 +162,6 @@
 
 - (void) updateSettings: (NSUserDefaults*) defaults
 {
-    static const NSString *mode2str[4][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
-                                             {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
-                                             {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
-                                             {@"Roll", @"Thrust", @"Yaw",  @"Pitch"}};
-    
     controlMode = [defaults doubleForKey:@"controlMode"];
     NSLog(@"controlMode %d", controlMode);
     sensitivities = (NSMutableDictionary*)[defaults dictionaryForKey:@"sensitivities"];
@@ -160,10 +172,25 @@
     yawRate = [(NSNumber*)[sensitivity valueForKey:@"yawRate"] floatValue];
     maxThrust = [(NSNumber*)[sensitivity valueForKey:@"maxThrust"] floatValue];
     
-    leftJoystick.hLabel.text = [mode2str[controlMode-1][0] copy];
-    leftJoystick.vLabel.text = [mode2str[controlMode-1][1] copy];
-    rightJoystick.hLabel.text = [mode2str[controlMode-1][2] copy];
-    rightJoystick.vLabel.text = [mode2str[controlMode-1][3] copy];
+    if ([MotionLink new].canAccessMotion) {
+        if (controlMode == 5) {
+            [self startMotionUpdate];
+        }
+        else {
+            [self stopMotionUpdate];
+        }
+        
+        leftJoystick.hLabel.text = [mode2str[controlMode-1][0] copy];
+        leftJoystick.vLabel.text = [mode2str[controlMode-1][1] copy];
+        rightJoystick.hLabel.text = [mode2str[controlMode-1][2] copy];
+        rightJoystick.vLabel.text = [mode2str[controlMode-1][3] copy];
+    }
+    else {
+        leftJoystick.hLabel.text = [mode2strNoMotion[controlMode-1][0] copy];
+        leftJoystick.vLabel.text = [mode2strNoMotion[controlMode-1][1] copy];
+        rightJoystick.hLabel.text = [mode2strNoMotion[controlMode-1][2] copy];
+        rightJoystick.vLabel.text = [mode2strNoMotion[controlMode-1][3] copy];
+    }
     
     leftJoystick.deadbandX = 0;
     rightJoystick.deadbandX = 0;
@@ -192,6 +219,7 @@
     if (leftJoystick.activated && rightJoystick.activated) {
         self.unlockLabel.hidden = true;
         locked = NO;
+        [self.motionLink calibrate];
     } else if (!leftJoystick.activated && !rightJoystick.activated) {
         self.unlockLabel.hidden = false;
         locked = YES;
@@ -205,6 +233,10 @@
 }
 
 - (IBAction)connectClick:(id)sender {
+#ifdef TEST
+    sent = YES;
+    self.commanderTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(sendCommander:) userInfo:nil repeats:YES];
+#else
     if ([[self.bluetoothLink getState]  isEqualToString:@"idle"]) {
         [self.bluetoothLink connect:nil callback: ^ (BOOL connected) {
             if (connected) {
@@ -249,6 +281,7 @@
         [self.commanderTimer invalidate];
         self.commanderTimer = nil;
     }
+#endif
 }
 
 - (IBAction)settingsClick:(id)sender {
@@ -265,14 +298,22 @@
         uint16_t thrust;
     } commanderPacket;
     // Mode sorted by pitch, roll, yaw, thrust versus lx, ly, rx, ry
-    static const int mode2axis[4][4] = {{1, 2, 0, 3},
+    static const int mode2axis[5][4] = {{1, 2, 0, 3},
                                         {3, 2, 0, 1},
                                         {1, 0, 2, 3},
-                                        {3, 0, 2, 1}};
+                                        {3, 0, 2, 1},
+                                        {1, 0, 2, 3}};
     float joysticks[4];
     float jsPitch, jsRoll, jsYaw, jsThrust;
     
-    if (locked == NO) {
+    if (locked == NO
+        && self.motionLink.accelerationUpdateActive) {
+        CMAcceleration a =  self.motionLink.calibratedAcceleration;
+        joysticks[0] = a.y;
+        joysticks[1] = a.x;
+        joysticks[2] = leftJoystick.x;
+        joysticks[3] = rightJoystick.y;
+    } else if (locked == NO) {
         joysticks[0] = leftJoystick.x;
         joysticks[1] = leftJoystick.y;
         joysticks[2] = rightJoystick.x;
@@ -296,14 +337,24 @@
         commanderPacket.header = 0x30;
         
         if (LINEAR_PR) {
-            commanderPacket.pitch = jsPitch*-1*pitchRate;
-            commanderPacket.roll = jsRoll*pitchRate;
+            if (jsPitch >= 0) {
+                commanderPacket.pitch = jsPitch*-1*pitchRate;
+            }
+            if (jsRoll >= 0) {
+                commanderPacket.roll = jsRoll*pitchRate;
+            }
         } else {
-            commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((jsPitch>0)?1:-1);
-            commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((jsRoll>0)?1:-1);
+            if (jsPitch >= 0) {
+                commanderPacket.pitch = pow(jsPitch, 2) * -1 * pitchRate * ((jsPitch>0)?1:-1);
+            }
+            if (jsRoll >= 0) {
+                commanderPacket.roll = pow(jsRoll, 2) * pitchRate * ((jsRoll>0)?1:-1);
+            }
         }
         
-        commanderPacket.yaw = jsYaw * yawRate;
+        if (yawRate >= 0) {
+            commanderPacket.yaw = jsYaw * yawRate;
+        }
         
         int thrust;
         if (LINEAR_THRUST) {
@@ -314,14 +365,16 @@
         if (thrust>65535) thrust = 65535;
         if (thrust < 0) thrust = 0;
         commanderPacket.thrust = thrust;
+        NSLog(@"pith: %f - roll: %f - yaw: %f - thrust: %f", commanderPacket.pitch, commanderPacket.roll, commanderPacket.yaw, commanderPacket.thrust);
         
         data = [NSData dataWithBytes:&commanderPacket length:sizeof(commanderPacket)];
         
+#ifndef TEST
         sent = NO;
-        
         [_bluetoothLink sendPacket:data callback: ^(BOOL success) {
             sent = YES;
         }];
+#endif
     } else {
         NSLog(@"Missed commander update!");
     }
