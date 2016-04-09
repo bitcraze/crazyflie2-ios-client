@@ -305,10 +305,12 @@
                                         {1, 0, 2, 3}};
     float joysticks[4];
     float jsPitch, jsRoll, jsYaw, jsThrust;
+    bool enableNegativeValues = NO;
     
     if (locked == NO
         && self.motionLink.accelerationUpdateActive) {
         CMAcceleration a =  self.motionLink.calibratedAcceleration;
+        enableNegativeValues = YES;
         joysticks[0] = a.y;
         joysticks[1] = a.x;
         joysticks[2] = leftJoystick.x;
@@ -337,10 +339,12 @@
         commanderPacket.header = 0x30;
         
         if (LINEAR_PR) {
-            if (jsPitch >= 0) {
+            if (jsPitch >= 0
+                || enableNegativeValues) {
                 commanderPacket.pitch = jsPitch*-1*pitchRate;
             }
-            if (jsRoll >= 0) {
+            if (jsRoll >= 0
+                || enableNegativeValues) {
                 commanderPacket.roll = jsRoll*pitchRate;
             }
         } else {
