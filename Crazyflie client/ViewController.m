@@ -311,8 +311,8 @@
         && self.motionLink.accelerationUpdateActive) {
         CMAcceleration a =  self.motionLink.calibratedAcceleration;
         enableNegativeValues = YES;
-        joysticks[0] = a.y;
-        joysticks[1] = a.x;
+        joysticks[0] = a.x;
+        joysticks[1] = a.y;
         joysticks[2] = leftJoystick.x;
         joysticks[3] = rightJoystick.y;
     } else if (locked == NO) {
