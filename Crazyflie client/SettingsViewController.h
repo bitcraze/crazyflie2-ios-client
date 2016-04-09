@@ -9,6 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <Crazyflie_client-Swift.h>
 
+static const NSString *mode2str[5][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
+    {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
+    {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
+    {@"Roll", @"Thrust", @"Yaw",  @"Pitch"},
+    {@"Yaw", @"", @" ",  @"Thrust"}};
+
+static const NSString *mode2strNoMotion[5][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
+    {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
+    {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
+    {@"Roll", @"Thrust", @"Yaw",  @"Pitch"}};
+
 @protocol SettingsProtocolDelegate <NSObject>
 
 @required
