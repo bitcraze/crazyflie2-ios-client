@@ -9,24 +9,76 @@
 import Foundation
 import CoreMotion
 
-class MotionLink: NSObject {
+public class MotionLink : NSObject {
     
-    private var motionManager: CMMotionManager?
-    private var crtpMotion:CMDeviceMotion! = nil
+    private let motionManager: CMMotionManager = CMMotionManager()
+    private let queue: NSOperationQueue = NSOperationQueue()
+    private var _motionUpdateActive:Bool = false;
+    private var _accelerationUpdateActive:Bool = false;
+    private var _accelerationDataCalibrate:CMAcceleration = CMAcceleration();
     
-    private var btQueue: dispatch_queue_t
-    
-    var canMotion = false
-    var state = ""
+    public var canAccessAccelerometer: Bool { get{return motionManager.accelerometerAvailable } }
+    public var canAccessMotion: Bool { get{return motionManager.deviceMotionAvailable } }
+    public var accelerometerData: CMAccelerometerData? { get{return motionManager.accelerometerData } }
+    public var deviceMotion: CMDeviceMotion? { get{return motionManager.deviceMotion} }
+    public var state:String?
+    public var motionUpdateActive: Bool { get{return _motionUpdateActive} }
+    public var accelerationUpdateActive: Bool { get{return _accelerationUpdateActive} }
     
     override init() {
-        self.btQueue = dispatch_queue_create("se.bitcraze.crazyfliecontrol.motion", DISPATCH_QUEUE_SERIAL)
-        
         super.init()
         
-        motionManager = CMMotionManager()
-        canMotion = motionManager!.accelerometerActive && motionManager!.accelerometerAvailable;
-        
+        motionManager.deviceMotion
+        motionManager.accelerometerUpdateInterval = 0.1
         state = "idle"
+    }
+    
+    func calibratedAcceleration() -> CMAcceleration {
+        let a:CMAcceleration =  (motionManager.deviceMotion?.gravity)!
+        var pitch:Double = ((_accelerationDataCalibrate.y - a.y) * 4);
+        var roll:Double = ((a.x - _accelerationDataCalibrate.x) * 4);
+        pitch = pitch < -25 ? -25 : pitch;
+        roll = roll < -25 ? -25 : roll;
+        roll = roll > 25 ? 25 : roll;
+        return CMAcceleration(x: pitch, y: roll, z: (_accelerationDataCalibrate.z - a.z))
+    }
+    
+    func calibrate() -> Void {
+        state = "calibrating"
+        _accelerationDataCalibrate = (motionManager.deviceMotion?.gravity)!;
+    }
+    
+    func startDeviceMotionUpdates(handler:CMDeviceMotionHandler?) -> Void {
+        state = "starting device motion updates"
+        self.motionManager.startDeviceMotionUpdatesToQueue(self.queue , withHandler:{
+            (data, error) in
+            if (handler != nil) {
+                handler!(data, error)
+            }
+        })
+        _motionUpdateActive = true
+    }
+    
+    func startAccelerometerUpdates(handler:CMAccelerometerHandler?) -> Void {
+        state = "starting accelerometer updates"
+        motionManager.startAccelerometerUpdatesToQueue(self.queue, withHandler:{
+            (data, error) in
+            if (handler != nil) {
+                handler!(data, error)
+            }
+        })
+        _accelerationUpdateActive = true
+    }
+    
+    func stopAccelerometerUpdates() -> Void {
+        state = "stopping accelerometer updates"
+        motionManager.stopAccelerometerUpdates();
+        _accelerationUpdateActive = false;
+    }
+    
+    func stopDeviceMotionUpdates() -> Void {
+        state = "stopping device motion updates"
+        motionManager.stopDeviceMotionUpdates();
+        _motionUpdateActive = false;
     }
 }
