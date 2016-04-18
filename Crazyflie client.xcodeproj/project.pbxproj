@@ -564,7 +564,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.emart-software.Crazyflie-client";
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
@@ -592,7 +592,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.emart-software.Crazyflie-client";
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
