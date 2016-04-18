@@ -303,7 +303,7 @@
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
 					3A003939198AE038001799A4 = {
-						DevelopmentTeam = ZZ3RP82Z38;
+						DevelopmentTeam = 2D27KY2HT6;
 					};
 					3A00395A198AE038001799A4 = {
 						TestTargetID = 3A003939198AE038001799A4;
