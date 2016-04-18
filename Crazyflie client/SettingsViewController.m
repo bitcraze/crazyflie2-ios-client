@@ -32,6 +32,10 @@
     else if ([self.sensitivitySetting isEqualToString:@"custom"])
         self.sensitivitySelector.selectedSegmentIndex = 2;
     
+    if ([MotionLink new].canAccessMotion) {
+        [self.controlModeSelector insertSegmentWithTitle:@"Mode 5" atIndex:4 animated:YES];
+    }
+    
     self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
     
     [self sensitivityChanged:self.sensitivitySelector];
@@ -75,17 +79,20 @@
     }
 }
 - (IBAction)modeChanged:(id)sender {
-    static const NSString *mode2str[4][4] = {{@"Yaw",  @"Pitch",  @"Roll", @"Thrust"},
-        {@"Yaw",  @"Thrust", @"Roll", @"Pitch"},
-        {@"Roll", @"Pitch",  @"Yaw",  @"Thrust"},
-        {@"Roll", @"Thrust", @"Yaw",  @"Pitch"}};
-    
     self.controlMode = (int)self.controlModeSelector.selectedSegmentIndex+1;
     
-    _leftXLabel.text = [mode2str[_controlMode-1][0] copy];
-    _leftYLabel.text = [mode2str[_controlMode-1][1] copy];
-    _rightXLabel.text = [mode2str[_controlMode-1][2] copy];
-    _rightYLabel.text = [mode2str[_controlMode-1][3] copy];
+    if ([MotionLink new].canAccessMotion) {
+        _leftXLabel.text = [mode2str[_controlMode-1][0] copy];
+        _leftYLabel.text = [mode2str[_controlMode-1][1] copy];
+        _rightXLabel.text = [mode2str[_controlMode-1][2] copy];
+        _rightYLabel.text = [mode2str[_controlMode-1][3] copy];
+    }
+    else {
+        _leftXLabel.text = [mode2strNoMotion[_controlMode-1][0] copy];
+        _leftYLabel.text = [mode2strNoMotion[_controlMode-1][1] copy];
+        _rightXLabel.text = [mode2strNoMotion[_controlMode-1][2] copy];
+        _rightYLabel.text = [mode2strNoMotion[_controlMode-1][3] copy];
+    }
 }
 
 - (IBAction)endEditing:(id)sender {

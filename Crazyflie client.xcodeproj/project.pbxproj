@@ -41,6 +41,8 @@
 		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
 		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
 		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
+		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
+		9C974A891CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		AD9115059450A8C973015607 /* Pods_Crazyflie_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9424F30F14112D48C2ED37C /* Pods_Crazyflie_client.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,7 +81,6 @@
 		4B8BC6864752492D0793AC84 /* Pods-Crazyflie client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.release.xcconfig"; sourceTree = "<group>"; };
 		5113D6B41A04C8B1008A33E0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		516212D61AE7D6B30044BC2B /* Crazyflie client-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Bridging-Header.h"; sourceTree = "<group>"; };
 		516212D71AE7D6B40044BC2B /* BluetoothLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLink.swift; sourceTree = "<group>"; };
 		5169E6931B66527900D29911 /* BootloaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootloaderViewController.swift; sourceTree = "<group>"; };
 		5169E6951B66C41900D29911 /* FirmwareImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareImage.swift; sourceTree = "<group>"; };
@@ -98,6 +99,9 @@
 		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
 		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
+		9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Bridging-Header.h"; sourceTree = "<group>"; };
+		9C974A861CAE58840002418A /* Crazyflie clientTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie clientTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		9C974A871CAE58840002418A /* MotionLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionLink.swift; sourceTree = "<group>"; };
 		AA10A9299179672A5BF20EFB /* Pods-Crazyflie client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.debug.xcconfig"; sourceTree = "<group>"; };
 		D9424F30F14112D48C2ED37C /* Pods_Crazyflie_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crazyflie_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -188,12 +192,14 @@
 				51E178231A27762900BB2AF7 /* images */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
 				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
-				516212D61AE7D6B30044BC2B /* Crazyflie client-Bridging-Header.h */,
+				9C974A871CAE58840002418A /* MotionLink.swift */,
 				5169E6931B66527900D29911 /* BootloaderViewController.swift */,
 				5169E6951B66C41900D29911 /* FirmwareImage.swift */,
 				5169E6971B67696500D29911 /* SwiftyJSON.swift */,
 				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
 				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
+				9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */,
+				9C974A861CAE58840002418A /* Crazyflie clientTests-Bridging-Header.h */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -418,6 +424,7 @@
 				5169E6981B67696500D29911 /* SwiftyJSON.swift in Sources */,
 				5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */,
 				3A00394A198AE038001799A4 /* main.m in Sources */,
+				9C974A881CAE58840002418A /* MotionLink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */,
+				9C974A891CAE58840002418A /* MotionLink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +553,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
@@ -557,6 +566,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -571,6 +581,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
@@ -583,6 +594,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -593,6 +605,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -605,8 +618,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie clientTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -616,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -624,8 +641,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie clientTests-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
