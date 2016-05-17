@@ -33,7 +33,7 @@
         self.sensitivitySelector.selectedSegmentIndex = 2;
     
     if ([MotionLink new].canAccessMotion) {
-        [self.controlModeSelector insertSegmentWithTitle:@"Mode 5" atIndex:4 animated:YES];
+        [self.controlModeSelector insertSegmentWithTitle:@"Tilt Mode" atIndex:4 animated:YES];
     }
     
     self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
