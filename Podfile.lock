@@ -1,10 +1,22 @@
 PODS:
-  - zipzap (8.0.4)
+  - zipzap (8.0.3):
+    - zipzap/c++ (= 8.0.3)
+    - zipzap/objc (= 8.0.3)
+    - zipzap/objcpp (= 8.0.3)
+  - zipzap/c++ (8.0.3)
+  - zipzap/objc (8.0.3)
+  - zipzap/objcpp (8.0.3)
 
 DEPENDENCIES:
-  - zipzap (~> 8.0)
+  - zipzap (from `https://raw.githubusercontent.com/tahasamad/zipzap/master/zipzap.podspec`)
+
+EXTERNAL SOURCES:
+  zipzap:
+    :podspec: https://raw.githubusercontent.com/tahasamad/zipzap/master/zipzap.podspec
 
 SPEC CHECKSUMS:
-  zipzap: 45be5e182aead61fbb8300ddb4766f8e82a557c4
+  zipzap: 9acb41bada1b910056640b18455ccbdd12682944
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 0ca1041880412a14e6600f084630ab37210bfd94
+
+COCOAPODS: 1.0.0
