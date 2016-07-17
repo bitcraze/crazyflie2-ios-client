@@ -109,7 +109,7 @@ public class CrazyFlie: NSObject {
             }
             
             self?.sent = true;
-            self?.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self!, selector: #selector(self?.sendCommander), userInfo:nil, repeats:true)
+            self?.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self!, selector: #selector(self?.sendTimer), userInfo:nil, repeats:true)
             })
     }
     
@@ -119,7 +119,17 @@ public class CrazyFlie: NSObject {
         self.timer = nil
     }
     
-    @objc private func sendCommander(timter:NSTimer){
+    func sendCommander(roll:Float, pitch:Float, thrust:Float, yaw:Float) {
+        
+        var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
+        let data = NSData(bytes: &commandPacket, length:sizeof(CommanderPacket))
+        
+        bluetoothLink.sendPacket(data, callback: {[weak self] (success) in
+            self?.sent = true
+            })
+    }
+    
+    @objc private func sendTimer(timter:NSTimer){
         guard sent else {
             print("Missing command update")
             return
@@ -128,12 +138,6 @@ public class CrazyFlie: NSObject {
         print("Send commander!")
         
         fetchData?(crazyFlie: self)
-       
-        var commandPacket = CommanderPacket(header: 0x30, pitch: self.pitch, roll: self.roll, yaw: self.yaw, thrust: self.thrust)
-        
-        var data = NSData(bytes: &commandPacket, length:sizeof(CommanderPacket))
-        bluetoothLink.sendPacket(data, callback: {[weak self] (success) in
-            self?.sent = true
-            })
+        sendCommander(self.roll, pitch: self.pitch, thrust: self.thrust, yaw: self.yaw)
     }
 }
