@@ -40,7 +40,7 @@ public class CrazyFlie: NSObject {
     private var sent:Bool = false
     private var callback:((state:State) -> Void)?
     private var fetchData:((crazyFlie:CrazyFlie) -> Void)?
-    private var bluetoothLink:BluetoothLink!
+    private(set) var bluetoothLink:BluetoothLink!
     private var timer:NSTimer?
     
     override init() {
