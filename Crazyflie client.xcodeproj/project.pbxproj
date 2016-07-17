@@ -41,6 +41,7 @@
 		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
 		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
 		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
+		58CFD14C1D397F310031D4E9 /* CrazyFlie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */; };
 		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		9C974A891CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		AD9115059450A8C973015607 /* Pods_Crazyflie_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9424F30F14112D48C2ED37C /* Pods_Crazyflie_client.framework */; };
@@ -99,6 +100,7 @@
 		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
 		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
+		58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlie.swift; sourceTree = "<group>"; };
 		9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Bridging-Header.h"; sourceTree = "<group>"; };
 		9C974A861CAE58840002418A /* Crazyflie clientTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie clientTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		9C974A871CAE58840002418A /* MotionLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionLink.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				3A003944198AE038001799A4 /* Supporting Files */,
 				51E178231A27762900BB2AF7 /* images */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
+				58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */,
 				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
 				9C974A871CAE58840002418A /* MotionLink.swift */,
 				5169E6931B66527900D29911 /* BootloaderViewController.swift */,
@@ -257,12 +260,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A00396C198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie client" */;
 			buildPhases = (
-				6C5034317D30C8D1DCF85902 /* Check Pods Manifest.lock */,
+				6C5034317D30C8D1DCF85902 /* 📦 Check Pods Manifest.lock */,
 				3A003936198AE038001799A4 /* Sources */,
 				3A003937198AE038001799A4 /* Frameworks */,
 				3A003938198AE038001799A4 /* Resources */,
-				E774B294DB8C77DC1DC47569 /* Embed Pods Frameworks */,
-				93406E8F9FAECCA26A14F0CC /* Copy Pods Resources */,
+				E774B294DB8C77DC1DC47569 /* 📦 Embed Pods Frameworks */,
+				93406E8F9FAECCA26A14F0CC /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -361,14 +364,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6C5034317D30C8D1DCF85902 /* Check Pods Manifest.lock */ = {
+		6C5034317D30C8D1DCF85902 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,14 +379,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		93406E8F9FAECCA26A14F0CC /* Copy Pods Resources */ = {
+		93406E8F9FAECCA26A14F0CC /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,14 +394,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E774B294DB8C77DC1DC47569 /* Embed Pods Frameworks */ = {
+		E774B294DB8C77DC1DC47569 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +423,7 @@
 				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
 				3A003954198AE038001799A4 /* ViewController.m in Sources */,
 				5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */,
+				58CFD14C1D397F310031D4E9 /* CrazyFlie.swift in Sources */,
 				3A00394E198AE038001799A4 /* AppDelegate.m in Sources */,
 				5169E6981B67696500D29911 /* SwiftyJSON.swift in Sources */,
 				5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */,
