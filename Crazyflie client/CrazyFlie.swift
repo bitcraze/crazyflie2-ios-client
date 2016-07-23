@@ -35,7 +35,22 @@ public class CrazyFlie: NSObject {
     var roll:Float = 0
     var thrust:Float = 0
     var yaw:Float = 0
+    var automaticCommandSending:Bool {
+        get {
+            return internalAutomaticCommandSending
+        }
+        set {
+            internalAutomaticCommandSending = newValue
+            if newValue {
+                invalidateTimer()
+            }
+            else if sent {
+                startTimer()
+            }
+        }
+    }
     
+    private var internalAutomaticCommandSending:Bool = true
     private var internalState:State = .Idle
     private var sent:Bool = false
     private var callback:((state:State) -> Void)?
@@ -45,7 +60,7 @@ public class CrazyFlie: NSObject {
     
     override init() {
         super.init()
-
+        
         self.bluetoothLink = BluetoothLink()
         bluetoothLink.onStateUpdated{[weak self] (state) in
             if state.isEqualToString("idle") {
@@ -109,14 +124,16 @@ public class CrazyFlie: NSObject {
             }
             
             self?.sent = true;
-            self?.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self!, selector: #selector(self?.sendTimer), userInfo:nil, repeats:true)
+            
+            if ((self?.automaticCommandSending.boolValue) != nil) {
+                self?.startTimer()
+            }
             })
     }
     
     func disconnect() {
         bluetoothLink.disconnect()
-        self.timer?.invalidate()
-        self.timer = nil
+        invalidateTimer()
     }
     
     func sendCommander(roll:Float, pitch:Float, thrust:Float, yaw:Float) {
@@ -127,6 +144,19 @@ public class CrazyFlie: NSObject {
         bluetoothLink.sendPacket(data, callback: {[weak self] (success) in
             self?.sent = true
             })
+    }
+    
+    private func startTimer() {
+        if timer != nil {
+            invalidateTimer()
+        }
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(self.sendTimer), userInfo:nil, repeats:true)
+    }
+    
+    private func invalidateTimer() {
+        self.timer?.invalidate()
+        self.timer = nil
     }
     
     @objc private func sendTimer(timter:NSTimer){
