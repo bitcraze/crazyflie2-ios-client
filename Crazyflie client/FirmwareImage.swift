@@ -9,30 +9,31 @@
 import Foundation
 import UIKit
 import zipzap
+import SwiftyJSON
 
 class FirmwareImage {
     
     static let latestVersionUrl = "https://api.github.com/repos/bitcraze/crazyflie-release/releases/latest"
     
-    static func fetchLatestWithCallback(callback:(FirmwareImage?, Bool)->()) {
-        let url = NSURL(string: latestVersionUrl)
+    static func fetchLatestWithCallback(_ callback:@escaping (FirmwareImage?, Bool)->()) {
+        let url = URL(string: latestVersionUrl)
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+        let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
             guard let data = data else {
                 NSLog("Error no data for firmware.")
                 return
             }
             
             if let error = error  {
-                NSLog("Error requesting latest version from github. Error: \(error.description)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, false) }
+                NSLog("Error requesting latest version from github. Error: \(error.localizedDescription)")
+                OperationQueue.main.addOperation() { callback(nil, false) }
                 return
             }
             
-            let httpResponse = response as! NSHTTPURLResponse
+            let httpResponse = response as! HTTPURLResponse
             if httpResponse.statusCode != 200 {
                 NSLog("Error requesting latest version from github. Response code: \(httpResponse.statusCode)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, false) }
+                OperationQueue.main.addOperation() { callback(nil, false) }
                 return
             }
             
@@ -61,15 +62,15 @@ class FirmwareImage {
             
             if version == nil || description == nil || fileName == nil || fileUrl == nil {
                 NSLog("Error decoding the github latest version json: (\(version), \(description), \(fileName), \(fileUrl)")
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(nil, fileName == nil) }
+                OperationQueue.main.addOperation() { callback(nil, fileName == nil) }
                 return
             }
             
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
+            OperationQueue.main.addOperation() {
                 let firmware = FirmwareImage(version: version!, description: description!, fileName: fileName!, fileUrl: fileUrl!)
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(firmware, false) }
+                OperationQueue.main.addOperation() { callback(firmware, false) }
             }
-        }
+        }) 
         
         task.resume()
     }
@@ -81,7 +82,7 @@ class FirmwareImage {
     
     var file: String? = nil
     
-    var targetFirmwares = [String: NSData]()
+    var targetFirmwares = [String: Data]()
     
     init(version:String, description:String, fileName:String, fileUrl:String) {
         self.version = version
@@ -90,43 +91,43 @@ class FirmwareImage {
         self.fileUrl = fileUrl
     }
     
-    func download(callback: (Bool)->()) {
-        let url = NSURL(string: fileUrl)
+    func download(_ callback: @escaping (Bool)->()) {
+        let url = URL(string: fileUrl)
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+        let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
             guard let data = data else {
                 NSLog("Error empty firmware data)")
                 return
             }
             
             if let error = error {
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(false) }
-                NSLog("Error downloading the firmware: \(error.description)")
+                OperationQueue.main.addOperation() { callback(false) }
+                NSLog("Error downloading the firmware: \(error.localizedDescription)")
                 return
             }
             
             let path = NSTemporaryDirectory() + self.fileName
             
-            if data.writeToFile(path, atomically: false) && self.extractTargets(path) {
+            if ((try? data.write(to: URL(fileURLWithPath: path), options: [])) != nil) && self.extractTargets(path) {
                 self.file = path
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(true) }
+                OperationQueue.main.addOperation() { callback(true) }
             } else {
                 self.file = nil
-                NSOperationQueue.mainQueue().addOperationWithBlock() { callback(false) }
+                OperationQueue.main.addOperation() { callback(false) }
             }
-        }
+        }) 
         
         task.resume()
     }
     
-    private func extractTargets(path: String) -> Bool {
+    fileprivate func extractTargets(_ path: String) -> Bool {
 
-        guard let archive = try? ZZArchive(URL: NSURL.fileURLWithPath(path)) else {
+        guard let archive = try? ZZArchive(url: URL(fileURLWithPath: path)) else {
             NSLog("Error extracting archive from url \(path)")
             return false
         }
 
-        var json: JSON = nil
+        var json: JSON = JSON.null
                 
         // Find json and decode it
         let entries = archive.entries.map { $0 as? ZZArchiveEntry }.flatMap { $0 }
@@ -138,7 +139,7 @@ class FirmwareImage {
             break
         }
         
-        if json == nil {
+        if json == JSON.null {
             NSLog("Error extracting the image: no manifest.json")
             return false
         }

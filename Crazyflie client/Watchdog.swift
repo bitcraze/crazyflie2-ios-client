@@ -18,12 +18,12 @@ import UIKit
 */
 class Watchdog : NSObject
 {
-    private var started = false
-    private var timer: NSTimer! = nil
+    fileprivate var started = false
+    fileprivate var timer: Timer! = nil
     var onTimeout: (()->())?
     var period: Double
     
-    init(period: Double, onTimeout: ()->()) {
+    init(period: Double, onTimeout: @escaping ()->()) {
         self.period = period
         self.onTimeout = onTimeout
     }
@@ -34,11 +34,11 @@ class Watchdog : NSObject
             return
         }
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(self.period, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: self.period, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
         self.started = true
     }
     
-    func timeout(_:NSTimer) {
+    func timeout(_:Timer) {
         self.onTimeout?()
         self.stop()
     }
@@ -63,13 +63,13 @@ class Watchdog : NSObject
                 watchdog and contained in the period property). Otherwise should be
                 the period in seconds
     */
-    func reset(period: Double? = nil) {
+    func reset(_ period: Double? = nil) {
         guard self.started == true else { return }
         
         let candidatePeriod = period ?? self.period
         
         self.timer.invalidate()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(candidatePeriod, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: candidatePeriod, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
     }
     
 }

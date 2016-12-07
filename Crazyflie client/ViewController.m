@@ -369,7 +369,7 @@
         if (thrust>65535) thrust = 65535;
         if (thrust < 0) thrust = 0;
         commanderPacket.thrust = thrust;
-        NSLog(@"pith: %f - roll: %f - yaw: %f - thrust: %f", commanderPacket.pitch, commanderPacket.roll, commanderPacket.yaw, commanderPacket.thrust);
+        NSLog(@"pith: %f - roll: %f - yaw: %f - thrust: %hu", commanderPacket.pitch, commanderPacket.roll, commanderPacket.yaw, commanderPacket.thrust);
         
         data = [NSData dataWithBytes:&commanderPacket length:sizeof(commanderPacket)];
         

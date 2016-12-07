@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'Crazyflie client' do
   pod 'zipzap', '~> 8.0'
+  pod 'SwiftyJSON'
 end

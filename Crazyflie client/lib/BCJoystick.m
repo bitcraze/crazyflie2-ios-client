@@ -28,7 +28,7 @@
 
 #define JSIZE 80.0
 
-@interface BCJoystick () {
+@interface BCJoystick  () {
     CGPoint center;
 }
 

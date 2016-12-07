@@ -26,7 +26,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BCJoystick : UIControl
+@interface BCJoystick : UIControl <CAAnimationDelegate>
 @property (nonatomic,assign) float x;
 @property (nonatomic,assign) float y;
 
