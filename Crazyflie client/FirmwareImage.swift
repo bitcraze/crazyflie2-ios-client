@@ -167,7 +167,7 @@ class FirmwareImage {
                     NSLog("Error extracting the image: Malformed firmware for \(name)")
                     return false
                 }
-                self.targetFirmwares["\(platform)-\(target)-\(type)"] = data
+                self.targetFirmwares["\(platform!)-\(target!)-\(type!)"] = data
             }
         }
         

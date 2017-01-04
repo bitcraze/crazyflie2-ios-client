@@ -110,7 +110,7 @@ class BootloaderViewController : UIViewController {
                         self.state = .imageFetched
                         var desc = ""
                         for (name, data) in firmware.targetFirmwares {
-                            desc += "\(name): \(data.count) Bytes "
+                            desc += "\(name): \(data.count/1024)KiB. "
                         }
                         self.descriptionLabel.text = desc
                     } else {
