@@ -9,21 +9,21 @@
 import Foundation
 import CoreMotion
 
-public class MotionLink : NSObject {
+open class MotionLink : NSObject {
     
-    private let motionManager: CMMotionManager = CMMotionManager()
-    private let queue: NSOperationQueue = NSOperationQueue()
-    private var _motionUpdateActive:Bool = false;
-    private var _accelerationUpdateActive:Bool = false;
-    private var _accelerationDataCalibrate:CMAcceleration = CMAcceleration();
+    fileprivate let motionManager: CMMotionManager = CMMotionManager()
+    fileprivate let queue: OperationQueue = OperationQueue()
+    fileprivate var _motionUpdateActive:Bool = false;
+    fileprivate var _accelerationUpdateActive:Bool = false;
+    fileprivate var _accelerationDataCalibrate:CMAcceleration = CMAcceleration();
     
-    public var canAccessAccelerometer: Bool { get{return motionManager.accelerometerAvailable } }
-    public var canAccessMotion: Bool { get{return motionManager.deviceMotionAvailable } }
-    public var accelerometerData: CMAccelerometerData? { get{return motionManager.accelerometerData } }
-    public var deviceMotion: CMDeviceMotion? { get{return motionManager.deviceMotion} }
-    public var state:String?
-    public var motionUpdateActive: Bool { get{return _motionUpdateActive} }
-    public var accelerationUpdateActive: Bool { get{return _accelerationUpdateActive} }
+    open var canAccessAccelerometer: Bool { get{return motionManager.isAccelerometerAvailable } }
+    open var canAccessMotion: Bool { get{return motionManager.isDeviceMotionAvailable } }
+    open var accelerometerData: CMAccelerometerData? { get{return motionManager.accelerometerData } }
+    open var deviceMotion: CMDeviceMotion? { get{return motionManager.deviceMotion} }
+    open var state:String?
+    open var motionUpdateActive: Bool { get{return _motionUpdateActive} }
+    open var accelerationUpdateActive: Bool { get{return _accelerationUpdateActive} }
     
     override init() {
         super.init()
@@ -48,9 +48,9 @@ public class MotionLink : NSObject {
         _accelerationDataCalibrate = (motionManager.deviceMotion?.gravity)!;
     }
     
-    func startDeviceMotionUpdates(handler:CMDeviceMotionHandler?) -> Void {
+    func startDeviceMotionUpdates(_ handler:CMDeviceMotionHandler?) -> Void {
         state = "starting device motion updates"
-        self.motionManager.startDeviceMotionUpdatesToQueue(self.queue , withHandler:{
+        self.motionManager.startDeviceMotionUpdates(to: self.queue , withHandler:{
             (data, error) in
             if (handler != nil) {
                 handler!(data, error)
@@ -59,9 +59,9 @@ public class MotionLink : NSObject {
         _motionUpdateActive = true
     }
     
-    func startAccelerometerUpdates(handler:CMAccelerometerHandler?) -> Void {
+    func startAccelerometerUpdates(_ handler:CMAccelerometerHandler?) -> Void {
         state = "starting accelerometer updates"
-        motionManager.startAccelerometerUpdatesToQueue(self.queue, withHandler:{
+        motionManager.startAccelerometerUpdates(to: self.queue, withHandler:{
             (data, error) in
             if (handler != nil) {
                 handler!(data, error)

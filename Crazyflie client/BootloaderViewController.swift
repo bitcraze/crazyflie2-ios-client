@@ -23,7 +23,7 @@ class BootloaderViewController : UIViewController {
     @IBOutlet var bootloaderUI: [UILabel]!
     
     enum State {
-        case Idle, ImageFetched , Updating, Error
+        case idle, imageFetched , updating, error
     }
 
     // MARK: - UI handling
@@ -32,58 +32,58 @@ class BootloaderViewController : UIViewController {
         //_closeButton.layer.borderColor = [_closeButton tintColor].CGColor;
         self.closeButton.layer.borderWidth = 1
         self.closeButton.layer.cornerRadius = 4
-        self.closeButton.layer.borderColor = self.closeButton.tintColor?.CGColor
+        self.closeButton.layer.borderColor = self.closeButton.tintColor?.cgColor
         
         self.updateButton.layer.borderWidth = 1
         self.updateButton.layer.cornerRadius = 4
-        self.updateButton.layer.borderColor = self.closeButton.tintColor?.CGColor
+        self.updateButton.layer.borderColor = self.closeButton.tintColor?.cgColor
         
-        self.state = .Idle;
+        self.state = .idle;
     }
     
-    override func viewDidAppear(animated: Bool) {
-        self.state = .Idle;
+    override func viewDidAppear(_ animated: Bool) {
+        self.state = .idle;
         
         self.progressIndicator.startAnimating()
         
         self.fetchFirmware();
     }
     
-    var state:State = .Idle {
+    var state:State = .idle {
         didSet {
-            NSOperationQueue.mainQueue().addOperationWithBlock() { self.updateUI() };
+            OperationQueue.main.addOperation() { self.updateUI() };
         }
     }
     
-    private var errorString = "Error, try again later."
+    fileprivate var errorString = "Error, try again later."
     
     func updateUI() {
         switch state {
-        case .Error:
-            self.updateButton.enabled = false
-            self.closeButton.enabled = true
-            self.updateButton.setTitle("Update", forState: .Normal)
+        case .error:
+            self.updateButton.isEnabled = false
+            self.closeButton.isEnabled = true
+            self.updateButton.setTitle("Update", for: UIControlState())
             self.progressLabel.text = self.errorString
             self.progressIndicator.stopAnimating()
-            self.progressIndicator.hidden = true;
-        case .Idle:
-            self.updateButton.enabled = false
-            self.closeButton.enabled = true
-            self.updateButton.setTitle("Update", forState: .Normal)
+            self.progressIndicator.isHidden = true;
+        case .idle:
+            self.updateButton.isEnabled = false
+            self.closeButton.isEnabled = true
+            self.updateButton.setTitle("Update", for: UIControlState())
             self.progressLabel.text = "Downloading latest firmware from the Internet"
-        case .ImageFetched:
-            self.updateButton.enabled = true
-            self.closeButton.enabled = true
+        case .imageFetched:
+            self.updateButton.isEnabled = true
+            self.closeButton.isEnabled = true
             self.progressIndicator.stopAnimating()
-            self.updateButton.setTitle("Update", forState: .Normal)
-            self.progressIndicator.hidden = true;
+            self.updateButton.setTitle("Update", for: UIControlState())
+            self.progressIndicator.isHidden = true;
             self.progressLabel.text = "Ready to Update"
-        case .Updating:
-            self.updateButton.enabled = true
-            self.closeButton.enabled = false
+        case .updating:
+            self.updateButton.isEnabled = true
+            self.closeButton.isEnabled = false
             self.progressIndicator.startAnimating()
-            self.progressIndicator.hidden = false;
-            self.updateButton.setTitle("Cancel update", forState: .Normal)
+            self.progressIndicator.isHidden = false;
+            self.updateButton.setTitle("Cancel update", for: UIControlState())
             self.progressLabel.text = "Updating ..."
         }
     }
@@ -107,15 +107,15 @@ class BootloaderViewController : UIViewController {
                 self.progressLabel.text = "Downloading firmware image ..."
                 firmware.download() { (success) in
                     if success {
-                        self.state = .ImageFetched
+                        self.state = .imageFetched
                         var desc = ""
                         for (name, data) in firmware.targetFirmwares {
-                            desc += "\(name): \(data.length) Bytes "
+                            desc += "\(name): \(data.count) Bytes "
                         }
                         self.descriptionLabel.text = desc
                     } else {
                         self.descriptionLabel.text =  "Error downloading firmware from the Internet."
-                        self.state = .Error
+                        self.state = .error
                     }
                 }
                 
@@ -128,7 +128,7 @@ class BootloaderViewController : UIViewController {
                 } else {
                     self.errorString = "Error fetching version from the Internet."
                 }
-                self.state = .Error
+                self.state = .error
             }
         }
     }
@@ -139,43 +139,43 @@ class BootloaderViewController : UIViewController {
     var link: BluetoothLink = BluetoothLink()
     lazy var bootloader: Bootloader = { Bootloader(link: self.link) }()
     
-    @IBAction func onUpdateClicked(sender: AnyObject) {
-        if self.state == .ImageFetched && self.link.getState() == "idle" {
+    @IBAction func onUpdateClicked(_ sender: AnyObject) {
+        if self.state == .imageFetched && self.link.getState() == "idle" {
             self.progressLabel.text = "Connecting bootloader ..."
             self.link.connect(self.bootloaderName) { (connected) in
-                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                OperationQueue.main.addOperation() {
                     if connected {
-                        self.state = .Updating
+                        self.state = .updating
                         self.update()
                     } else {
                         let errorMessage = "Bootloader connection: \(self.link.getError())"
                         UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok").show()
-                        self.state = .ImageFetched
+                        self.state = .imageFetched
                     }
                 }
             }
-        } else if self.state == .Updating {
+        } else if self.state == .updating {
             self.bootloader.cancel()
             self.link.disconnect()
-            self.state = .ImageFetched
+            self.state = .imageFetched
         }
     }
     
-    private func update() {
+    fileprivate func update() {
         bootloader.update(self.firmware!) { (done, progress, status, error) in
             if done && error == nil {
                 UIAlertView(title: "Success", message: "Crazyflie successfuly updated!\n" +
                                                        "Press the ON/OFF switch to start new firmware.",
                             delegate: self, cancelButtonTitle: "Ok").show()
                 self.link.disconnect()
-                self.state = .ImageFetched
+                self.state = .imageFetched
             } else if done && error != nil {
                 UIAlertView(title: "Error updating", message: error!.localizedDescription, delegate: self, cancelButtonTitle: "Ok").show()
                 if self.link.getState() == "connected" {
                     self.link.disconnect()
-                    self.state = .ImageFetched
+                    self.state = .imageFetched
                 } else {
-                    self.state = .ImageFetched
+                    self.state = .imageFetched
                 }
             } else { // Just a state update ...
                 self.progressLabel.text = status
@@ -184,11 +184,11 @@ class BootloaderViewController : UIViewController {
         }
     }
     
-    @IBAction func onCloseClicked(sender: AnyObject) {
+    @IBAction func onCloseClicked(_ sender: AnyObject) {
         if self.link.getState() == "connected" {
             self.link.disconnect()
-            self.state = .Idle
+            self.state = .idle
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -50,52 +50,52 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var canBluetooth = false
     
-    var stateCallback: (NSString -> ())?
+    var stateCallback: ((NSString) -> ())?
     var txCallback: ((Bool) -> ())?
-    var rxCallback: ((NSData) -> ())?
+    var rxCallback: ((Data) -> ())?
     
-    private var centralManager: CBCentralManager?
-    private var peripheralBLE: CBPeripheral?
-    private var connectingPeripheral: CBPeripheral?
-    private var crazyflie: CBPeripheral?
-    private var crtpCharacteristic: CBCharacteristic! = nil
-    private var crtpUpCharacteristic:CBCharacteristic! = nil
-    private var crtpDownCharacteristic:CBCharacteristic! = nil
+    fileprivate var centralManager: CBCentralManager?
+    fileprivate var peripheralBLE: CBPeripheral?
+    fileprivate var connectingPeripheral: CBPeripheral?
+    fileprivate var crazyflie: CBPeripheral?
+    fileprivate var crtpCharacteristic: CBCharacteristic! = nil
+    fileprivate var crtpUpCharacteristic:CBCharacteristic! = nil
+    fileprivate var crtpDownCharacteristic:CBCharacteristic! = nil
     
-    private var btQueue: dispatch_queue_t
-    private var pollTimer: NSTimer?
+    fileprivate var btQueue: DispatchQueue
+    fileprivate var pollTimer: Timer?
     
     
-    private var state = "idle" {
+    fileprivate var state = "idle" {
         didSet {
-            stateCallback?(state)
+            stateCallback?(state as NSString)
         }
     }
-    private var error = ""
+    fileprivate var error = ""
     
-    private var scanTimer: NSTimer?
+    fileprivate var scanTimer: Timer?
     
-    private var connectCallback: (Bool -> ())?
+    fileprivate var connectCallback: ((Bool) -> ())?
     
-    private var address = "Crazyflie"
+    fileprivate var address = "Crazyflie"
     
     override init() {
-        self.btQueue = dispatch_queue_create("se.bitcraze.crazyfliecontrol.bluetooth", DISPATCH_QUEUE_SERIAL)
+        self.btQueue = DispatchQueue(label: "se.bitcraze.crazyfliecontrol.bluetooth", attributes: [])
         
         super.init()
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        canBluetooth = centralManager!.state == CBCentralManagerState.PoweredOn
+        canBluetooth = centralManager!.state.rawValue == CBCentralManagerState.poweredOn.rawValue
         
         state = "idle"
     }
     
-    func centralManagerDidUpdateState(central: CBCentralManager) {
-        canBluetooth = central.state == CBCentralManagerState.PoweredOn;
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        canBluetooth = central.state.rawValue == CBCentralManagerState.poweredOn.rawValue
         print("Bluetooth is now " + (canBluetooth ? "on" : "off"))
     }
     
-    func connect(address: String?, callback: Bool -> ()) {
+    func connect(_ address: String?, callback: @escaping (Bool) -> ()) {
         if !canBluetooth || state != "idle" {
             error = canBluetooth ? "Already connected":"Bluetooth disabled"
             callback(false);
@@ -115,26 +115,26 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         
         if let central = centralManager {
-            let connectedPeripheral = central.retrieveConnectedPeripheralsWithServices([CBUUID(string: crazyflieServiceUuid)]) ;
+            let connectedPeripheral = central.retrieveConnectedPeripherals(withServices: [CBUUID(string: crazyflieServiceUuid)]) ;
             
             if connectedPeripheral.count > 0  && connectedPeripheral.first!.name != nil && connectedPeripheral.first!.name == self.address {
                 NSLog("Already connected, reusing peripheral");
                 connectingPeripheral = connectedPeripheral.first;
-                central.connectPeripheral(connectingPeripheral!, options: nil);
+                central.connect(connectingPeripheral!, options: nil);
                 state = "connecting";
             } else {
                 NSLog("Start scanning")
-                central.scanForPeripheralsWithServices(nil, options: nil);
+                central.scanForPeripherals(withServices: nil, options: nil);
                 state = "scanning"
                 
-                scanTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(BluetoothLink.scanningTimeout(_:)), userInfo: nil, repeats: false)
+                scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(BluetoothLink.scanningTimeout(_:)), userInfo: nil, repeats: false)
             }
             
             connectCallback = callback
         }
     }
     
-    func scanningTimeout(timer: NSTimer) {
+    func scanningTimeout(_ timer: Timer) {
         NSLog("Scan timeout, stop scan");
         centralManager!.stopScan()
         state = "idle"
@@ -145,7 +145,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         connectCallback?(false)
     }
     
-    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let name = peripheral.name  {
             if name == self.address {
                 scanTimer?.invalidate()
@@ -154,18 +154,18 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 connectingPeripheral = peripheral
                 state = "connecting"
                 
-                central.connectPeripheral(peripheral, options: nil)
+                central.connect(peripheral, options: nil)
             }
         }
     }
     
-    func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         self.error = "Failed to connect"
         state = "idle"
         connectCallback?(false)
     }
     
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         crazyflie = peripheral
         
         NSLog("Crazyflie connected, refreshing services ...")
@@ -177,7 +177,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         state = "services";
     }
     
-    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         disconnect()
         
         if let error = error {
@@ -187,67 +187,67 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         connectCallback?(false)
     }
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {return }
         
         for service in services {
-            if service.UUID.UUIDString == crazyflieServiceUuid {
+            if service.uuid.uuidString == crazyflieServiceUuid {
                 peripheral.discoverCharacteristics([CBUUID(string: crtpCharacteristicUuid),
                                                     CBUUID(string: crtpUpCharacteristicUuid),
-                                                    CBUUID(string: crtpDownCharacteristicUuid)], forService: service);
+                                                    CBUUID(string: crtpDownCharacteristicUuid)], for: service);
                 state = "characteristics"
             }
         }
     }
     
-    func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         
         for characteristic in characteristics  {
-            if characteristic.UUID.UUIDString == crtpCharacteristicUuid {
+            if characteristic.uuid.uuidString == crtpCharacteristicUuid {
                 self.crtpCharacteristic = characteristic
-            } else if characteristic.UUID.UUIDString == crtpUpCharacteristicUuid {
+            } else if characteristic.uuid.uuidString == crtpUpCharacteristicUuid {
                 self.crtpUpCharacteristic = characteristic
-            } else if characteristic.UUID.UUIDString == crtpDownCharacteristicUuid {
+            } else if characteristic.uuid.uuidString == crtpDownCharacteristicUuid {
                 self.crtpDownCharacteristic = characteristic
-                peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                peripheral.setNotifyValue(true, for: characteristic)
             }
             
             if self.crtpCharacteristic != nil && self.crtpUpCharacteristic != nil && crtpDownCharacteristic != nil {
                 state = "connected"
                 connectCallback?(true)
                 // Start the packet polling
-                dispatch_async(self.btQueue) {
+                self.btQueue.async {
                     self.sendAPacket()
                 }
             }
         }
     }
     
-    func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             NSLog("Error setting notification state: " + error.localizedDescription)
             return
         }
         
-        NSLog("Changed notification state for " + characteristic.UUID.UUIDString)
+        NSLog("Changed notification state for " + characteristic.uuid.uuidString)
     }
     
-    private var decoderLength = 0
-    private var decoderPid = -1
-    private var decoderData: [UInt8] = []
-    func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    fileprivate var decoderLength = 0
+    fileprivate var decoderPid = -1
+    fileprivate var decoderData: [UInt8] = []
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard let data = characteristic.value else { return }
         
-        print("Received value for characteristic: \(characteristic.UUID.UUIDString), length: \(data.length)")
+        print("Received value for characteristic: \(characteristic.uuid.uuidString), length: \(data.count)")
         
-        var dataArray = [UInt8](count: data.length, repeatedValue: 0)
-        data.getBytes(&dataArray, length: dataArray.count)
+        var dataArray = [UInt8](repeating: 0, count: data.count)
+        (data as NSData).getBytes(&dataArray, length: dataArray.count)
         let header = ControlByte(Int(dataArray[0]))
         
         if header.start {
             if header.length < 20 {
-                let packet = NSData(bytes: Array(dataArray[1..<dataArray.count]), length: dataArray.count-1)
+                let packet = Data(bytes: UnsafePointer<UInt8>(Array(dataArray[1..<dataArray.count])), count: dataArray.count-1)
                 self.rxCallback?(packet)
             } else {
                 self.decoderData = Array(dataArray[1..<dataArray.count])
@@ -257,7 +257,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else {
             if header.pid == self.decoderPid {
                 let fullData = self.decoderData + Array(dataArray[1..<dataArray.count])
-                let packet = NSData(bytes: fullData, length: fullData.count)
+                let packet = Data(bytes: UnsafePointer<UInt8>(fullData), count: fullData.count)
                 self.rxCallback?(packet)
             } else {
                 self.decoderPid = -1
@@ -299,7 +299,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return error
     }
     
-    func onStateUpdated(callback: NSString -> ()) {
+    func onStateUpdated(_ callback: @escaping (NSString) -> ()) {
         stateCallback = callback
     }
     
@@ -307,12 +307,12 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // MARK: Bluetooth queue
     
     // The following variables are modified ONLY from the bluetooth execution queue
-    private var packetQueue: [(NSData, ((Bool)->())?)] = []
+    fileprivate var packetQueue: [(Data, ((Bool)->())?)] = []
     
-    private var encodedSecondPacket: NSData! = nil
-    private var encoderPid = 0
+    fileprivate var encodedSecondPacket: Data! = nil
+    fileprivate var encoderPid = 0
     
-    private let nullPacket: NSData = NSData(bytes: [UInt8(0xff)], length: 1)
+    fileprivate let nullPacket: Data = Data(bytes: UnsafePointer<UInt8>([UInt8(0xff)]), count: 1)
     
     /**
         Send a packet to Crazyflie
@@ -321,15 +321,15 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         - parameter callback: Callback called when the packet has been sent of not.
                 The boolean will be true is the packet has been sent, false otherwise.
     */
-    func sendPacket(packet: NSData, callback: ((Bool) -> ())?) {
-        dispatch_async(self.btQueue) {
+    func sendPacket(_ packet: Data, callback: ((Bool) -> ())?) {
+        self.btQueue.async {
             self.packetQueue.append((packet, callback))
         }
     }
     
     /* Send either a packet from the packetQueue or a NULL packet */
-    private func sendAPacket() {
-        var packet: NSData
+    fileprivate func sendAPacket() {
+        var packet: Data
         var callback: ((Bool)->())?
         
         if packetQueue.count > 0 {
@@ -347,34 +347,34 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         txCallback = callback
         
         // If the packet is small send it with the simple crtp characteristic, otherwise send it with the segmented crtpUp characteristic
-        if packet.length <= 20 {
+        if packet.count <= 20 {
             self.encodedSecondPacket = nil
-            crazyflie!.writeValue(packet, forCharacteristic: crtpCharacteristic, type: CBCharacteristicWriteType.WithResponse)
+            crazyflie!.writeValue(packet, for: crtpCharacteristic, type: CBCharacteristicWriteType.withResponse)
         } else {
-            var packetArray = [UInt8](count: packet.length, repeatedValue: 0)
-            packet.getBytes(&packetArray, length: packetArray.count)
+            var packetArray = [UInt8](repeating: 0, count: packet.count)
+            (packet as NSData).getBytes(&packetArray, length: packetArray.count)
             
-            var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.length).header)
-            let firstPacket = NSData(bytes: [header] + Array(packetArray[0..<19]), length: 20)
+            var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.count).header)
+            let firstPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[0..<19])), count: 20)
             
             header = UInt8(ControlByte(start: false, pid: self.encoderPid, length: 0).header)
-            self.encodedSecondPacket = NSData(bytes: [header] + Array(packetArray[19..<packetArray.count]), length: packetArray.count-19)
+            self.encodedSecondPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[19..<packetArray.count])), count: packetArray.count-19)
             
-            crazyflie!.writeValue(firstPacket, forCharacteristic: crtpUpCharacteristic, type: CBCharacteristicWriteType.WithResponse)
+            crazyflie!.writeValue(firstPacket, for: crtpUpCharacteristic, type: CBCharacteristicWriteType.withResponse)
             
             self.encoderPid = (self.encoderPid+1)%4
         }
         
     }
     
-    func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if self.encodedSecondPacket == nil {
             txCallback?(true)
-            dispatch_async(self.btQueue) {
+            self.btQueue.async {
                 self.sendAPacket()
             }
         } else {
-            crazyflie!.writeValue(self.encodedSecondPacket, forCharacteristic: crtpUpCharacteristic, type: CBCharacteristicWriteType.WithResponse)
+            crazyflie!.writeValue(self.encodedSecondPacket, for: crtpUpCharacteristic, type: CBCharacteristicWriteType.withResponse)
             self.encodedSecondPacket = nil
         }
     }

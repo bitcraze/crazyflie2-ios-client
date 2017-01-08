@@ -1,4 +1,5 @@
 PODS:
+  - SwiftyJSON (3.1.1)
   - zipzap (8.0.3):
     - zipzap/c++ (= 8.0.3)
     - zipzap/objc (= 8.0.3)
@@ -8,6 +9,7 @@ PODS:
   - zipzap/objcpp (8.0.3)
 
 DEPENDENCIES:
+  - SwiftyJSON
   - zipzap (from `https://raw.githubusercontent.com/tahasamad/zipzap/master/zipzap.podspec`)
 
 EXTERNAL SOURCES:
@@ -15,8 +17,9 @@ EXTERNAL SOURCES:
     :podspec: https://raw.githubusercontent.com/tahasamad/zipzap/master/zipzap.podspec
 
 SPEC CHECKSUMS:
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   zipzap: 9acb41bada1b910056640b18455ccbdd12682944
 
-PODFILE CHECKSUM: 0ca1041880412a14e6600f084630ab37210bfd94
+PODFILE CHECKSUM: 7f9ea8cfabe785d31afc1b16d3398b442a1607fe
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.1.1

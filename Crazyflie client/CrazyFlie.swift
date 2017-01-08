@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class CrazyFlie: NSObject {
+open class CrazyFlie: NSObject {
     @objc enum State:Int {
-        case Idle, Connected , Scanning, Connecting, Services, Characteristics
+        case idle, connected , scanning, connecting, services, characteristics
     }
     
     struct CommanderPacket {
@@ -27,7 +27,7 @@ public class CrazyFlie: NSObject {
         }
         set {
             internalState = newValue
-            callback?(state: state)
+            callback?(state)
         }
     }
     
@@ -50,45 +50,45 @@ public class CrazyFlie: NSObject {
         }
     }
     
-    private var internalAutomaticCommandSending:Bool = true
-    private var internalState:State = .Idle
-    private var sent:Bool = false
-    private var callback:((state:State) -> Void)?
-    private var fetchData:((crazyFlie:CrazyFlie) -> Void)?
-    private(set) var bluetoothLink:BluetoothLink!
-    private var timer:NSTimer?
+    fileprivate var internalAutomaticCommandSending:Bool = true
+    fileprivate var internalState:State = .idle
+    fileprivate var sent:Bool = false
+    fileprivate var callback:((_ state:State) -> Void)?
+    fileprivate var fetchData:((_ crazyFlie:CrazyFlie) -> Void)?
+    fileprivate(set) var bluetoothLink:BluetoothLink!
+    fileprivate var timer:Timer?
     
     override init() {
         super.init()
         
         self.bluetoothLink = BluetoothLink()
         bluetoothLink.onStateUpdated{[weak self] (state) in
-            if state.isEqualToString("idle") {
-                self?.state = .Idle
-            } else if state.isEqualToString("connected") {
-                self?.state = .Connected
-            } else if state.isEqualToString("scanning") {
-                self?.state = .Scanning
-            } else if state.isEqualToString("connecting") {
-                self?.state = .Connecting
-            } else if state.isEqualToString("services") {
-                self?.state = .Services
-            } else if state.isEqualToString("characteristics") {
-                self?.state = .Characteristics
+            if state.isEqual(to: "idle") {
+                self?.state = .idle
+            } else if state.isEqual(to: "connected") {
+                self?.state = .connected
+            } else if state.isEqual(to: "scanning") {
+                self?.state = .scanning
+            } else if state.isEqual(to: "connecting") {
+                self?.state = .connecting
+            } else if state.isEqual(to: "services") {
+                self?.state = .services
+            } else if state.isEqual(to: "characteristics") {
+                self?.state = .characteristics
             }
         }
     }
     
-    func onStateUpdated(callback:(state:State) -> Void) {
+    func onStateUpdated(_ callback:@escaping (_ state:State) -> Void) {
         self.callback = callback
     }
     
-    func fetchData(callback:(crazyFlie:CrazyFlie) -> Void) {
+    func fetchData(_ callback:@escaping (_ crazyFlie:CrazyFlie) -> Void) {
         self.fetchData = callback
     }
     
-    func connect(callback:((Bool) -> ())?) {
-        guard state == .Idle else {
+    func connect(_ callback:((Bool) -> ())?) {
+        guard state == .idle else {
             self.disconnect()
             return
         }
@@ -125,7 +125,7 @@ public class CrazyFlie: NSObject {
             
             self?.sent = true;
             
-            if ((self?.automaticCommandSending.boolValue) != nil) {
+            if ((self?.automaticCommandSending) != nil) {
                 self?.startTimer()
             }
             })
@@ -136,30 +136,30 @@ public class CrazyFlie: NSObject {
         invalidateTimer()
     }
     
-    func sendCommander(roll:Float, pitch:Float, thrust:Float, yaw:Float) {
+    func sendCommander(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
         
         var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
-        let data = NSData(bytes: &commandPacket, length:sizeof(CommanderPacket))
+        let data = Data(bytes: &commandPacket, count:MemoryLayout<CommanderPacket>.size)
         
         bluetoothLink.sendPacket(data, callback: {[weak self] (success) in
             self?.sent = true
             })
     }
     
-    private func startTimer() {
+    fileprivate func startTimer() {
         if timer != nil {
             invalidateTimer()
         }
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(self.sendTimer), userInfo:nil, repeats:true)
+        self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.sendTimer), userInfo:nil, repeats:true)
     }
     
-    private func invalidateTimer() {
+    fileprivate func invalidateTimer() {
         self.timer?.invalidate()
         self.timer = nil
     }
     
-    @objc private func sendTimer(timter:NSTimer){
+    @objc fileprivate func sendTimer(_ timter:Timer){
         guard sent else {
             print("Missing command update")
             return
@@ -167,7 +167,7 @@ public class CrazyFlie: NSObject {
         
         print("Send commander!")
         
-        fetchData?(crazyFlie: self)
+        fetchData?(self)
         sendCommander(self.roll, pitch: self.pitch, thrust: self.thrust, yaw: self.yaw)
     }
 }
