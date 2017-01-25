@@ -8,10 +8,26 @@
 
 import UIKit
 
+protocol CrazyFlieCommander {
+    var pitch: Float { get }
+    var roll: Float { get }
+    var thrust: Float { get }
+    var yaw: Float { get }
+    
+    func prepareData()
+}
+
+enum CrazyFlieState {
+    case idle, connected , scanning, connecting, services, characteristics
+}
+
+protocol CrazyFlieDelegate {
+    func didSend()
+    func didUpdate(state: CrazyFlieState)
+    func didFail(with title: String, message: String?)
+}
+
 open class CrazyFlie: NSObject {
-    @objc enum State:Int {
-        case idle, connected , scanning, connecting, services, characteristics
-    }
     
     struct CommanderPacket {
         var header: __uint8_t;
@@ -21,47 +37,25 @@ open class CrazyFlie: NSObject {
         var thrust:Float;
     }
     
-    var state:State {
-        get{
-            return internalState
-        }
-        set {
-            internalState = newValue
-            callback?(state)
+    private(set) var state:CrazyFlieState {
+        didSet {
+            delegate?.didUpdate(state: state)
         }
     }
+    private var timer:Timer?
+    private var delegate: CrazyFlieDelegate?
+    private(set) var bluetoothLink:BluetoothLink!
+
+    var commander: CrazyFlieCommander?
     
-    var pitch:Float = 0
-    var roll:Float = 0
-    var thrust:Float = 0
-    var yaw:Float = 0
-    var automaticCommandSending:Bool {
-        get {
-            return internalAutomaticCommandSending
-        }
-        set {
-            internalAutomaticCommandSending = newValue
-            if newValue {
-                invalidateTimer()
-            }
-            else if sent {
-                startTimer()
-            }
-        }
-    }
-    
-    fileprivate var internalAutomaticCommandSending:Bool = true
-    fileprivate var internalState:State = .idle
-    fileprivate var sent:Bool = false
-    fileprivate var callback:((_ state:State) -> Void)?
-    fileprivate var fetchData:((_ crazyFlie:CrazyFlie) -> Void)?
-    fileprivate(set) var bluetoothLink:BluetoothLink!
-    fileprivate var timer:Timer?
-    
-    override init() {
-        super.init()
+    init(bluetoothLink:BluetoothLink? = BluetoothLink(), delegate: CrazyFlieDelegate?) {
         
-        self.bluetoothLink = BluetoothLink()
+        state = .idle
+        self.delegate = delegate
+        
+        self.bluetoothLink = bluetoothLink
+        super.init()
+    
         bluetoothLink.onStateUpdated{[weak self] (state) in
             if state.isEqual(to: "idle") {
                 self?.state = .idle
@@ -79,21 +73,13 @@ open class CrazyFlie: NSObject {
         }
     }
     
-    func onStateUpdated(_ callback:@escaping (_ state:State) -> Void) {
-        self.callback = callback
-    }
-    
-    func fetchData(_ callback:@escaping (_ crazyFlie:CrazyFlie) -> Void) {
-        self.fetchData = callback
-    }
-    
-    func connect(_ callback:((Bool) -> ())?) {
+    func connect(_ callback:((Bool) -> Void)?) {
         guard state == .idle else {
             self.disconnect()
             return
         }
         
-        self.bluetoothLink.connect(nil, callback: {[weak self](connected) in
+        self.bluetoothLink.connect(nil, callback: {[weak self] (connected) in
             callback?(connected)
             guard connected else {
                 if self?.timer != nil {
@@ -116,58 +102,44 @@ open class CrazyFlie: NSObject {
                     body = self?.bluetoothLink.getError()
                 }
                 
-                // Display the message
-                let alert = UIAlertView(title: title, message:body, delegate: nil, cancelButtonTitle: "OK")
-                alert.show()
-                
+                self?.delegate?.didFail(with: title, message: body)
                 return
             }
             
-            self?.sent = true;
-            
-            if ((self?.automaticCommandSending) != nil) {
-                self?.startTimer()
-            }
-            })
+            self?.startTimer()
+        })
     }
     
     func disconnect() {
         bluetoothLink.disconnect()
-        invalidateTimer()
+        stopTimer()
     }
     
-    func sendCommander(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
+    private func startTimer() {
+        stopTimer()
         
-        var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
-        let data = Data(bytes: &commandPacket, count:MemoryLayout<CommanderPacket>.size)
-        
-        bluetoothLink.sendPacket(data, callback: {[weak self] (success) in
-            self?.sent = true
-            })
+        self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updateData), userInfo:nil, repeats:true)
     }
     
-    fileprivate func startTimer() {
+    private func stopTimer() {
         if timer != nil {
-            invalidateTimer()
+            timer?.invalidate()
+            timer = nil
         }
-        
-        self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.sendTimer), userInfo:nil, repeats:true)
     }
     
-    fileprivate func invalidateTimer() {
-        self.timer?.invalidate()
-        self.timer = nil
-    }
-    
-    @objc fileprivate func sendTimer(_ timter:Timer){
-        guard sent else {
-            print("Missing command update")
+    @objc private func updateData(_ timter:Timer){
+        guard timer != nil, let commander = commander else {
             return
         }
-        
-        print("Send commander!")
-        
-        fetchData?(self)
-        sendCommander(self.roll, pitch: self.pitch, thrust: self.thrust, yaw: self.yaw)
+
+        commander.prepareData()
+        sendData(commander.roll, pitch: commander.pitch, thrust: commander.thrust, yaw: commander.yaw)
+    }
+    
+    private func sendData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
+        var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
+        let data = Data(bytes: &commandPacket, count:MemoryLayout<CommanderPacket>.size)
+        bluetoothLink.sendPacket(data, callback: nil)
     }
 }
