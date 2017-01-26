@@ -47,31 +47,19 @@ final class SettingsViewController: UIViewController {
     
     private func updateUI() {
         sensitivitySelector.selectedSegmentIndex = viewModel?.sensitivity.index
-        controlModeSelector.selectedSegmentIndex = viewModel.
+        controlModeSelector.selectedSegmentIndex = viewModel?.controlMode.index
+        
+        leftXLabel.text = viewModel?.leftXTitle
+        leftYLabel.text = viewModel?.leftYTitle
+        rightXLabel.text = viewModel?.rightXTitle
+        rightYLabel.text = viewModel?.rightYTitle
     }
     
-                self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
-                
-                [self sensitivityChanged:self.sensitivitySelector];
-                [self modeChanged:self.controlModeSelector];
-                
-                [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
-        }
+    @IBAction func modeChanged(_ sender: Any) {
+        
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
         
     }
-    
-    
-    @required
-    - (void) closeButtonPressed;
-    @end
-    
-    @property (nonatomic, strong) id delegate;
-    
-    
-    @property () NSInteger controlMode;
-    @property (strong, nonatomic) NSMutableDictionary *sensitivities;
-    @property (weak, nonatomic) NSString *sensitivitySetting;
 }

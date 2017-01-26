@@ -40,6 +40,14 @@ final class ViewModel {
         }
     }
     
+    // MARK: - Public Methods
+    
+    func connect() {
+        crazyFlie.connect(nil)
+    }
+    
+    // MARK: - Private MEthods
+    
     private func startMotionUpdate() {
         if motionLink == nil {
             motionLink = MotionLink()

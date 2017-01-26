@@ -58,6 +58,11 @@ final class SettingsViewModel {
     
     var sensitivity: Sensitivity
     var controlMode: ControlMode
+    
+    private(set) var leftXTitle: String?
+    private(set) var rightXTitle: String?
+    private(set) var leftYTitle: String?
+    private(set) var rightYTitle: String?
 }
 
 /*
