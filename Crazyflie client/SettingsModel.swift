@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class CommandSettings {
+class SettingModel {
     
 }
