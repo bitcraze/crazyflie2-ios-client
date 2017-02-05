@@ -27,13 +27,14 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     private(set) var deadbandX: Double
     private(set) var deadbandY: Double = 0
     private(set) var vLabelLeft: Bool
-    private(set) var positiveY: Bool = false
+    var thrustControl: Bool
     
     //MARK: - Init
     
-    init(deadbandX: Double = 0, vLabelLeft: Bool = false) {
+    init(deadbandX: Double = 0, vLabelLeft: Bool = false, thrustControl: Bool = false) {
         self.deadbandX = deadbandX
         self.vLabelLeft = vLabelLeft
+        self.thrustControl = thrustControl
     }
 
     //MARK: - ViewModel
@@ -56,8 +57,15 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
         var yUpdate = yValue
         if yUpdate > 1 { yUpdate = 1 }
         if yUpdate < -1 { yUpdate = -1 }
-        y = Float(apply(deadband: deadbandY, to: yUpdate))
-        y = !positiveY ? y : (y + 1) / 2
+        yUpdate = apply(deadband: deadbandY, to: yUpdate)
+        y = Float(thrustControl == false ? yUpdate : (yUpdate + 1) / 2)
+        
+        /*x = ((CGFloat)(point.x-center.x))/JSIZE;
+        if (x>1) x=1;
+        if (x<-1) x=-1;
+        x = [self applyDeadband:self.deadbandX toValue:x];
+        
+        y = -1*(point.y-center.y)/JSIZE;*/
         
         notifyDidUpdate()
     }

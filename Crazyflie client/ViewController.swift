@@ -152,12 +152,12 @@ extension ViewController: ViewModelDelegate {
         rightJoystick.deadbandX = 0.1;
     }
     
-    leftJoystick.positiveY = NO;
-    rightJoystick.positiveY = NO;
+    leftJoystick.thrustControl = NO;
+    rightJoystick.thrustControl = NO;
     if ([leftJoystick.vLabel.text isEqualToString:@"Thrust"]) {
-        leftJoystick.positiveY = YES;
+        leftJoystick.thrustControl = YES;
     } else {
-        rightJoystick.positiveY = YES;
+        rightJoystick.thrustControl = YES;
     }
     }
 

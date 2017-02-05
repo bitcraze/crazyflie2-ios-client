@@ -102,9 +102,12 @@ enum ControlMode: Int {
             let rightJoystick = rightJoystick else {
                 return nil
         }
+        leftJoystick.thrustControl = false
+        rightJoystick.thrustControl = false
         var commander: CrazyFlieCommander
         switch self {
         case .mode1:
+            rightJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: leftJoystick),
                 rollProvider: .y(provider: rightJoystick),
@@ -113,6 +116,7 @@ enum ControlMode: Int {
                 settings: settings)
             break
         case .mode2:
+            leftJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: rightJoystick),
                 rollProvider: .y(provider: rightJoystick),
@@ -121,6 +125,7 @@ enum ControlMode: Int {
                 settings: settings)
             break
         case .mode3:
+            rightJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: leftJoystick),
                 rollProvider: .y(provider: leftJoystick),
@@ -129,6 +134,7 @@ enum ControlMode: Int {
                 settings: settings)
             break
         case .mode4:
+            leftJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: rightJoystick),
                 rollProvider: .y(provider: leftJoystick),
@@ -140,11 +146,12 @@ enum ControlMode: Int {
             guard let motionLink = motionLink else {
                 return nil
             }
+            rightJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: motionLink),
                 rollProvider: .y(provider: motionLink),
-                yawProvider: .y(provider: rightJoystick),
-                thrustProvider: .x(provider: leftJoystick),
+                yawProvider: .y(provider: leftJoystick),
+                thrustProvider: .x(provider: rightJoystick),
                 settings: settings,
                 allowNegativeValues: true)
         }
