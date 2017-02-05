@@ -17,11 +17,11 @@ final class SettingsViewController: UIViewController {
     @IBOutlet weak var sensitivitySelector: UISegmentedControl!
     @IBOutlet weak var controlModeSelector: UISegmentedControl!
     
-    @IBOutlet weak var leftYLabel: UILabel!
     @IBOutlet weak var leftXLabel: UILabel!
-    @IBOutlet weak var rightYLabel: UILabel!
     @IBOutlet weak var leftYLabel: UILabel!
-    @IBOutlet weak var rightXLabel: UIButton!
+    @IBOutlet weak var rightXLabel: UILabel!
+    @IBOutlet weak var rightYLabel: UILabel!
+    @IBOutlet weak var closeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,14 @@ final class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel?.delegate = self
         updateUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        viewModel?.delegate = nil
     }
     
     // MARK: - Private Methods
@@ -45,21 +52,39 @@ final class SettingsViewController: UIViewController {
         }
     }
     
-    private func updateUI() {
-        sensitivitySelector.selectedSegmentIndex = viewModel?.sensitivity.index
-        controlModeSelector.selectedSegmentIndex = viewModel?.controlMode.index
+    fileprivate func updateUI() {
+        guard let viewModel = viewModel else {
+            return
+        }
         
-        leftXLabel.text = viewModel?.leftXTitle
-        leftYLabel.text = viewModel?.leftYTitle
-        rightXLabel.text = viewModel?.rightXTitle
-        rightYLabel.text = viewModel?.rightYTitle
+        sensitivitySelector.selectedSegmentIndex = viewModel.sensitivity.index
+        controlModeSelector.selectedSegmentIndex = viewModel.controlMode.index
+        
+        leftXLabel.text = viewModel.leftXTitle
+        leftYLabel.text = viewModel.leftYTitle
+        rightXLabel.text = viewModel.rightXTitle
+        rightYLabel.text = viewModel.rightYTitle
     }
     
-    @IBAction func modeChanged(_ sender: Any) {
-        
+    @IBAction func sensitivityModeChanged(_ sender: Any) {
+        viewModel?.didSetSensitivityMode(at: sensitivitySelector.selectedSegmentIndex)
     }
     
-    @IBAction func closeButtonPressed(_ sender: Any) {
-        
+    @IBAction func controlModeChanged(_ sender: Any) {
+        viewModel?.didSetControlMode(at: controlModeSelector.selectedSegmentIndex)
+    }
+    
+    @IBAction func closeClicked(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func onBootloaderClicked( _ sender: Any) {
+        viewModel?.bootloaderClicked()
+    }
+}
+
+extension SettingsViewController: SettingsViewModelDelegate {
+    func didUpdate() {
+        updateUI()
     }
 }

@@ -56,7 +56,7 @@ open class CrazyFlie: NSObject {
         self.bluetoothLink = bluetoothLink
         super.init()
     
-        bluetoothLink.onStateUpdated{[weak self] (state) in
+        bluetoothLink?.onStateUpdated{[weak self] (state) in
             if state.isEqual(to: "idle") {
                 self?.state = .idle
             } else if state.isEqual(to: "connected") {

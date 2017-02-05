@@ -8,28 +8,36 @@
 
 import Foundation
 
-protocol ViewModelDelegate {
+protocol ViewModelDelegate: class {
     func signalUpdate()
 }
 
 final class ViewModel {
-    var delegate: ViewModelDelegate?
+    weak var delegate: ViewModelDelegate?
+    var leftJoystickProvider: BCJoystickViewModel?
+    var rightJoystickProvider: BCJoystickViewModel?
     
-    private let motionLink: MotionLink?
-    private let crazyFlie: CrazyFlie
-    private var lastBothThumbsOn
+    private var motionLink: MotionLink?
+    private var crazyFlie: CrazyFlie?
+    private var sensitivity: Sensitivity = .slow
+    private var controlMode: ControlMode = ControlMode.current!
     
     private(set) var leftJoystickHorizontalTitle: String?
     private(set) var leftJoystickVerticalTitle: String?
     private(set) var rightJoystickHorizontalTitle: String?
     private(set) var rightJoystickVerticalTitle: String?
     
+    fileprivate(set) var progress: Float = 0
+    fileprivate(set) var topButtonTitle: String
+    
     init() {
+        topButtonTitle = "Connect"
+        
         crazyFlie = CrazyFlie(delegate: self)
         loadDefaults()
     }
     
-    var bothThumbsOnJoystick: Bool {
+    var bothThumbsOnJoystick: Bool = false {
         didSet {
             if oldValue != bothThumbsOnJoystick {
                 if bothThumbsOnJoystick {
@@ -40,10 +48,21 @@ final class ViewModel {
         }
     }
     
+    var settingsViewModel: SettingsViewModel? {
+        guard let bluetoothLink = crazyFlie?.bluetoothLink else {
+            return nil
+        }
+        return SettingsViewModel(sensitivity: sensitivity, controlMode: controlMode, bluetoothLink: bluetoothLink)
+    }
+    
     // MARK: - Public Methods
     
+    func loadSettings() {
+        
+    }
+    
     func connect() {
-        crazyFlie.connect(nil)
+        crazyFlie?.connect(nil)
     }
     
     // MARK: - Private MEthods
@@ -58,7 +77,7 @@ final class ViewModel {
     
     private func stopMotionUpdate() {
         motionLink?.stopDeviceMotionUpdates()
-        motionLink?.stopAccelerometerUpdates(nil)
+        motionLink?.stopAccelerometerUpdates()
     }
     
     private func loadDefaults() {
@@ -67,35 +86,69 @@ final class ViewModel {
                 return
         }
         let defaults = UserDefaults.standard
-        defaults.register(defaults: defaultPrefs)
+        defaults.register(defaults: defaultPrefs as! [String : Any])
+        defaults.synchronize()
         
         updateSettings()
     }
     
-    private func saveDefaults() {
-    }
-    
     private func updateSettings() {
-        let defaults = UserDefaults.standard
-        let controlMode = defaults.integer(forKey: "controlMode")
-        
-        if motionLink?.canAccessMotion,
-            controlMode == 5 {
+        if controlMode == .tilt,
+            let motionLink = motionLink,
+            motionLink.canAccessMotion {
             startMotionUpdate()
-            crazyFlie.commander = .tilt(leftJoystick, rightJoystick, motionLink).commander()
-            
-        } else {
+        }
+        else {
             stopMotionUpdate()
         }
         
-        if controlMode == 1 {
-            crazyFlie.commander = .mode1(leftJoystick, rightJoystick).commander
-        } else if controlMode == 2 {
-            crazyFlie.commander = .mode2(leftJoystick, rightJoystick).commander
-        } else if controlMode == 3 {
-            crazyFlie.commander = .mode3(leftJoystick, rightJoystick).commander
-        } else if controlMode == 4 {
-            crazyFlie.commander = .mode4(leftJoystick, rightJoystick).commander
+        crazyFlie?.commander = controlMode.commander(
+            leftJoystick: leftJoystickProvider,
+            rightJoystick: rightJoystickProvider,
+            motionLink: motionLink,
+            settings: sensitivity.settings)
+    }
+    
+    fileprivate func updateWith(state: CrazyFlieState) {
+        topButtonTitle = "Cancel"
+        switch state {
+        case .idle:
+            progress = 0
+            topButtonTitle = "Connect"
+            break
+        case .scanning:
+            progress = 0
+            break
+        case .connecting:
+            progress = 0.25
+            break
+        case .services:
+            progress = 0.5
+            break
+        case .characteristics:
+            progress = 0.75
+            break
+        case .connected:
+            progress = 1
+            break
         }
+    }
+}
+
+extension ViewModel: BCJoystickViewModelObserver {
+}
+
+extension ViewModel: CrazyFlieDelegate {
+    func didSend() {
+        
+    }
+    
+    func didUpdate(state: CrazyFlieState) {
+        updateWith(state: state)
+        delegate?.signalUpdate()
+    }
+    
+    func didFail(with title: String, message: String?) {
+        
     }
 }

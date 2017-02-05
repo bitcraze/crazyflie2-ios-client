@@ -8,182 +8,150 @@
 
 import Foundation
 
-protocol SettingsViewModelDelegate {
+protocol SettingsViewModelDelegate: class {
     func didUpdate()
 }
 
 final class SettingsViewModel {
- 
-    enum Sensitivity: String {
-        case slow = "slow"
-        case fast = "fast"
-        case custom = "custom"
-        
-        var index: Int {
-            switch self {
-            case .slow:
-                return 0
-            case .fast:
-                return 1
-            case .custom:
-                return 2
-            }
-        }
-    }
-    
-    enum ControlMode: Int {
-        case slow = "slow"
-        case fast = "fast"
-        case custom = "custom"
-        
-        var index: Int {
-            switch self {
-            case .slow:
-                return 0
-            case .fast:
-                return 1
-            case .custom:
-                return 2
-            }
-        }
-    }
     
     weak var delegate: SettingsViewModelDelegate?
-    
+    private(set) var sensitivity: Sensitivity
+    private(set) var controlMode: ControlMode
     private let bluetoothLink: BluetoothLink
     
-    init(bluetoothLink: BluetoothLink) {
+    init(sensitivity: Sensitivity, controlMode: ControlMode, bluetoothLink: BluetoothLink) {
         self.bluetoothLink = bluetoothLink
+        self.sensitivity = sensitivity
+        self.controlMode = controlMode
     }
     
-    var sensitivity: Sensitivity
-    var controlMode: ControlMode
-    
-    private(set) var leftXTitle: String?
-    private(set) var rightXTitle: String?
-    private(set) var leftYTitle: String?
-    private(set) var rightYTitle: String?
-}
-
-/*
-    if ([self.sensitivitySetting isEqualToString:@"slow"])
-    self.sensitivitySelector.selectedSegmentIndex = 0;
-    else if ([self.sensitivitySetting isEqualToString:@"fast"])
-    self.sensitivitySelector.selectedSegmentIndex = 1;
-    else if ([self.sensitivitySetting isEqualToString:@"custom"])
-    self.sensitivitySelector.selectedSegmentIndex = 2;
-    
-    if ([MotionLink new].canAccessMotion) {
-        [self.controlModeSelector insertSegmentWithTitle:@"Tilt Mode" atIndex:4 animated:YES];
+    var leftXTitle: String? {
+        return title(at: 0)
+    }
+    var rightXTitle: String? {
+        return title(at: 1)
+    }
+    var leftYTitle: String? {
+        return title(at: 2)
+    }
+    var rightYTitle: String? {
+        return title(at: 3)
     }
     
-    self.controlModeSelector.selectedSegmentIndex = self.controlMode-1;
-    
-    [self sensitivityChanged:self.sensitivitySelector];
-    [self modeChanged:self.controlModeSelector];
-    
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    var controlModeIndex: Int {
+        return controlMode.rawValue
     }
     
-    - (void)didReceiveMemoryWarning {
-        [super didReceiveMemoryWarning];
-        // Dispose of any resources that can be recreated.
+    var sensitivityModeIndex: Int {
+        return sensitivity.index
+    }
+    
+    var hasTiltMode: Bool {
+        return MotionLink().canAccessMotion
+    }
+    
+    var canEditValues: Bool {
+        return sensitivity == .custom
+    }
+    
+    func didSetControlMode(at index: Int) {
+        guard let controlMode = ControlMode(rawValue: index) else {
+            return
+        }
+        self.controlMode = controlMode
+        controlMode.save()
+        delegate?.didUpdate()
+    }
+    
+    func didSetSensitivityMode(at index: Int) {
+        guard let sensitivity = Sensitivity.sensitivity(for: index) else {
+            return
+        }
+        self.sensitivity = sensitivity
+        delegate?.didUpdate()
+    }
+    
+    var pitch: Float? {
+        guard let settings = sensitivity.settings else {
+            return nil
+        }
+        return settings.pitchRate
+    }
+    
+    func didUpdate(pitch: Float) -> Float? {
+        guard let settings = sensitivity.settings else {
+            return nil
         }
         
-        - (IBAction)closeClicked:(id)sender {
-            if (self.delegate) {
-                [self.delegate closeButtonPressed];
+        if canEditValues {
+            settings.pitchRate = pitch
+            if settings.pitchRate != pitch {
+                return settings.pitchRate
             }
+            return nil
+        }
+        return settings.pitchRate
+    }
+    
+    var yaw: Float? {
+        guard let settings = sensitivity.settings else {
+        return nil
+        }
+        return settings.yawRate
+    }
+    
+    func didUpdate(yaw: Float) -> Float? {
+        guard let settings = sensitivity.settings else {
+        return nil
+        }
+        if canEditValues {
+            settings.yawRate = yaw
+            if settings.yawRate != yaw {
+                return settings.yawRate
             }
-            - (IBAction)sensitivityChanged:(id)sender {
-                NSArray *selectorNames = @[@"slow", @"fast", @"custom"];
-                
-                self.sensitivitySetting = selectorNames[self.sensitivitySelector.selectedSegmentIndex];
-                NSDictionary *sensitivity =  [self.sensitivities valueForKey:self.sensitivitySetting];
-                
-                self.pitchrollSensitivity.text = [[sensitivity valueForKey:@"pitchRate"] stringValue];
-                self.thrustSensitivity.text = [[sensitivity valueForKey:@"maxThrust"] stringValue];
-                self.yawSensitivity.text = [[sensitivity valueForKey:@"yawRate"] stringValue];
-                
-                switch (self.sensitivitySelector.selectedSegmentIndex) {
-                case 0:
-                case 1:
-                    self.pitchrollSensitivity.enabled = NO;
-                    self.thrustSensitivity.enabled = NO;
-                    self.yawSensitivity.enabled = NO;
-                    break;
-                case 2:
-                    self.pitchrollSensitivity.enabled = YES;
-                    self.thrustSensitivity.enabled = YES;
-                    self.yawSensitivity.enabled = YES;
-                    break;
-                }
-                }
-                - (IBAction)modeChanged:(id)sender {
-                    self.controlMode = (int)self.controlModeSelector.selectedSegmentIndex+1;
-                    
-                    if ([MotionLink new].canAccessMotion) {
-                        _leftXLabel.text = [mode2str[_controlMode-1][0] copy];
-                        _leftYLabel.text = [mode2str[_controlMode-1][1] copy];
-                        _rightXLabel.text = [mode2str[_controlMode-1][2] copy];
-                        _rightYLabel.text = [mode2str[_controlMode-1][3] copy];
-                    }
-                    else {
-                        _leftXLabel.text = [mode2strNoMotion[_controlMode-1][0] copy];
-                        _leftYLabel.text = [mode2strNoMotion[_controlMode-1][1] copy];
-                        _rightXLabel.text = [mode2strNoMotion[_controlMode-1][2] copy];
-                        _rightYLabel.text = [mode2strNoMotion[_controlMode-1][3] copy];
-                    }
-                    }
-                    
-                    - (IBAction)endEditing:(id)sender {
-                        if ([self.sensitivitySetting isEqualToString:@"custom"]) {
-                            //Check settings range and correct them automatically if required
-                            NSInteger pitchRate = [self.pitchrollSensitivity.text integerValue];
-                            NSInteger yawRate = [self.yawSensitivity.text integerValue];
-                            NSInteger maxThrust = [self.thrustSensitivity.text integerValue];
-                            
-                            if (pitchRate<0)
-                            pitchRate = 0;
-                            if (pitchRate>80)
-                            pitchRate = 80;
-                            if (yawRate<0)
-                            yawRate = 0;
-                            if (yawRate>500)
-                            yawRate = 500;
-                            if (maxThrust<0)
-                            maxThrust = 0;
-                            if (maxThrust>100)
-                            maxThrust = 100;
-                            
-                            // Write the correctef values
-                            self.pitchrollSensitivity.text = [NSString stringWithFormat:@"%ld", (long)pitchRate];
-                            self.yawSensitivity.text = [NSString stringWithFormat:@"%ld", (long)yawRate];
-                            self.thrustSensitivity.text = [NSString stringWithFormat:@"%ld", (long)maxThrust];
-                            
-                            NSDictionary * customSensitivity = @{@"pitchRate": [NSNumber numberWithLong:pitchRate],
-                                @"yawRate": [NSNumber numberWithLong:yawRate],
-                                @"maxThrust": [NSNumber numberWithLong:maxThrust]};
-                            
-                            [self.sensitivities setValue:customSensitivity forKey:@"custom"];
-                        }
-                        }
-                        
-                        /*
-                         #pragma mark - Navigation
-                         
-                         // In a storyboard-based application, you will often want to do a little preparation before navigation
-                         - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-                         // Get the new view controller using [segue destinationViewController].
-                         // Pass the selected object to the new view controller.
-                         }
-                         */
-                        - (IBAction)onBootloaderClicked:(id)sender {
-                            if (self.bluetoothLink && [[self.bluetoothLink getState] isEqualToString:@"connected"]) {
-                                [self.bluetoothLink disconnect];
-                            }
+            return nil
+        }
+        return settings.yawRate
+    }
+    
+    var thrust: Float? {
+        guard let settings = sensitivity.settings else {
+            return nil
+        }
+        return settings.maxThrust
+    }
+    
+    func didUpdate(thrust: Float) -> Float? {
+        guard let settings = sensitivity.settings else {
+            return nil
+        }
+        if canEditValues {
+            settings.maxThrust = thrust
+            if settings.maxThrust != thrust {
+                return settings.maxThrust
+            }
+            return nil
+        }
+        return settings.maxThrust
+    }
+    
+    var sensitivityTitles: [String] {
+        return ["Slow", "Fast", "Custom"]
+    }
+    
+    var controlModeTitles: [String] {
+        return controlMode.titles
+    }
+    
+    func bootloaderClicked() {
+        if bluetoothLink.isConnected {
+            bluetoothLink.disconnect()
+        }
+    }
+    
+    private func title(at index: Int) -> String? {
+        guard controlMode.titles.indices.contains(index) else { return nil }
+        
+        return controlMode.titles[index]
+    }
 }
-
-@end
-
-

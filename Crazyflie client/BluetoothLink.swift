@@ -269,6 +269,10 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
     }
     
+    var isConnected: Bool {
+        return state == "connected"
+    }
+    
     func disconnect() {
         switch state {
         case "scanning":

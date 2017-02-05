@@ -3,5 +3,6 @@ use_frameworks!
 
 target 'Crazyflie client' do
     pod 'SwiftyJSON'
+    #pod 'SwiftLint'
   pod 'zipzap', :podspec => 'https://raw.githubusercontent.com/tahasamad/zipzap/master/zipzap.podspec'
 end

@@ -16,7 +16,7 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" customModule="Crazyflie_client" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BBt-Ae-QU0"/>
                         <viewControllerLayoutGuide type="bottom" id="uYX-Ot-m4w"/>
@@ -52,7 +52,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="settingsClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="goA-dy-w78"/>
+                                    <action selector="settingsClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="EMD-N1-wSz"/>
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ax9-lF-Vx6">
@@ -76,7 +76,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="connectClick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Etd-nj-wiH"/>
+                                    <action selector="connectClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Avg-bU-eli"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place both thumbs to enable control" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4K-nN-6na">
@@ -108,12 +108,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="P9X-at-VK1"/>
                     <connections>
-                        <outlet property="connectButton" destination="zUR-3g-aLF" id="bA2-Z1-bbX"/>
-                        <outlet property="connectProgress" destination="ax9-lF-Vx6" id="VCb-4D-6O6"/>
-                        <outlet property="leftView" destination="Ta2-ZF-aps" id="WLu-gg-T9d"/>
-                        <outlet property="rightView" destination="eY8-VG-3Hc" id="d1v-FG-2fg"/>
-                        <outlet property="settingsButton" destination="cqv-t8-690" id="8l6-Ds-9hC"/>
-                        <outlet property="unlockLabel" destination="M4K-nN-6na" id="6C6-1n-91b"/>
+                        <outlet property="connectButton" destination="zUR-3g-aLF" id="skm-HZ-eon"/>
+                        <outlet property="connectProgress" destination="ax9-lF-Vx6" id="o1S-NR-V6h"/>
+                        <outlet property="leftView" destination="Ta2-ZF-aps" id="pNk-9c-ZfP"/>
+                        <outlet property="rightView" destination="eY8-VG-3Hc" id="4Uh-Me-2kp"/>
+                        <outlet property="settingsButton" destination="cqv-t8-690" id="IXn-aM-wKd"/>
+                        <outlet property="unlockLabel" destination="M4K-nN-6na" id="psN-ME-O7i"/>
                         <segue destination="yUo-2Y-gx5" kind="modal" identifier="settings" id="Elg-lL-7c2"/>
                     </connections>
                 </viewController>
@@ -162,7 +162,7 @@
         <!--Settings View Controller-->
         <scene sceneID="8Rp-Ed-EgN">
             <objects>
-                <viewController storyboardIdentifier="settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yUo-2Y-gx5" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yUo-2Y-gx5" customClass="SettingsViewController" customModule="Crazyflie_client" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nfi-7o-1q9"/>
                         <viewControllerLayoutGuide type="bottom" id="frN-5W-BJR"/>
@@ -179,7 +179,7 @@
                                     <segment title="Custom"/>
                                 </segments>
                                 <connections>
-                                    <action selector="sensitivityChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="SOR-pH-2UM"/>
+                                    <action selector="sensitivityModeChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="GSR-3o-PoV"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Control mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkH-py-9oS">
@@ -197,7 +197,7 @@
                                     <segment title="Mode 4"/>
                                 </segments>
                                 <connections>
-                                    <action selector="modeChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="Oln-Hh-YQp"/>
+                                    <action selector="controlModeChanged:" destination="yUo-2Y-gx5" eventType="valueChanged" id="GCq-Na-bta"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thrust (%)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFb-Nf-8vW">

@@ -9,8 +9,8 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    let leftJoystick: BCJoystick
-    let rightJoystick: BCJoystick
+    private var leftJoystick: BCJoystick?
+    private var rightJoystick: BCJoystick?
     
     weak var viewModel: ViewModel?
     private var settingsViewController: SettingsViewController?
@@ -22,31 +22,32 @@ final class ViewController: UIViewController {
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var rightView: UIView!
 
-    func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         if viewModel == nil {
             viewModel = ViewModel()
-            viewModel.delegate = self
+            viewModel?.delegate = self
         }
         
         setupUI()
     }
     
-    func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel?.loadSettings()
         updateUI()
     }
     
-    var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
     
     //MARK: - IBActions
     
     @IBAction func connectClicked(_ sender: Any) {
-        viewMode.connect()
+        viewModel?.connect()
     }
     
     @IBAction func settingsClicked(_ sender: Any) {
@@ -56,6 +57,7 @@ final class ViewController: UIViewController {
     //MARK: - Private
     
     private func setupUI() {
+        guard let viewModel = viewModel else { return }
         connectProgress.progress = 0
         
         connectButton.layer.borderColor = connectButton.tintColor.cgColor
@@ -63,61 +65,44 @@ final class ViewController: UIViewController {
         
         //Init joysticks
         let frame = UIScreen.main.bounds
-        leftJoystick = BCJoystick(frame: frame)
-        leftView.addSubview(leftJoystick)
-        leftJoystick.addTarget(self, action: #selector(joystickTouched(_:)), forControlEvents: .allEvents)
         
-        rightJoystick = BCJoystick(frame: frame)
+        var leftViewModel = BCJoystickViewModel()
+        let leftJoystick = BCJoystick(frame: frame)
+        leftJoystick.viewModel = leftViewModel
+        leftViewModel.add(observer: viewModel)
+        leftView.addSubview(leftJoystick)
+        self.leftJoystick = leftJoystick
+        
+        var rightViewModel = BCJoystickViewModel(deadbandX: 0.1, vLabelLeft: true)
+        let rightJoystick = BCJoystick(frame: frame)
+        rightJoystick.viewModel = rightViewModel
+        rightViewModel.add(observer: viewModel)
         rightView.addSubview(rightJoystick)
-        rightJoystick.addTarget(self, action: #selector(joystickTouched(_:)), forControlEvents: .allEvents)
-        rightJoystick.deadbandX = 0.1;  //Some deadband for the yaw
-        rightJoystick.vLabelLeft = true
+        self.rightJoystick = rightJoystick
     }
     
     fileprivate func updateUI() {
-        unlockLabel.hidden = viewModel.bothThumbsOnJoystick
+        guard let viewModel = viewModel else {
+            return
+        }
+        unlockLabel.isHidden = viewModel.bothThumbsOnJoystick
         
-        leftJoystick.hLabel.text = viewModel?.leftJoystickHorizontalTitle
-        leftJoystick.vLabel.text = viewModel?.leftJoystickVerticalTitle
-        rightJoystick.hLabel.text = viewModel?.rightJoystickHorizontalTitle
-        rightJoystick.vLabel.text = viewModel?.rightJoystickVerticalTitle
-    }
-    
-    private func joystickTouched(_ sender: Any) {
-        viewModel.bothThumbsOnJoystick = leftJoystick.activated && rightJoystick.activated
+        leftJoystick?.hLabel.text = viewModel.leftJoystickHorizontalTitle
+        leftJoystick?.vLabel.text = viewModel.leftJoystickVerticalTitle
+        rightJoystick?.hLabel.text = viewModel.rightJoystickHorizontalTitle
+        rightJoystick?.vLabel.text = viewModel.rightJoystickVerticalTitle
     }
     
     // MARK: - Navigation
     
-    func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "settings" {
+            guard let viewController = segue.destination as? SettingsViewController else {
+                return
+            }
             
+            viewController.viewModel = viewModel?.settingsViewModel
         }
-    settingsViewController = [segue destinationViewController];
-    settingsViewController.delegate = self;
-    settingsViewController.bluetoothLink = self.bluetoothLink;
-    
-    settingsViewController.controlMode = controlMode;
-    settingsViewController.sensitivities = [sensitivities mutableCopy];
-    settingsViewController.sensitivitySetting = sensitivitySetting;
-    
-    [leftJoystick cancel];
-    [rightJoystick cancel];
-    }
-    }
-    
-    
-    #pragma mark - SettingsControllerDelegate
-    - (void) closeButtonPressed
-    {
-    if (settingsViewController) {
-    pitchRate = [settingsViewController.pitchrollSensitivity.text floatValue];
-    sensitivitySetting = settingsViewController.sensitivitySetting;
-    controlMode = (int)settingsViewController.controlMode;
-    sensitivities = [settingsViewController.sensitivities mutableCopy];
-    [self saveDefault];
-    }
-    [self dismissViewControllerAnimated:true completion:nil];
     }
 
 }
