@@ -70,7 +70,7 @@ enum ControlMode: Int {
     
     func save() {
         let defaults = UserDefaults.standard
-        defaults.set(rawValue, forKey: "controlMode")
+        defaults.set(rawValue + 1, forKey: "controlMode")
         defaults.synchronize()
     }
     
@@ -83,11 +83,11 @@ enum ControlMode: Int {
         case .mode1:
             return ["Yaw", "Pitch",  "Roll", "Thrust"]
         case .mode2:
-            return ["Yaw", "Pitch",  "Roll", "Thrust"]
+            return ["Yaw", "Thrust",  "Roll", "Pitch"]
         case .mode3:
-            return ["Yaw", "Pitch",  "Roll", "Thrust"]
+            return ["Roll", "Pitch",  "Yaw", "Thrust"]
         case .mode4:
-            return ["Yaw", "Pitch",  "Roll", "Thrust"]
+            return ["Roll", "Thrust",  "Yaw", "Pitch"]
         case .tilt:
             return ["Yaw", "",  "", "Thrust"]
         }
@@ -143,8 +143,8 @@ enum ControlMode: Int {
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: motionLink),
                 rollProvider: .y(provider: motionLink),
-                yawProvider: .y(provider: leftJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                yawProvider: .y(provider: rightJoystick),
+                thrustProvider: .x(provider: leftJoystick),
                 settings: settings,
                 allowNegativeValues: true)
         }
@@ -158,6 +158,10 @@ class Settings {
         case maxThrust = "maxThrust"
         case yawRate = "yawRate"
     }
+    
+    private var _pitchRate: Float
+    private var _yawRate: Float
+    private var _maxThrust: Float
     
     let minPitchRate: Float = 0
     let maxPitchRate: Float = 80
@@ -173,9 +177,9 @@ class Settings {
                 return nil
         }
         
-        self.pitchRate = pitchRate
-        self.yawRate = yawRate
-        self.maxThrust = maxThrust
+        _pitchRate = pitchRate
+        _yawRate = yawRate
+        _maxThrust = maxThrust
     }
     
     var dictionary: [String: Any] {
@@ -186,39 +190,39 @@ class Settings {
     
     var pitchRate: Float {
         get {
-            return pitchRate
+            return _pitchRate
         }
         set {
             if newValue < minPitchRate {
-                pitchRate = minPitchRate
+                _pitchRate = minPitchRate
             } else if newValue > maxPitchRate {
-                pitchRate = maxPitchRate
+                _pitchRate = maxPitchRate
             }
         }
     }
     
     var maxThrust: Float {
         get {
-            return maxThrust
+            return _maxThrust
         }
         set {
             if newValue < minThrustRate {
-                maxThrust = minThrustRate
+                _maxThrust = minThrustRate
             } else if newValue > maxThrustRate {
-                maxThrust = maxThrustRate
+                _maxThrust = maxThrustRate
             }
         }
     }
     
     var yawRate: Float {
         get {
-            return yawRate
+            return _yawRate
         }
         set {
             if newValue < minYawRate {
-                yawRate = minYawRate
+                _yawRate = minYawRate
             } else if newValue > maxYawRate {
-                yawRate = maxYawRate
+                _yawRate = maxYawRate
             }
         }
     }

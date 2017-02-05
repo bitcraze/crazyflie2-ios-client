@@ -40,22 +40,23 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     
     func touchesBegan() {
         activated = true
+        notifyDidUpdate()
     }
     
     func touchesEnded() {
         cancel()
     }
     
-    func touches(movedTo x: Double, y: Double) {
-        var x = x
-        if x > 1 { x = 1 }
-        if x < -1 { x = -1 }
-        x = apply(deadband: deadbandX, to: x)
-    
-        var y = y
-        if y > 1 { y = 1 }
-        if y < -1 { y = -1 }
-        y = apply(deadband: deadbandY, to: y)
+    func touches(movedTo xValue: Double, yValue: Double) {
+        var xUpdate = xValue
+        if xUpdate > 1 { xUpdate = 1 }
+        if xUpdate < -1 { xUpdate = -1 }
+        x = Float(apply(deadband: deadbandX, to: xUpdate))
+        
+        var yUpdate = yValue
+        if yUpdate > 1 { yUpdate = 1 }
+        if yUpdate < -1 { yUpdate = -1 }
+        y = Float(apply(deadband: deadbandY, to: yUpdate))
         y = !positiveY ? y : (y + 1) / 2
         
         notifyDidUpdate()

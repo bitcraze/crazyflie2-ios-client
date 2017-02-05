@@ -66,19 +66,21 @@ final class ViewController: UIViewController {
         //Init joysticks
         let frame = UIScreen.main.bounds
         
-        var leftViewModel = BCJoystickViewModel()
-        let leftJoystick = BCJoystick(frame: frame)
-        leftJoystick.viewModel = leftViewModel
+        let leftViewModel = BCJoystickViewModel()
+        let leftJoystick = BCJoystick(frame: frame, viewModel: leftViewModel)
+        leftViewModel.delegate = leftJoystick
         leftViewModel.add(observer: viewModel)
         leftView.addSubview(leftJoystick)
         self.leftJoystick = leftJoystick
+        viewModel.leftJoystickProvider = leftViewModel
         
-        var rightViewModel = BCJoystickViewModel(deadbandX: 0.1, vLabelLeft: true)
-        let rightJoystick = BCJoystick(frame: frame)
-        rightJoystick.viewModel = rightViewModel
+        let rightViewModel = BCJoystickViewModel(deadbandX: 0.1, vLabelLeft: true)
+        let rightJoystick = BCJoystick(frame: frame, viewModel: rightViewModel)
+        rightViewModel.delegate = rightJoystick
         rightViewModel.add(observer: viewModel)
         rightView.addSubview(rightJoystick)
         self.rightJoystick = rightJoystick
+        viewModel.rightJoystickProvider = rightViewModel
     }
     
     fileprivate func updateUI() {
@@ -91,6 +93,9 @@ final class ViewController: UIViewController {
         leftJoystick?.vLabel.text = viewModel.leftJoystickVerticalTitle
         rightJoystick?.hLabel.text = viewModel.rightJoystickHorizontalTitle
         rightJoystick?.vLabel.text = viewModel.rightJoystickVerticalTitle
+        
+        connectProgress.setProgress(viewModel.progress, animated: true)
+        connectButton.setTitle(viewModel.topButtonTitle, for: .normal)
     }
     
     // MARK: - Navigation

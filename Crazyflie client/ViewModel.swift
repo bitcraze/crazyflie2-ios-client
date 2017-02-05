@@ -48,12 +48,14 @@ final class ViewModel {
         }
     }
     
-    var settingsViewModel: SettingsViewModel? {
-        guard let bluetoothLink = crazyFlie?.bluetoothLink else {
+    lazy var settingsViewModel: SettingsViewModel? = {
+        guard let bluetoothLink = self.crazyFlie?.bluetoothLink else {
             return nil
         }
-        return SettingsViewModel(sensitivity: sensitivity, controlMode: controlMode, bluetoothLink: bluetoothLink)
-    }
+        let settings = SettingsViewModel(sensitivity: self.sensitivity, controlMode: self.controlMode, bluetoothLink: bluetoothLink)
+        settings.add(observer: self)
+        return settings
+    }()
     
     // MARK: - Public Methods
     
@@ -94,14 +96,22 @@ final class ViewModel {
     
     private func updateSettings() {
         if controlMode == .tilt,
-            let motionLink = motionLink,
-            motionLink.canAccessMotion {
+            MotionLink().canAccessMotion {
             startMotionUpdate()
         }
         else {
             stopMotionUpdate()
         }
         
+        applyCommander()
+    }
+    
+    fileprivate func changed(controlMode: ControlMode) {
+        self.controlMode = controlMode
+        updateSettings()
+    }
+    
+    private func applyCommander() {
         crazyFlie?.commander = controlMode.commander(
             leftJoystick: leftJoystickProvider,
             rightJoystick: rightJoystickProvider,
@@ -138,6 +148,13 @@ final class ViewModel {
 extension ViewModel: BCJoystickViewModelObserver {
 }
 
+extension ViewModel: SettingsViewModelObserver {
+    func didUpdate(controlMode: ControlMode) {
+        changed(controlMode: controlMode)
+    }
+}
+
+//MARK: - Crazyflie
 extension ViewModel: CrazyFlieDelegate {
     func didSend() {
         

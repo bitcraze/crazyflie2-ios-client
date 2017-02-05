@@ -12,12 +12,18 @@ protocol SettingsViewModelDelegate: class {
     func didUpdate()
 }
 
-final class SettingsViewModel {
+protocol SettingsViewModelObserver: Observer {
+    func didUpdate(controlMode: ControlMode)
+}
+
+final class SettingsViewModel: Observable {
+    typealias ConcreteObserver = SettingsViewModelObserver
     
     weak var delegate: SettingsViewModelDelegate?
     private(set) var sensitivity: Sensitivity
     private(set) var controlMode: ControlMode
     private let bluetoothLink: BluetoothLink
+    var weakObservers: [WeakBox] = [WeakBox]()
     
     init(sensitivity: Sensitivity, controlMode: ControlMode, bluetoothLink: BluetoothLink) {
         self.bluetoothLink = bluetoothLink
@@ -61,6 +67,7 @@ final class SettingsViewModel {
         self.controlMode = controlMode
         controlMode.save()
         delegate?.didUpdate()
+        notifyObserverDidUpdate(controlMode: controlMode)
     }
     
     func didSetSensitivityMode(at index: Int) {
@@ -153,5 +160,9 @@ final class SettingsViewModel {
         guard controlMode.titles.indices.contains(index) else { return nil }
         
         return controlMode.titles[index]
+    }
+    
+    private func notifyObserverDidUpdate(controlMode: ControlMode) {
+        observers.forEach { $0.didUpdate(controlMode: controlMode) }
     }
 }

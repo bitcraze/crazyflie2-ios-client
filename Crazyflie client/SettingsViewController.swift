@@ -64,6 +64,16 @@ final class SettingsViewController: UIViewController {
         leftYLabel.text = viewModel.leftYTitle
         rightXLabel.text = viewModel.rightXTitle
         rightYLabel.text = viewModel.rightYTitle
+        
+        if let pitch = viewModel.pitch {
+            pitchrollSensitivity.text = String(describing: pitch)
+        }
+        if let thrust = viewModel.thrust {
+            thrustSensitivity.text = String(describing: thrust)
+        }
+        if let yaw = viewModel.yaw {
+            yawSensitivity.text = String(describing: yaw)
+        }
     }
     
     @IBAction func sensitivityModeChanged(_ sender: Any) {

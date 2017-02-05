@@ -11,7 +11,7 @@ import UIKit
 protocol BCJoystickViewModelProtocol: class {
     func touchesBegan()
     func touchesEnded()
-    func touches(movedTo x: Double, y: Double)
+    func touches(movedTo xValue: Double, yValue: Double)
     
     var activated: Bool { get }
     var positiveY: Bool { get }
@@ -23,7 +23,7 @@ protocol BCJoystickViewModelProtocol: class {
 final class BCJoystick: UIControl {
     private static let JSIZE: CGFloat = 80.0
     
-    weak var viewModel: BCJoystickViewModelProtocol?
+    var viewModel: BCJoystickViewModelProtocol?
     
     private var _center: CGPoint?
     private var path: UIBezierPath?
@@ -34,8 +34,10 @@ final class BCJoystick: UIControl {
     private(set) var hProgress: UIProgressView!
     fileprivate var shapeLayer: CAShapeLayer!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, viewModel: BCJoystickViewModelProtocol) {
         super.init(frame: frame)
+        
+        self.viewModel = viewModel
         
         shapeLayer = CAShapeLayer()
         shapeLayer.fillColor = UIColor(red: 0, green: 122.0/255.0, blue: 1.0, alpha: 0.25).cgColor
@@ -121,11 +123,12 @@ final class BCJoystick: UIControl {
         
         viewModel.touchesBegan()
         
-        center = touch.location(in: self)
+        var center = touch.location(in: self)
         if viewModel.positiveY {
             center.y -= BCJoystick.JSIZE
         }
         
+        _center = center
         var rect = CGRect(origin: center, size: CGSize.zero)
         let startPath = UIBezierPath(rect: rect)
         
@@ -157,6 +160,7 @@ final class BCJoystick: UIControl {
         hProgress.progress = 0.5;
         hLabel.center = CGPoint(x: center.x, y: center.y - JSIZE - 12);
         let path = UIBezierPath(rect: rect)
+        self.path = path
         shapeLayer.path = path.cgPath
         
         sendActions(for: .allTouchEvents)
@@ -164,7 +168,8 @@ final class BCJoystick: UIControl {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let JSIZE = BCJoystick.JSIZE
-        guard let touch = event?.touches(for: self)?.first else {
+        guard let touch = event?.touches(for: self)?.first,
+            let center = _center else {
             return
         }
         
@@ -172,7 +177,7 @@ final class BCJoystick: UIControl {
         let x = CGFloat(point.x - center.x) / JSIZE
         let y = -1 * (point.y - center.y) / JSIZE
         
-        viewModel?.touches(movedTo: Double(x), y: Double(y))
+        viewModel?.touches(movedTo: Double(x), yValue: Double(y))
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -181,6 +186,12 @@ final class BCJoystick: UIControl {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewModel?.touchesEnded()
+    }
+}
+
+extension BCJoystick: BCJoystickViewModelDelegate {
+    func didUpdate() {
+        updateUI()
     }
 }
 
