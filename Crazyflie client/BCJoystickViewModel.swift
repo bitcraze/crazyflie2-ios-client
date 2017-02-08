@@ -13,6 +13,7 @@ protocol BCJoystickViewModelDelegate: class {
 }
 
 public protocol BCJoystickViewModelObserver: Observer {
+    func didUpdateState()
 }
 
 final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyFlieXProvideable, CrazyFlieYProvideable  {
@@ -58,16 +59,17 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
         if yUpdate > 1 { yUpdate = 1 }
         if yUpdate < -1 { yUpdate = -1 }
         yUpdate = apply(deadband: deadbandY, to: yUpdate)
-        y = Float(thrustControl == false ? yUpdate : (yUpdate + 1) / 2)
-        
-        /*x = ((CGFloat)(point.x-center.x))/JSIZE;
-        if (x>1) x=1;
-        if (x<-1) x=-1;
-        x = [self applyDeadband:self.deadbandX toValue:x];
-        
-        y = -1*(point.y-center.y)/JSIZE;*/
+        y = Float(thrustControl ? (yUpdate + 1) / 2 : yUpdate)
         
         notifyDidUpdate()
+    }
+    
+    var hProgress: Float {
+        return (x + 1) / 2
+    }
+    
+    var vProgress: Float {
+        return thrustControl ? y : (y + 1) / 2
     }
     
     //MARK: - Private Methods
@@ -103,5 +105,6 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     
     private func notifyDidUpdate() {
         delegate?.didUpdate()
+        observers.forEach { $0.didUpdateState() }
     }
 }

@@ -18,6 +18,8 @@ protocol BCJoystickViewModelProtocol: class {
     var vLabelLeft: Bool { get }
     var x: Float { get }
     var y: Float { get }
+    var hProgress: Float { get }
+    var vProgress: Float { get }
 }
 
 final class BCJoystick: UIControl {
@@ -105,8 +107,8 @@ final class BCJoystick: UIControl {
             shapeLayer.path = nil
             sendActions(for: .valueChanged)
         } else {
-            hProgress.progress = Float((viewModel.x + 1) / 2.0)
-            vProgress.progress = Float((viewModel.y + 1) / 2.0)
+            hProgress.progress = viewModel.hProgress
+            vProgress.progress =  viewModel.vProgress
             sendActions(for: .valueChanged)
         }
         
@@ -193,9 +195,6 @@ extension BCJoystick: BCJoystickViewModelDelegate {
     func didUpdate() {
         updateUI()
     }
-}
-
-extension BCJoystick: BCJoystickViewModelObserver {
 }
 
 extension BCJoystick: CAAnimationDelegate {
