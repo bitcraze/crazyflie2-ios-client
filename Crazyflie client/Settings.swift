@@ -109,19 +109,19 @@ enum ControlMode: Int {
         case .mode1:
             rightJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: leftJoystick),
-                rollProvider: .y(provider: rightJoystick),
+                pitchProvider: .x(provider: rightJoystick),
+                rollProvider: .x(provider: leftJoystick),
                 yawProvider: .y(provider: leftJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                thrustProvider: .y(provider: rightJoystick),
                 settings: settings)
             break
         case .mode2:
             leftJoystick.thrustControl = true
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: rightJoystick),
-                rollProvider: .y(provider: rightJoystick),
-                yawProvider: .y(provider: leftJoystick),
-                thrustProvider: .x(provider: leftJoystick),
+                pitchProvider: .y(provider: rightJoystick),
+                rollProvider: .y(provider:  leftJoystick),
+                yawProvider: .x(provider: leftJoystick),
+                thrustProvider: .x(provider: rightJoystick),
                 settings: settings)
             break
         case .mode3:
@@ -138,8 +138,8 @@ enum ControlMode: Int {
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: rightJoystick),
                 rollProvider: .y(provider: leftJoystick),
-                yawProvider: .y(provider: rightJoystick),
-                thrustProvider: .x(provider: leftJoystick),
+                yawProvider: .y(provider: leftJoystick),
+                thrustProvider: .x(provider: rightJoystick),
                 settings: settings)
             break
         case .tilt:

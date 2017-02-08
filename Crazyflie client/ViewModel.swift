@@ -10,22 +10,18 @@ import Foundation
 
 protocol ViewModelDelegate: class {
     func signalUpdate()
+    func signalFailed(with title: String, message: String?)
 }
 
 final class ViewModel {
     weak var delegate: ViewModelDelegate?
-    var leftJoystickProvider: BCJoystickViewModel?
-    var rightJoystickProvider: BCJoystickViewModel?
+    let leftJoystickProvider: BCJoystickViewModel
+    let rightJoystickProvider: BCJoystickViewModel
     
     private var motionLink: MotionLink?
     private var crazyFlie: CrazyFlie?
     private var sensitivity: Sensitivity = .slow
     private var controlMode: ControlMode = ControlMode.current!
-    
-    private(set) var leftJoystickHorizontalTitle: String?
-    private(set) var leftJoystickVerticalTitle: String?
-    private(set) var rightJoystickHorizontalTitle: String?
-    private(set) var rightJoystickVerticalTitle: String?
     
     fileprivate(set) var progress: Float = 0
     fileprivate(set) var topButtonTitle: String
@@ -33,19 +29,36 @@ final class ViewModel {
     init() {
         topButtonTitle = "Connect"
         
+        leftJoystickProvider = BCJoystickViewModel()
+        rightJoystickProvider = BCJoystickViewModel(deadbandX: 0.1, vLabelLeft: true)
+        
+        leftJoystickProvider.add(observer: self)
+        rightJoystickProvider.add(observer: self)
+        
         crazyFlie = CrazyFlie(delegate: self)
         loadDefaults()
     }
     
-    var bothThumbsOnJoystick: Bool = false {
-        didSet {
-            if oldValue != bothThumbsOnJoystick {
-                if bothThumbsOnJoystick {
-                    motionLink?.calibrate()
-                }
-                delegate?.signalUpdate()
-            }
-        }
+    deinit {
+        leftJoystickProvider.remove(observer: self)
+        rightJoystickProvider.remove(observer: self)
+    }
+    
+    var leftXTitle: String? {
+        return title(at: 0)
+    }
+    var rightXTitle: String? {
+        return title(at: 1)
+    }
+    var leftYTitle: String? {
+        return title(at: 2)
+    }
+    var rightYTitle: String? {
+        return title(at: 3)
+    }
+    
+    var bothThumbsOnJoystick: Bool {
+        return leftJoystickProvider.activated && rightJoystickProvider.activated
     }
     
     lazy var settingsViewModel: SettingsViewModel? = {
@@ -67,7 +80,13 @@ final class ViewModel {
         crazyFlie?.connect(nil)
     }
     
-    // MARK: - Private MEthods
+    // MARK: - Private Methods
+    
+    private func title(at index: Int) -> String? {
+        guard controlMode.titles.indices.contains(index) else { return nil }
+        
+        return controlMode.titles[index]
+    }
     
     private func startMotionUpdate() {
         if motionLink == nil {
@@ -94,7 +113,7 @@ final class ViewModel {
         updateSettings()
     }
     
-    private func updateSettings() {
+    func updateSettings() {
         if controlMode == .tilt,
             MotionLink().canAccessMotion {
             startMotionUpdate()
@@ -104,6 +123,12 @@ final class ViewModel {
         }
         
         applyCommander()
+    }
+    
+    fileprivate func calibrateMotionIfNeeded() {
+        if controlMode == .tilt && bothThumbsOnJoystick {
+            motionLink?.calibrate()
+        }
     }
     
     fileprivate func changed(controlMode: ControlMode) {
@@ -146,6 +171,11 @@ final class ViewModel {
 }
 
 extension ViewModel: BCJoystickViewModelObserver {
+    func didUpdateState() {
+        calibrateMotionIfNeeded()
+        
+        delegate?.signalUpdate()
+    }
 }
 
 extension ViewModel: SettingsViewModelObserver {
@@ -166,6 +196,6 @@ extension ViewModel: CrazyFlieDelegate {
     }
     
     func didFail(with title: String, message: String?) {
-        
+        delegate?.signalFailed(with: title, message: message)
     }
 }

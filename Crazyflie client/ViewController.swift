@@ -31,6 +31,7 @@ final class ViewController: UIViewController {
         }
         
         setupUI()
+        viewModel?.updateSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,21 +67,19 @@ final class ViewController: UIViewController {
         //Init joysticks
         let frame = UIScreen.main.bounds
         
-        let leftViewModel = BCJoystickViewModel()
+        let leftViewModel = viewModel.leftJoystickProvider
         let leftJoystick = BCJoystick(frame: frame, viewModel: leftViewModel)
         leftViewModel.delegate = leftJoystick
         leftViewModel.add(observer: viewModel)
         leftView.addSubview(leftJoystick)
         self.leftJoystick = leftJoystick
-        viewModel.leftJoystickProvider = leftViewModel
         
-        let rightViewModel = BCJoystickViewModel(deadbandX: 0.1, vLabelLeft: true)
+        let rightViewModel = viewModel.rightJoystickProvider
         let rightJoystick = BCJoystick(frame: frame, viewModel: rightViewModel)
         rightViewModel.delegate = rightJoystick
         rightViewModel.add(observer: viewModel)
         rightView.addSubview(rightJoystick)
         self.rightJoystick = rightJoystick
-        viewModel.rightJoystickProvider = rightViewModel
     }
     
     fileprivate func updateUI() {
@@ -89,10 +88,10 @@ final class ViewController: UIViewController {
         }
         unlockLabel.isHidden = viewModel.bothThumbsOnJoystick
         
-        leftJoystick?.hLabel.text = viewModel.leftJoystickHorizontalTitle
-        leftJoystick?.vLabel.text = viewModel.leftJoystickVerticalTitle
-        rightJoystick?.hLabel.text = viewModel.rightJoystickHorizontalTitle
-        rightJoystick?.vLabel.text = viewModel.rightJoystickVerticalTitle
+        leftJoystick?.hLabel.text = viewModel.leftXTitle
+        leftJoystick?.vLabel.text = viewModel.leftYTitle
+        rightJoystick?.hLabel.text = viewModel.rightXTitle
+        rightJoystick?.vLabel.text = viewModel.rightYTitle
         
         connectProgress.setProgress(viewModel.progress, animated: true)
         connectButton.setTitle(viewModel.topButtonTitle, for: .normal)
@@ -115,6 +114,18 @@ final class ViewController: UIViewController {
 extension ViewController: ViewModelDelegate {
     func signalUpdate() {
         updateUI()
+    }
+    
+    func signalFailed(with title: String, message: String?) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok",
+                                      style: .default,
+                                      handler: {[weak alert] (action) in
+            alert?.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
 /*
