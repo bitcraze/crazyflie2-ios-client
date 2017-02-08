@@ -21,7 +21,7 @@ final class ViewModel {
     private var motionLink: MotionLink?
     private var crazyFlie: CrazyFlie?
     private var sensitivity: Sensitivity = .slow
-    private var controlMode: ControlMode = ControlMode.current!
+    private var controlMode: ControlMode = ControlMode.current ?? .mode1
     
     fileprivate(set) var progress: Float = 0
     fileprivate(set) var topButtonTitle: String
