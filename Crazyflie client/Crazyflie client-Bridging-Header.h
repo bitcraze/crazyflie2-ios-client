@@ -3,3 +3,4 @@
 //
 
 #import "ZipZap/ZipZap.h"
+#import "CommandPacket.h"

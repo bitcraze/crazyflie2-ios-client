@@ -45,6 +45,7 @@
 		586415AB1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415AA1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift */; };
 		586415AD1E3E4FA000B3CB27 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415AC1E3E4FA000B3CB27 /* Observer.swift */; };
 		58B2742F1E47B6B900E39DFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B2742E1E47B6B900E39DFD /* AppDelegate.swift */; };
+		58B89C7B1E51132400750790 /* CommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C7A1E51132400750790 /* CommandPacket.m */; };
 		58CFD14C1D397F310031D4E9 /* CrazyFlie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */; };
 		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		9C974A891CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
@@ -104,6 +105,8 @@
 		586415AA1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystickViewModel.swift; sourceTree = "<group>"; };
 		586415AC1E3E4FA000B3CB27 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		58B2742E1E47B6B900E39DFD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		58B89C7A1E51132400750790 /* CommandPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandPacket.m; sourceTree = "<group>"; };
+		58B89C7C1E51133700750790 /* CommandPacket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandPacket.h; sourceTree = "<group>"; };
 		58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlie.swift; sourceTree = "<group>"; };
 		9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Bridging-Header.h"; sourceTree = "<group>"; };
 		9C974A871CAE58840002418A /* MotionLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionLink.swift; sourceTree = "<group>"; };
@@ -207,6 +210,8 @@
 				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
 				9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */,
 				586415AC1E3E4FA000B3CB27 /* Observer.swift */,
+				58B89C7C1E51133700750790 /* CommandPacket.h */,
+				58B89C7A1E51132400750790 /* CommandPacket.m */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -436,6 +441,7 @@
 			files = (
 				5864159E1E36A1F100B3CB27 /* Settings.swift in Sources */,
 				586415AB1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift in Sources */,
+				58B89C7B1E51132400750790 /* CommandPacket.m in Sources */,
 				5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
 				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,

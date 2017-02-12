@@ -29,14 +29,6 @@ protocol CrazyFlieDelegate {
 
 open class CrazyFlie: NSObject {
     
-    struct CommanderPacket {
-        var header: __uint8_t;
-        var pitch: Float;
-        var roll: Float;
-        var yaw: Float;
-        var thrust:Float;
-    }
-    
     private(set) var state:CrazyFlieState {
         didSet {
             delegate?.didUpdate(state: state)
@@ -140,9 +132,8 @@ open class CrazyFlie: NSObject {
     }
     
     private func sendData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
-        var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
-        print("thrust: ", thrust, ", pitch: ", pitch, ", roll: ", roll, ", yaw: ", yaw)
-        let data = Data(bytes: &commandPacket, count:MemoryLayout<CommanderPacket>.size)
-        bluetoothLink.sendPacket(data, callback: nil)
+        var commandPacket = CommanderPacket(header: 0x30, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
+        let data = CommandPacketCreator.data(from: commandPacket)
+        bluetoothLink.sendPacket(data!, callback: nil)
     }
 }
