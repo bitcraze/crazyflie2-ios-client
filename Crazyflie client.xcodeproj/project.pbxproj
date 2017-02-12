@@ -40,7 +40,6 @@
 		5864159E1E36A1F100B3CB27 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864159D1E36A1F100B3CB27 /* Settings.swift */; };
 		586415A01E36A3F700B3CB27 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864159F1E36A3F700B3CB27 /* ViewModel.swift */; };
 		586415A21E37F1FE00B3CB27 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415A11E37F1FE00B3CB27 /* SettingsViewController.swift */; };
-		586415A41E37F2B000B3CB27 /* CrazyFlieProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415A31E37F2B000B3CB27 /* CrazyFlieProtocols.swift */; };
 		586415A61E380E7C00B3CB27 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415A51E380E7C00B3CB27 /* SettingsViewModel.swift */; };
 		586415A91E3BC1AF00B3CB27 /* BCJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415A81E3BC1AF00B3CB27 /* BCJoystick.swift */; };
 		586415AB1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415AA1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift */; };
@@ -100,7 +99,6 @@
 		5864159D1E36A1F100B3CB27 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		5864159F1E36A3F700B3CB27 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		586415A11E37F1FE00B3CB27 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		586415A31E37F2B000B3CB27 /* CrazyFlieProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieProtocols.swift; sourceTree = "<group>"; };
 		586415A51E380E7C00B3CB27 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		586415A81E3BC1AF00B3CB27 /* BCJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystick.swift; sourceTree = "<group>"; };
 		586415AA1E3DF4FF00B3CB27 /* BCJoystickViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystickViewModel.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				51E178231A27762900BB2AF7 /* images */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
 				586415991E33DEE800B3CB27 /* CrazyFlieCommander.swift */,
-				586415A31E37F2B000B3CB27 /* CrazyFlieProtocols.swift */,
 				58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */,
 				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
 				9C974A871CAE58840002418A /* MotionLink.swift */,
@@ -454,7 +451,6 @@
 				5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */,
 				586415A91E3BC1AF00B3CB27 /* BCJoystick.swift in Sources */,
 				9C974A881CAE58840002418A /* MotionLink.swift in Sources */,
-				586415A41E37F2B000B3CB27 /* CrazyFlieProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

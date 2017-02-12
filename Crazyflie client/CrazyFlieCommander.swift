@@ -11,6 +11,18 @@ import Foundation
 let LINEAR_PR = true
 let LINEAR_THRUST = true
 
+protocol CrazyFlieDataProviderProtocol {
+    var value: Float { get }
+}
+
+protocol CrazyFlieXProvideable {
+    var x: Float { get }
+}
+
+protocol CrazyFlieYProvideable {
+    var y: Float { get }
+}
+
 enum CrazyFlieDataProvider {
     case x(provider: CrazyFlieXProvideable)
     case y(provider: CrazyFlieYProvideable)
