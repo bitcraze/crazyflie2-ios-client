@@ -142,10 +142,7 @@ class SimpleCrazyFlieCommander: CrazyFlieCommander {
     }
     
     private func yaw(from control: Float) -> Float {
-        if control >= 0 {
-            return control * yawRate
-        }
-        return 0
+        return control * yawRate
     }
 
     private func thrust(from control: Float) -> Float {
