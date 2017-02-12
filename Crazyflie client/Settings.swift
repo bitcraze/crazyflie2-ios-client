@@ -102,56 +102,56 @@ enum ControlMode: Int {
             let rightJoystick = rightJoystick else {
                 return nil
         }
-        leftJoystick.thrustControl = false
-        rightJoystick.thrustControl = false
+        leftJoystick.thrustControl = .none
+        rightJoystick.thrustControl = .none
         var commander: CrazyFlieCommander
         switch self {
         case .mode1:
-            rightJoystick.thrustControl = true
+            rightJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: rightJoystick),
-                rollProvider: .x(provider: leftJoystick),
-                yawProvider: .y(provider: leftJoystick),
+                pitchProvider: .y(provider: leftJoystick),
+                rollProvider: .x(provider: rightJoystick),
+                yawProvider: .x(provider: leftJoystick),
                 thrustProvider: .y(provider: rightJoystick),
                 settings: settings)
             break
         case .mode2:
-            leftJoystick.thrustControl = true
+            leftJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .y(provider: rightJoystick),
-                rollProvider: .y(provider:  leftJoystick),
+                rollProvider: .x(provider:  rightJoystick),
                 yawProvider: .x(provider: leftJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                thrustProvider: .y(provider: leftJoystick),
                 settings: settings)
             break
         case .mode3:
-            rightJoystick.thrustControl = true
+            rightJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: leftJoystick),
-                rollProvider: .y(provider: leftJoystick),
-                yawProvider: .y(provider: rightJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                pitchProvider: .y(provider: leftJoystick),
+                rollProvider: .x(provider: leftJoystick),
+                yawProvider: .x(provider: rightJoystick),
+                thrustProvider: .y(provider: rightJoystick),
                 settings: settings)
             break
         case .mode4:
-            leftJoystick.thrustControl = true
+            leftJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: rightJoystick),
-                rollProvider: .y(provider: leftJoystick),
-                yawProvider: .y(provider: leftJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                pitchProvider: .y(provider: rightJoystick),
+                rollProvider: .x(provider: leftJoystick),
+                yawProvider: .x(provider: rightJoystick),
+                thrustProvider: .y(provider: leftJoystick),
                 settings: settings)
             break
         case .tilt:
             guard let motionLink = motionLink else {
                 return nil
             }
-            rightJoystick.thrustControl = true
+            rightJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
                 pitchProvider: .x(provider: motionLink),
                 rollProvider: .y(provider: motionLink),
-                yawProvider: .y(provider: leftJoystick),
-                thrustProvider: .x(provider: rightJoystick),
+                yawProvider: .x(provider: leftJoystick),
+                thrustProvider: .y(provider: rightJoystick),
                 settings: settings,
                 allowNegativeValues: true)
         }

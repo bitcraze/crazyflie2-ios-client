@@ -71,6 +71,8 @@ open class CrazyFlie: NSObject {
                 self?.state = .characteristics
             }
         }
+        
+        startTimer()
     }
     
     func connect(_ callback:((Bool) -> Void)?) {
@@ -139,6 +141,7 @@ open class CrazyFlie: NSObject {
     
     private func sendData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
         var commandPacket = CommanderPacket(header: 0x30, pitch: pitch, roll: roll, yaw: yaw, thrust: thrust)
+        print("thrust: ", thrust, ", pitch: ", pitch, ", roll: ", roll, ", yaw: ", yaw)
         let data = Data(bytes: &commandPacket, count:MemoryLayout<CommanderPacket>.size)
         bluetoothLink.sendPacket(data, callback: nil)
     }

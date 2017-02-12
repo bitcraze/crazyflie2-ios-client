@@ -25,14 +25,15 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     private(set) var x: Float = 0
     private(set) var y: Float = 0
     private(set) var activated: Bool = false
+    private(set) var touchesChanged: Bool = false
     private(set) var deadbandX: Double
     private(set) var deadbandY: Double = 0
     private(set) var vLabelLeft: Bool
-    var thrustControl: Bool
+    var thrustControl: ThrustControl
     
     //MARK: - Init
     
-    init(deadbandX: Double = 0, vLabelLeft: Bool = false, thrustControl: Bool = false) {
+    init(deadbandX: Double = 0, vLabelLeft: Bool = false, thrustControl: ThrustControl = .none) {
         self.deadbandX = deadbandX
         self.vLabelLeft = vLabelLeft
         self.thrustControl = thrustControl
@@ -42,7 +43,9 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     
     func touchesBegan() {
         activated = true
+        touchesChanged = true
         notifyDidUpdate()
+        touchesChanged = false
     }
     
     func touchesEnded() {
@@ -59,7 +62,7 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
         if yUpdate > 1 { yUpdate = 1 }
         if yUpdate < -1 { yUpdate = -1 }
         yUpdate = apply(deadband: deadbandY, to: yUpdate)
-        y = Float(thrustControl ? (yUpdate + 1) / 2 : yUpdate)
+        y = Float(thrustControl == .y ? (yUpdate + 1) / 2 : yUpdate)
         
         notifyDidUpdate()
     }
@@ -69,7 +72,7 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     }
     
     var vProgress: Float {
-        return thrustControl ? y : (y + 1) / 2
+        return thrustControl == .y ? y : (y + 1) / 2
     }
     
     //MARK: - Private Methods
@@ -84,9 +87,11 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
         x = 0
         y = 0
         
+        touchesChanged = true
         activated = false
         
         notifyDidUpdate()
+        touchesChanged = false
     }
     
     private func apply(deadband: Double, to value: Double) -> Double {

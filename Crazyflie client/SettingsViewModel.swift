@@ -35,10 +35,10 @@ final class SettingsViewModel: Observable {
         return title(at: 0)
     }
     var rightXTitle: String? {
-        return title(at: 1)
+        return title(at: 2)
     }
     var leftYTitle: String? {
-        return title(at: 2)
+        return title(at: 1)
     }
     var rightYTitle: String? {
         return title(at: 3)

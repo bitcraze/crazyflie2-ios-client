@@ -25,11 +25,11 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     }
     
     var x: Float {
-        return Float(accelerometerData?.acceleration.x ?? 0)
+        return Float(calibratedAcceleration?.x ?? 0)
     }
     
     var y: Float {
-        return Float(accelerometerData?.acceleration.y ?? 0)
+        return Float(calibratedAcceleration?.y ?? 0)
     }
     
     var canAccessAccelerometer: Bool { return motionManager.isAccelerometerAvailable }
@@ -37,8 +37,11 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     var accelerometerData: CMAccelerometerData? { return motionManager.accelerometerData }
     var deviceMotion: CMDeviceMotion? { return motionManager.deviceMotion }
     
-    func calibratedAcceleration() -> CMAcceleration {
-        let a:CMAcceleration =  (motionManager.deviceMotion?.gravity)!
+    private var calibratedAcceleration: CMAcceleration? {
+        guard let a =  motionManager.accelerometerData?.acceleration else {
+            return nil
+        }
+        
         var pitch:Double = ((accelerationDataCalibrate.y - a.y) * 4);
         var roll:Double = ((a.x - accelerationDataCalibrate.x) * 4);
         pitch = pitch < -25 ? -25 : pitch;

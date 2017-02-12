@@ -8,13 +8,18 @@
 
 import UIKit
 
+enum ThrustControl {
+    case none
+    case y
+}
+
 protocol BCJoystickViewModelProtocol: class {
     func touchesBegan()
     func touchesEnded()
     func touches(movedTo xValue: Double, yValue: Double)
     
     var activated: Bool { get }
-    var thrustControl: Bool { get }
+    var thrustControl: ThrustControl { get }
     var vLabelLeft: Bool { get }
     var x: Float { get }
     var y: Float { get }
@@ -126,7 +131,7 @@ final class BCJoystick: UIControl {
         viewModel.touchesBegan()
         
         var center = touch.location(in: self)
-        if viewModel.thrustControl {
+        if viewModel.thrustControl == .y {
             center.y -= BCJoystick.JSIZE
         }
         
@@ -156,7 +161,7 @@ final class BCJoystick: UIControl {
             vLabel.center = CGPoint(x: center.x+JSIZE+12, y: center.y)
             vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(M_PI * +0.5)))
         }
-        vProgress.progress = viewModel.thrustControl ? 0 : 0.5
+        vProgress.progress = viewModel.thrustControl == .y ? 0 : 0.5
         
         hProgress.frame = CGRect(x: center.x - JSIZE, y: center.y - JSIZE - 4, width: 2 * JSIZE, height: 2 * JSIZE)
         hProgress.progress = 0.5;
