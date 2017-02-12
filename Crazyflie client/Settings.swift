@@ -148,8 +148,8 @@ enum ControlMode: Int {
             }
             rightJoystick.thrustControl = .y
             commander = SimpleCrazyFlieCommander(
-                pitchProvider: .x(provider: motionLink),
-                rollProvider: .y(provider: motionLink),
+                pitchProvider: .y(provider: motionLink),
+                rollProvider: .x(provider: motionLink),
                 yawProvider: .x(provider: leftJoystick),
                 thrustProvider: .y(provider: rightJoystick),
                 settings: settings,
