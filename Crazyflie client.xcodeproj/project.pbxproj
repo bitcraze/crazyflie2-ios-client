@@ -35,7 +35,7 @@
 		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
 		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
 		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
-		5864159A1E33DEE800B3CB27 /* CrazyFlieCommander.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415991E33DEE800B3CB27 /* CrazyFlieCommander.swift */; };
+		5864159A1E33DEE800B3CB27 /* CrazyFlieCommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586415991E33DEE800B3CB27 /* CrazyFlieCommandHelper.swift */; };
 		5864159C1E3693C100B3CB27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864159B1E3693C100B3CB27 /* ViewController.swift */; };
 		5864159E1E36A1F100B3CB27 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864159D1E36A1F100B3CB27 /* Settings.swift */; };
 		586415A01E36A3F700B3CB27 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5864159F1E36A3F700B3CB27 /* ViewModel.swift */; };
@@ -95,7 +95,7 @@
 		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
 		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
-		586415991E33DEE800B3CB27 /* CrazyFlieCommander.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieCommander.swift; sourceTree = "<group>"; };
+		586415991E33DEE800B3CB27 /* CrazyFlieCommandHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieCommandHelper.swift; sourceTree = "<group>"; };
 		5864159B1E3693C100B3CB27 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5864159D1E36A1F100B3CB27 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		5864159F1E36A3F700B3CB27 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -200,8 +200,8 @@
 				3A003944198AE038001799A4 /* Supporting Files */,
 				51E178231A27762900BB2AF7 /* images */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
-				586415991E33DEE800B3CB27 /* CrazyFlieCommander.swift */,
 				58CFD14B1D397F310031D4E9 /* CrazyFlie.swift */,
+				586415991E33DEE800B3CB27 /* CrazyFlieCommandHelper.swift */,
 				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
 				9C974A871CAE58840002418A /* MotionLink.swift */,
 				5169E6931B66527900D29911 /* BootloaderViewController.swift */,
@@ -445,7 +445,7 @@
 				5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
 				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,
-				5864159A1E33DEE800B3CB27 /* CrazyFlieCommander.swift in Sources */,
+				5864159A1E33DEE800B3CB27 /* CrazyFlieCommandHelper.swift in Sources */,
 				5864159C1E3693C100B3CB27 /* ViewController.swift in Sources */,
 				586415A01E36A3F700B3CB27 /* ViewModel.swift in Sources */,
 				58B2742F1E47B6B900E39DFD /* AppDelegate.swift in Sources */,
