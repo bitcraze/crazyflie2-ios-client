@@ -17,6 +17,10 @@ protocol CrazyFlieCommander {
     func prepareData()
 }
 
+enum CrazyFlieHeader: UInt8 {
+    case commander = 0x30
+}
+
 enum CrazyFlieState {
     case idle, connected , scanning, connecting, services, characteristics
 }
@@ -109,6 +113,8 @@ open class CrazyFlie: NSObject {
         stopTimer()
     }
     
+    // MARK: - Private Methods 
+    
     private func startTimer() {
         stopTimer()
         
@@ -128,11 +134,11 @@ open class CrazyFlie: NSObject {
         }
 
         commander.prepareData()
-        sendData(commander.roll, pitch: commander.pitch, thrust: commander.thrust, yaw: commander.yaw)
+        sendFlightData(commander.roll, pitch: commander.pitch, thrust: commander.thrust, yaw: commander.yaw)
     }
     
-    private func sendData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
-        var commandPacket = CommanderPacket(header: 0x30, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
+    private func sendFlightData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
+        let commandPacket = CommanderPacket(header: CrazyFlieHeader.commander.rawValue, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
         let data = CommandPacketCreator.data(from: commandPacket)
         bluetoothLink.sendPacket(data!, callback: nil)
     }
