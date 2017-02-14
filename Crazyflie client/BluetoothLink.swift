@@ -85,13 +85,21 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         super.init()
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        canBluetooth = centralManager!.state.rawValue == CBCentralManagerState.poweredOn.rawValue
+        if #available(iOS 10.0, *) {
+            canBluetooth = centralManager!.state == CBManagerState.poweredOn
+        } else {
+            canBluetooth = centralManager!.state.rawValue == 5 // PoweredOn
+        }
         
         state = "idle"
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        canBluetooth = central.state.rawValue == CBCentralManagerState.poweredOn.rawValue
+        if #available(iOS 10.0, *) {
+            canBluetooth = central.state == CBManagerState.poweredOn
+        } else {
+            canBluetooth = central.state.rawValue == 5 // PoweredOn
+        };
         print("Bluetooth is now " + (canBluetooth ? "on" : "off"))
     }
     

@@ -25,7 +25,7 @@ class FirmwareImage {
             }
             
             if let error = error  {
-                NSLog("Error requesting latest version from github. Error: \(error)")
+                NSLog("Error requesting latest version from github. Error: \(error.localizedDescription)")
                 OperationQueue.main.addOperation() { callback(nil, false) }
                 return
             }
@@ -102,7 +102,7 @@ class FirmwareImage {
             
             if let error = error {
                 OperationQueue.main.addOperation() { callback(false) }
-                NSLog("Error downloading the firmware: \(error)")
+                NSLog("Error downloading the firmware: \(error.localizedDescription)")
                 return
             }
             
@@ -127,7 +127,7 @@ class FirmwareImage {
             return false
         }
 
-        var json: JSON = nil
+        var json: JSON = JSON.null
                 
         // Find json and decode it
         let entries = archive.entries.map { $0 as? ZZArchiveEntry }.flatMap { $0 }
@@ -139,7 +139,7 @@ class FirmwareImage {
             break
         }
         
-        if json == nil {
+        if json == JSON.null {
             NSLog("Error extracting the image: no manifest.json")
             return false
         }
@@ -167,7 +167,7 @@ class FirmwareImage {
                     NSLog("Error extracting the image: Malformed firmware for \(name)")
                     return false
                 }
-                self.targetFirmwares["\(platform)-\(target)-\(type)"] = data
+                self.targetFirmwares["\(platform!)-\(target!)-\(type!)"] = data
             }
         }
         
