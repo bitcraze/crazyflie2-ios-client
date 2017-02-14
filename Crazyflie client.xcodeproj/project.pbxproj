@@ -11,18 +11,13 @@
 		3A003940198AE038001799A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393F198AE038001799A4 /* CoreGraphics.framework */; };
 		3A003942198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
 		3A003948198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003946198AE038001799A4 /* InfoPlist.strings */; };
-		3A00394A198AE038001799A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003949198AE038001799A4 /* main.m */; };
-		3A00394E198AE038001799A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A00394D198AE038001799A4 /* AppDelegate.m */; };
 		3A003951198AE038001799A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A00394F198AE038001799A4 /* Main.storyboard */; };
-		3A003954198AE038001799A4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003953198AE038001799A4 /* ViewController.m */; };
 		3A00395D198AE038001799A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00395C198AE038001799A4 /* XCTest.framework */; };
 		3A00395E198AE038001799A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393D198AE038001799A4 /* Foundation.framework */; };
 		3A00395F198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
 		3A003967198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003965198AE038001799A4 /* InfoPlist.strings */; };
 		3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003968198AE038001799A4 /* Crazyflie_clientTests.m */; };
-		3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003973198B5A7F001799A4 /* BCJoystick.m */; };
 		3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFD046199632B900FDF11A /* CoreBluetooth.framework */; };
-		5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */; };
 		516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516212D71AE7D6B40044BC2B /* BluetoothLink.swift */; };
 		5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6931B66527900D29911 /* BootloaderViewController.swift */; };
 		5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6951B66C41900D29911 /* FirmwareImage.swift */; };
@@ -40,6 +35,18 @@
 		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
 		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
 		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
+		58B89C801E539F0000750790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C7F1E539F0000750790 /* AppDelegate.swift */; };
+		58B89C831E539F0C00750790 /* BCJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C811E539F0C00750790 /* BCJoystick.swift */; };
+		58B89C841E539F0C00750790 /* BCJoystickViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */; };
+		58B89C871E539F2A00750790 /* CommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C861E539F2A00750790 /* CommandPacket.m */; };
+		58B89C891E539F3700750790 /* CrazyFlie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C881E539F3700750790 /* CrazyFlie.swift */; };
+		58B89C901E539F4500750790 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8A1E539F4500750790 /* Observer.swift */; };
+		58B89C911E539F4500750790 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8B1E539F4500750790 /* Settings.swift */; };
+		58B89C921E539F4500750790 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8C1E539F4500750790 /* SettingsViewController.swift */; };
+		58B89C931E539F4500750790 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8D1E539F4500750790 /* SettingsViewModel.swift */; };
+		58B89C941E539F4500750790 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8E1E539F4500750790 /* ViewController.swift */; };
+		58B89C951E539F4500750790 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8F1E539F4500750790 /* ViewModel.swift */; };
+		58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */; };
 		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		9C974A891CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		A9ED5CE618365A835BCE6316 /* Pods_Crazyflie_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12141818E36E1A261D77B0DB /* Pods_Crazyflie_client.framework */; };
@@ -65,21 +72,14 @@
 		3A003947198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A003949198AE038001799A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Prefix.pch"; sourceTree = "<group>"; };
-		3A00394C198AE038001799A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3A00394D198AE038001799A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3A003950198AE038001799A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3A003952198AE038001799A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3A003953198AE038001799A4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A00395C198AE038001799A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3A003964198AE038001799A4 /* Crazyflie clientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crazyflie clientTests-Info.plist"; sourceTree = "<group>"; };
 		3A003966198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A003968198AE038001799A4 /* Crazyflie_clientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crazyflie_clientTests.m; sourceTree = "<group>"; };
-		3A003972198B5A7F001799A4 /* BCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCJoystick.h; path = lib/BCJoystick.h; sourceTree = "<group>"; };
-		3A003973198B5A7F001799A4 /* BCJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCJoystick.m; path = lib/BCJoystick.m; sourceTree = "<group>"; };
 		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		5113D6B41A04C8B1008A33E0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		516212D71AE7D6B40044BC2B /* BluetoothLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLink.swift; sourceTree = "<group>"; };
 		5169E6931B66527900D29911 /* BootloaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootloaderViewController.swift; sourceTree = "<group>"; };
 		5169E6951B66C41900D29911 /* FirmwareImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareImage.swift; sourceTree = "<group>"; };
@@ -97,10 +97,22 @@
 		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
 		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
+		58B89C7F1E539F0000750790 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		58B89C811E539F0C00750790 /* BCJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystick.swift; sourceTree = "<group>"; };
+		58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystickViewModel.swift; sourceTree = "<group>"; };
+		58B89C851E539F2A00750790 /* CommandPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandPacket.h; sourceTree = "<group>"; };
+		58B89C861E539F2A00750790 /* CommandPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandPacket.m; sourceTree = "<group>"; };
+		58B89C881E539F3700750790 /* CrazyFlie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlie.swift; sourceTree = "<group>"; };
+		58B89C8A1E539F4500750790 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		58B89C8B1E539F4500750790 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		58B89C8C1E539F4500750790 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		58B89C8D1E539F4500750790 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		58B89C8E1E539F4500750790 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		58B89C8F1E539F4500750790 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieCommandHelper.swift; sourceTree = "<group>"; };
 		5DFF2281859CF831709F91CE /* Pods-Crazyflie client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.release.xcconfig"; sourceTree = "<group>"; };
 		8DFBD893C1CD99CE121EFD5F /* Pods-Crazyflie client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.debug.xcconfig"; sourceTree = "<group>"; };
 		9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Bridging-Header.h"; sourceTree = "<group>"; };
-		9C974A861CAE58840002418A /* Crazyflie clientTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie clientTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		9C974A871CAE58840002418A /* MotionLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionLink.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,26 +189,31 @@
 		3A003943198AE038001799A4 /* Crazyflie client */ = {
 			isa = PBXGroup;
 			children = (
-				3A00394C198AE038001799A4 /* AppDelegate.h */,
-				3A00394D198AE038001799A4 /* AppDelegate.m */,
+				58B89C7F1E539F0000750790 /* AppDelegate.swift */,
 				3A00394F198AE038001799A4 /* Main.storyboard */,
-				5113D6B41A04C8B1008A33E0 /* SettingsViewController.h */,
-				5113D6B51A04C8B1008A33E0 /* SettingsViewController.m */,
-				3A003973198B5A7F001799A4 /* BCJoystick.m */,
-				3A003972198B5A7F001799A4 /* BCJoystick.h */,
-				3A003953198AE038001799A4 /* ViewController.m */,
+				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
 				51E178241A27766C00BB2AF7 /* Images.xcassets */,
 				3A003944198AE038001799A4 /* Supporting Files */,
 				51E178231A27762900BB2AF7 /* images */,
-				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
+				58B89C811E539F0C00750790 /* BCJoystick.swift */,
+				58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */,
+				58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */,
+				58B89C881E539F3700750790 /* CrazyFlie.swift */,
+				58B89C8A1E539F4500750790 /* Observer.swift */,
+				58B89C8B1E539F4500750790 /* Settings.swift */,
+				58B89C8C1E539F4500750790 /* SettingsViewController.swift */,
+				58B89C8D1E539F4500750790 /* SettingsViewModel.swift */,
+				58B89C8E1E539F4500750790 /* ViewController.swift */,
+				58B89C8F1E539F4500750790 /* ViewModel.swift */,
 				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
 				9C974A871CAE58840002418A /* MotionLink.swift */,
 				5169E6931B66527900D29911 /* BootloaderViewController.swift */,
 				5169E6951B66C41900D29911 /* FirmwareImage.swift */,
 				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
 				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
+				58B89C851E539F2A00750790 /* CommandPacket.h */,
+				58B89C861E539F2A00750790 /* CommandPacket.m */,
 				9C89DADA1CBC35C900FA10FD /* Crazyflie client-Bridging-Header.h */,
-				9C974A861CAE58840002418A /* Crazyflie clientTests-Bridging-Header.h */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -412,17 +429,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B89C901E539F4500750790 /* Observer.swift in Sources */,
+				58B89C801E539F0000750790 /* AppDelegate.swift in Sources */,
 				5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
+				58B89C911E539F4500750790 /* Settings.swift in Sources */,
 				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,
 				519AB5E51B6B75BB007BDE9B /* Watchdog.swift in Sources */,
-				3A003974198B5A7F001799A4 /* BCJoystick.m in Sources */,
-				3A003954198AE038001799A4 /* ViewController.m in Sources */,
-				5113D6B61A04C8B1008A33E0 /* SettingsViewController.m in Sources */,
-				3A00394E198AE038001799A4 /* AppDelegate.m in Sources */,
+				58B89C841E539F0C00750790 /* BCJoystickViewModel.swift in Sources */,
+				58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */,
+				58B89C921E539F4500750790 /* SettingsViewController.swift in Sources */,
+				58B89C941E539F4500750790 /* ViewController.swift in Sources */,
+				58B89C951E539F4500750790 /* ViewModel.swift in Sources */,
+				58B89C831E539F0C00750790 /* BCJoystick.swift in Sources */,
 				5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */,
-				3A00394A198AE038001799A4 /* main.m in Sources */,
+				58B89C871E539F2A00750790 /* CommandPacket.m in Sources */,
 				9C974A881CAE58840002418A /* MotionLink.swift in Sources */,
+				58B89C891E539F3700750790 /* CrazyFlie.swift in Sources */,
+				58B89C931E539F4500750790 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
