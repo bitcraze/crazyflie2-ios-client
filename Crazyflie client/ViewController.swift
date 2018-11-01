@@ -12,7 +12,7 @@ final class ViewController: UIViewController {
     private var leftJoystick: BCJoystick?
     private var rightJoystick: BCJoystick?
     
-    weak var viewModel: ViewModel?
+    private var viewModel: ViewModel?
     private var settingsViewController: SettingsViewController?
     
     @IBOutlet weak var unlockLabel: UILabel!

@@ -24,6 +24,8 @@
 	<string>8</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Uses Bluetooth to connect to Crazyflie 2.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>
@@ -34,8 +36,6 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Uses Bluetooth to connect to Crazyflie 2.0</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
