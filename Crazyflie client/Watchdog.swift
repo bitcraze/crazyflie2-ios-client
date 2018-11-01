@@ -39,7 +39,7 @@ class Watchdog : NSObject
     }
     
     @objc
-    func timeout(timer: Timer) {
+    private func timeout(timer: Timer) {
         self.onTimeout?()
         self.stop()
     }

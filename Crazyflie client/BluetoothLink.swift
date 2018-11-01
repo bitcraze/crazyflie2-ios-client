@@ -142,7 +142,8 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    @objc func scanningTimeout(timer: Timer) {
+    @objc
+    private func scanningTimeout(timer: Timer) {
         NSLog("Scan timeout, stop scan");
         centralManager!.stopScan()
         state = "idle"

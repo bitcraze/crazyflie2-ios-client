@@ -128,7 +128,8 @@ open class CrazyFlie: NSObject {
         }
     }
     
-    @objc private func updateData(_ timter:Timer){
+    @objc
+    private func updateData(_ timter:Timer){
         guard timer != nil, let commander = commander else {
             return
         }
