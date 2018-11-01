@@ -7,7 +7,7 @@ Features
 
 - Can connect and control a Crazyflie 2 via Bluetooth Smart
 - Choice of control mode and sensitivity
-- Can update Crazyflie with the latest firmware version (not released yet)
+- Can update Crazyflie with the latest firmware version
 
 This app requires iOS 8 or higher.
 
@@ -19,7 +19,7 @@ Install cocoapod dependencies for the project with command.
 
     pod install
 
-Open the workspace file `Crazyflie client.xcworkspace` in Xcode 7.1 or above to compile and run the app.
+Open the workspace file `Crazyflie client.xcworkspace` in Xcode to compile and run the app.
 
 See the [Bitcraze wiki](https://wiki.bitcraze.io) for more information about
 Crazyflie and the communication protocols.
