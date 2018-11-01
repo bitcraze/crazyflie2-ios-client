@@ -52,7 +52,7 @@ final class BCJoystick: UIControl {
         
         vProgress = UIProgressView(progressViewStyle: .default)
         vProgress.center = CGPoint(x:0, y:0)
-        vProgress.transform = CGAffineTransform(rotationAngle: CGFloat(Double(M_PI * -0.5)))
+        vProgress.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * -0.5)))
         vProgress.isHidden = true
         
         vLabel = UILabel(frame: frame)
@@ -60,7 +60,7 @@ final class BCJoystick: UIControl {
         vLabel.textColor = UIColor(red: 0, green: 122.0/255.0, blue: 1.0, alpha: 0.75)
         vLabel.textAlignment = .center;
         vLabel.center = CGPoint(x:0, y:0);
-        vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(M_PI * -0.5)))
+        vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * -0.5)))
         vLabel.isHidden = true
         
         hProgress = UIProgressView(progressViewStyle: .default)
@@ -155,11 +155,11 @@ final class BCJoystick: UIControl {
         if viewModel.vLabelLeft {
             vProgress.center = CGPoint(x: center.x-JSIZE-3, y: center.y)
             vLabel.center = CGPoint(x: center.x-JSIZE-12, y: center.y)
-            vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(M_PI * -0.5)))
+            vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * -0.5)))
         } else {
             vProgress.center = CGPoint(x: center.x+JSIZE+3, y: center.y)
             vLabel.center = CGPoint(x: center.x+JSIZE+12, y: center.y)
-            vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(M_PI * +0.5)))
+            vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * +0.5)))
         }
         vProgress.progress = viewModel.thrustControl == .y ? 0 : 0.5
         

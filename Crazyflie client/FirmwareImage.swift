@@ -38,8 +38,15 @@ class FirmwareImage {
             }
             
             // Decoding the JSON and inithializing a new FirmwareImage object
-            let json = JSON(data: data)
-            
+            let json: JSON
+            do {
+                json = try JSON(data: data)
+            } catch {
+                NSLog("Error, the data is not json. Data: \(data)")
+                OperationQueue.main.addOperation() { callback(nil, false) }
+                return
+            }
+
             let version = json["tag_name"].string
             let description = json["body"].string
             var fileName: String? = nil
@@ -59,16 +66,19 @@ class FirmwareImage {
                     }
                 }
             }
-            
-            if version == nil || description == nil || fileName == nil || fileUrl == nil {
-                NSLog("Error decoding the github latest version json: (\(version), \(description), \(fileName), \(fileUrl)")
+
+            if let version = version,
+                let description = description,
+                let fileName = fileName,
+                let fileUrl = fileUrl {
+                OperationQueue.main.addOperation() {
+                    let firmware = FirmwareImage(version: version, description: description, fileName: fileName, fileUrl: fileUrl)
+                    OperationQueue.main.addOperation() { callback(firmware, false) }
+                }
+            } else {
+                NSLog("Error decoding the github latest version json: (\(String(describing: version)), \(String(describing: description)), \(String(describing: fileName)), \(String(describing: fileUrl))")
                 OperationQueue.main.addOperation() { callback(nil, fileName == nil) }
                 return
-            }
-            
-            OperationQueue.main.addOperation() {
-                let firmware = FirmwareImage(version: version!, description: description!, fileName: fileName!, fileUrl: fileUrl!)
-                OperationQueue.main.addOperation() { callback(firmware, false) }
             }
         }) 
         
@@ -127,23 +137,23 @@ class FirmwareImage {
             return false
         }
 
-        var json: JSON = JSON.null
-                
-        // Find json and decode it
-        let entries = archive.entries.map { $0 as? ZZArchiveEntry }.flatMap { $0 }
 
-        for entry in entries where entry.fileName == "manifest.json" {
-            if let data = try? entry.newData() {
-                json = JSON(data: data)
-            }
-            break
-        }
-        
-        if json == JSON.null {
+        // Find json and decode it
+        let entries = archive.entries
+
+        guard let manifestEntry = entries.first(where: { $0.fileName == "manifest.json" }) else {
             NSLog("Error extracting the image: no manifest.json")
             return false
         }
-        
+
+        let json: JSON
+        do {
+            json = try JSON(data: manifestEntry.newData())
+        } catch {
+            NSLog("Error extracting the image: json malformed. Error: \(error)")
+            return false
+        }
+
         let version =  json["version"].int
         let files = json["files"].dictionary
         

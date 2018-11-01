@@ -102,7 +102,7 @@ class BootloaderViewController : UIViewController {
             if let firmware = self.firmware {
                 NSLog("New version fetched!")
                 self.versionLabel.text = firmware.version
-                self.descriptionLabel.text = (firmware.description.characters.split { $0 == "\n" }.map { String($0) })[0]
+                self.descriptionLabel.text = (firmware.description.split { $0 == "\n" }.map { String($0) })[0]
                 
                 self.progressLabel.text = "Downloading firmware image ..."
                 firmware.download() { (success) in
