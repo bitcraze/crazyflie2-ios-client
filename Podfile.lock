@@ -1,15 +1,20 @@
 PODS:
-  - SwiftyJSON (3.1.3)
-  - zipzap (8.0.4)
+  - SwiftyJSON (4.2.0)
+  - zipzap (8.1.1)
 
 DEPENDENCIES:
   - SwiftyJSON
   - zipzap (~> 8.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftyJSON
+    - zipzap
+
 SPEC CHECKSUMS:
-  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
-  zipzap: 45be5e182aead61fbb8300ddb4766f8e82a557c4
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  zipzap: 940162d9c9c60472c2eab341385e4214da0fdf1c
 
-PODFILE CHECKSUM: a5eb80c924aa3cf1f07529d61ae4c2fd49e757b5
+PODFILE CHECKSUM: 450736c91d436b039f79db0ce4d508db7d1f8d70
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.5.3
