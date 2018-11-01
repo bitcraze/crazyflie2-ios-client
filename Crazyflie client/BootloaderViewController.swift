@@ -62,20 +62,20 @@ class BootloaderViewController : UIViewController {
         case .error:
             self.updateButton.isEnabled = false
             self.closeButton.isEnabled = true
-            self.updateButton.setTitle("Update", for: UIControlState())
+            self.updateButton.setTitle("Update", for: .normal)
             self.progressLabel.text = self.errorString
             self.progressIndicator.stopAnimating()
             self.progressIndicator.isHidden = true;
         case .idle:
             self.updateButton.isEnabled = false
             self.closeButton.isEnabled = true
-            self.updateButton.setTitle("Update", for: UIControlState())
+            self.updateButton.setTitle("Update", for: .normal)
             self.progressLabel.text = "Downloading latest firmware from the Internet"
         case .imageFetched:
             self.updateButton.isEnabled = true
             self.closeButton.isEnabled = true
             self.progressIndicator.stopAnimating()
-            self.updateButton.setTitle("Update", for: UIControlState())
+            self.updateButton.setTitle("Update", for: .normal)
             self.progressIndicator.isHidden = true;
             self.progressLabel.text = "Ready to Update"
         case .updating:
@@ -83,7 +83,7 @@ class BootloaderViewController : UIViewController {
             self.closeButton.isEnabled = false
             self.progressIndicator.startAnimating()
             self.progressIndicator.isHidden = false;
-            self.updateButton.setTitle("Cancel update", for: UIControlState())
+            self.updateButton.setTitle("Cancel update", for: .normal)
             self.progressLabel.text = "Updating ..."
         }
     }

@@ -60,6 +60,6 @@ extension Observable {
     }
     
     public var observers: [ConcreteObserver] {
-        return weakObservers.flatMap { $0.object as? ConcreteObserver }
+        return weakObservers.compactMap { $0.object as? ConcreteObserver }
     }
 }
