@@ -135,14 +135,15 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 central.scanForPeripherals(withServices: nil, options: nil);
                 state = "scanning"
                 
-                scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(BluetoothLink.scanningTimeout(_:)), userInfo: nil, repeats: false)
+                scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(scanningTimeout), userInfo: nil, repeats: false)
             }
             
             connectCallback = callback
         }
     }
     
-    func scanningTimeout(_ timer: Timer) {
+    @objc
+    private func scanningTimeout(timer: Timer) {
         NSLog("Scan timeout, stop scan");
         centralManager!.stopScan()
         state = "idle"

@@ -34,11 +34,12 @@ class Watchdog : NSObject
             return
         }
         
-        self.timer = Timer.scheduledTimer(timeInterval: self.period, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: self.period, target:self, selector: #selector(timeout), userInfo: nil, repeats: false)
         self.started = true
     }
     
-    func timeout(_:Timer) {
+    @objc
+    private func timeout(timer: Timer) {
         self.onTimeout?()
         self.stop()
     }
@@ -69,7 +70,7 @@ class Watchdog : NSObject
         let candidatePeriod = period ?? self.period
         
         self.timer.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: candidatePeriod, target:self, selector: #selector(Watchdog.timeout(_:)), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: candidatePeriod, target:self, selector: #selector(timeout), userInfo: nil, repeats: false)
     }
     
 }

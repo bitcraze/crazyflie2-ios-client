@@ -76,9 +76,7 @@ final class BCJoystickViewModel: BCJoystickViewModelProtocol, Observable, CrazyF
     }
     
     //MARK: - Private Methods
-    
-    //MARK: - Public Methods
-    
+
     private func cancel() {
         guard activated else {
             return

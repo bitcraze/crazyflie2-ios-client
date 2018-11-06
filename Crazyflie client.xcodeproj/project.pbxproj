@@ -12,12 +12,8 @@
 		3A003942198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
 		3A003948198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003946198AE038001799A4 /* InfoPlist.strings */; };
 		3A003951198AE038001799A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A00394F198AE038001799A4 /* Main.storyboard */; };
-		3A00395D198AE038001799A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00395C198AE038001799A4 /* XCTest.framework */; };
-		3A00395E198AE038001799A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A00393D198AE038001799A4 /* Foundation.framework */; };
-		3A00395F198AE038001799A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A003941198AE038001799A4 /* UIKit.framework */; };
-		3A003967198AE038001799A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A003965198AE038001799A4 /* InfoPlist.strings */; };
-		3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A003968198AE038001799A4 /* Crazyflie_clientTests.m */; };
 		3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFD046199632B900FDF11A /* CoreBluetooth.framework */; };
+		41A02DC5218A80CC0036DC36 /* Crazyflie_clientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A02DC4218A80CC0036DC36 /* Crazyflie_clientTests.swift */; };
 		516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516212D71AE7D6B40044BC2B /* BluetoothLink.swift */; };
 		5169E6941B66527900D29911 /* BootloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6931B66527900D29911 /* BootloaderViewController.swift */; };
 		5169E6961B66C41900D29911 /* FirmwareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5169E6951B66C41900D29911 /* FirmwareImage.swift */; };
@@ -48,12 +44,11 @@
 		58B89C951E539F4500750790 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8F1E539F4500750790 /* ViewModel.swift */; };
 		58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */; };
 		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
-		9C974A891CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 		A9ED5CE618365A835BCE6316 /* Pods_Crazyflie_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12141818E36E1A261D77B0DB /* Pods_Crazyflie_client.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3A003960198AE038001799A4 /* PBXContainerItemProxy */ = {
+		41A02DC7218A80CC0036DC36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3A003932198AE038001799A4 /* Project object */;
 			proxyType = 1;
@@ -74,12 +69,11 @@
 		3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Prefix.pch"; sourceTree = "<group>"; };
 		3A003950198AE038001799A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3A003952198AE038001799A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A00395C198AE038001799A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		3A003964198AE038001799A4 /* Crazyflie clientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crazyflie clientTests-Info.plist"; sourceTree = "<group>"; };
-		3A003966198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A003968198AE038001799A4 /* Crazyflie_clientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crazyflie_clientTests.m; sourceTree = "<group>"; };
 		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		41A02DC2218A80CC0036DC36 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		41A02DC4218A80CC0036DC36 /* Crazyflie_clientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crazyflie_clientTests.swift; sourceTree = "<group>"; };
+		41A02DC6218A80CC0036DC36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		516212D71AE7D6B40044BC2B /* BluetoothLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothLink.swift; sourceTree = "<group>"; };
 		5169E6931B66527900D29911 /* BootloaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootloaderViewController.swift; sourceTree = "<group>"; };
 		5169E6951B66C41900D29911 /* FirmwareImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareImage.swift; sourceTree = "<group>"; };
@@ -130,13 +124,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3A003958198AE038001799A4 /* Frameworks */ = {
+		41A02DBF218A80CC0036DC36 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A00395D198AE038001799A4 /* XCTest.framework in Frameworks */,
-				3A00395F198AE038001799A4 /* UIKit.framework in Frameworks */,
-				3A00395E198AE038001799A4 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				3A003943198AE038001799A4 /* Crazyflie client */,
-				3A003962198AE038001799A4 /* Crazyflie clientTests */,
+				41A02DC3218A80CC0036DC36 /* Crazyflie clientTests */,
 				3A00393C198AE038001799A4 /* Frameworks */,
 				3A00393B198AE038001799A4 /* Products */,
 				301C61D498506D25B58E3ABF /* Pods */,
@@ -167,7 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				3A00393A198AE038001799A4 /* Crazyflie client.app */,
-				3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */,
+				41A02DC2218A80CC0036DC36 /* Crazyflie clientTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,22 +222,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3A003962198AE038001799A4 /* Crazyflie clientTests */ = {
+		41A02DC3218A80CC0036DC36 /* Crazyflie clientTests */ = {
 			isa = PBXGroup;
 			children = (
-				3A003968198AE038001799A4 /* Crazyflie_clientTests.m */,
-				3A003963198AE038001799A4 /* Supporting Files */,
+				41A02DC4218A80CC0036DC36 /* Crazyflie_clientTests.swift */,
+				41A02DC6218A80CC0036DC36 /* Info.plist */,
 			);
 			path = "Crazyflie clientTests";
-			sourceTree = "<group>";
-		};
-		3A003963198AE038001799A4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3A003964198AE038001799A4 /* Crazyflie clientTests-Info.plist */,
-				3A003965198AE038001799A4 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		51E178231A27762900BB2AF7 /* images */ = {
@@ -276,7 +258,6 @@
 				3A003937198AE038001799A4 /* Frameworks */,
 				3A003938198AE038001799A4 /* Resources */,
 				801C50ACC3629D1619543712 /* [CP] Embed Pods Frameworks */,
-				B157E500839982AFA026B20D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -287,22 +268,22 @@
 			productReference = 3A00393A198AE038001799A4 /* Crazyflie client.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3A00395A198AE038001799A4 /* Crazyflie clientTests */ = {
+		41A02DC1218A80CC0036DC36 /* Crazyflie clientTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A00396F198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */;
+			buildConfigurationList = 41A02DC9218A80CC0036DC36 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */;
 			buildPhases = (
-				3A003957198AE038001799A4 /* Sources */,
-				3A003958198AE038001799A4 /* Frameworks */,
-				3A003959198AE038001799A4 /* Resources */,
+				41A02DBE218A80CC0036DC36 /* Sources */,
+				41A02DBF218A80CC0036DC36 /* Frameworks */,
+				41A02DC0218A80CC0036DC36 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3A003961198AE038001799A4 /* PBXTargetDependency */,
+				41A02DC8218A80CC0036DC36 /* PBXTargetDependency */,
 			);
 			name = "Crazyflie clientTests";
 			productName = "Crazyflie clientTests";
-			productReference = 3A00395B198AE038001799A4 /* Crazyflie clientTests.xctest */;
+			productReference = 41A02DC2218A80CC0036DC36 /* Crazyflie clientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -312,7 +293,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0730;
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
@@ -320,8 +301,9 @@
 						DevelopmentTeam = 2D27KY2HT6;
 						LastSwiftMigration = 0810;
 					};
-					3A00395A198AE038001799A4 = {
-						LastSwiftMigration = 0810;
+					41A02DC1218A80CC0036DC36 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 3A003939198AE038001799A4;
 					};
 				};
@@ -340,7 +322,7 @@
 			projectRoot = "";
 			targets = (
 				3A003939198AE038001799A4 /* Crazyflie client */,
-				3A00395A198AE038001799A4 /* Crazyflie clientTests */,
+				41A02DC1218A80CC0036DC36 /* Crazyflie clientTests */,
 			);
 		};
 /* End PBXProject section */
@@ -366,11 +348,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3A003959198AE038001799A4 /* Resources */ = {
+		41A02DC0218A80CC0036DC36 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A003967198AE038001799A4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,13 +364,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crazyflie client-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		801C50ACC3629D1619543712 /* [CP] Embed Pods Frameworks */ = {
@@ -398,28 +382,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/zipzap/zipzap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/zipzap.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B157E500839982AFA026B20D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -450,22 +424,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3A003957198AE038001799A4 /* Sources */ = {
+		41A02DBE218A80CC0036DC36 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A003969198AE038001799A4 /* Crazyflie_clientTests.m in Sources */,
-				9C974A891CAE58840002418A /* MotionLink.swift in Sources */,
+				41A02DC5218A80CC0036DC36 /* Crazyflie_clientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3A003961198AE038001799A4 /* PBXTargetDependency */ = {
+		41A02DC8218A80CC0036DC36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3A003939198AE038001799A4 /* Crazyflie client */;
-			targetProxy = 3A003960198AE038001799A4 /* PBXContainerItemProxy */;
+			targetProxy = 41A02DC7218A80CC0036DC36 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -484,14 +457,6 @@
 				3A003950198AE038001799A4 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3A003965198AE038001799A4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A003966198AE038001799A4 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -586,7 +551,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8DFBD893C1CD99CE121EFD5F /* Pods-Crazyflie client.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -606,7 +570,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -616,7 +580,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5DFF2281859CF831709F91CE /* Pods-Crazyflie client.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -635,60 +598,82 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie client-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		3A003970198AE038001799A4 /* Debug */ = {
+		41A02DCA218A80CC0036DC36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Crazyflie clientTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.Crazyflie-clientTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie clientTests-Bridging-Header.h";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
 			};
 			name = Debug;
 		};
-		3A003971198AE038001799A4 /* Release */ = {
+		41A02DCB218A80CC0036DC36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
-				INFOPLIST_FILE = "Crazyflie clientTests/Crazyflie clientTests-Info.plist";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Crazyflie clientTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.Crazyflie-clientTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Crazyflie client/Crazyflie clientTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crazyflie client.app/Crazyflie client";
 			};
 			name = Release;
 		};
@@ -713,11 +698,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A00396F198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */ = {
+		41A02DC9218A80CC0036DC36 /* Build configuration list for PBXNativeTarget "Crazyflie clientTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3A003970198AE038001799A4 /* Debug */,
-				3A003971198AE038001799A4 /* Release */,
+				41A02DCA218A80CC0036DC36 /* Debug */,
+				41A02DCB218A80CC0036DC36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
