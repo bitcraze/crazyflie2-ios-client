@@ -16,7 +16,6 @@ enum MotionLinkState {
 final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     
     private let motionManager = CMMotionManager()
-    private let queue = OperationQueue()
     private var accelerationDataCalibrate = CMAcceleration()
     
     private(set) var accelerationUpdateActive = false
@@ -24,7 +23,6 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     private(set) var state: MotionLinkState
     
     init() {
-        motionManager.accelerometerUpdateInterval = 0.1
         state = .idle
     }
     
@@ -38,8 +36,6 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     
     var canAccessAccelerometer: Bool { return motionManager.isAccelerometerAvailable }
     var canAccessMotion: Bool { return motionManager.isDeviceMotionAvailable }
-    var accelerometerData: CMAccelerometerData? { return motionManager.accelerometerData }
-    var deviceMotion: CMDeviceMotion? { return motionManager.deviceMotion }
     
     private var calibratedAcceleration: CMAcceleration? {
         guard let a =  motionManager.accelerometerData?.acceleration else {
@@ -55,29 +51,23 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     }
     
     func calibrate() {
+        guard let deviceMotionData = motionManager.deviceMotion else {
+            return
+        }
+        
         state = .calibrating
-        accelerationDataCalibrate = (motionManager.deviceMotion?.gravity)!;
+        accelerationDataCalibrate = deviceMotionData.gravity;
     }
     
-    func startDeviceMotionUpdates(_ handler:CMDeviceMotionHandler?) -> Void {
+    func startDeviceMotionUpdates() -> Void {
         state = .startingDeviceMotionUpdates
-        self.motionManager.startDeviceMotionUpdates(to: self.queue , withHandler:{
-            (data, error) in
-            if (handler != nil) {
-                handler!(data, error)
-            }
-        })
+        self.motionManager.startDeviceMotionUpdates()
         motionUpdateActive = true
     }
     
-    func startAccelerometerUpdates(_ handler:CMAccelerometerHandler?) -> Void {
+    func startAccelerometerUpdates() -> Void {
         state = .startingAccelerometerUpdates
-        motionManager.startAccelerometerUpdates(to: self.queue, withHandler:{
-            (data, error) in
-            if (handler != nil) {
-                handler!(data, error)
-            }
-        })
+        motionManager.startAccelerometerUpdates()
         accelerationUpdateActive = true
     }
     
