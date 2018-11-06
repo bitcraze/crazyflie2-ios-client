@@ -9,6 +9,10 @@
 import Foundation
 import CoreMotion
 
+enum MotionLinkState {
+    case idle, calibrating, startingDeviceMotionUpdates, startingAccelerometerUpdates, stoppingDeviceMotionUpdates, stoppingAccelerometerUpdates
+}
+
 final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     
     private let motionManager = CMMotionManager()
@@ -17,11 +21,11 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     
     private(set) var accelerationUpdateActive = false
     private(set) var motionUpdateActive = false
-    private(set) var state:String?
+    private(set) var state: MotionLinkState
     
     init() {
         motionManager.accelerometerUpdateInterval = 0.1
-        state = "idle"
+        state = .idle
     }
     
     var x: Float {
@@ -51,12 +55,12 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     }
     
     func calibrate() {
-        state = "calibrating"
+        state = .calibrating
         accelerationDataCalibrate = (motionManager.deviceMotion?.gravity)!;
     }
     
     func startDeviceMotionUpdates(_ handler:CMDeviceMotionHandler?) -> Void {
-        state = "starting device motion updates"
+        state = .startingDeviceMotionUpdates
         self.motionManager.startDeviceMotionUpdates(to: self.queue , withHandler:{
             (data, error) in
             if (handler != nil) {
@@ -67,7 +71,7 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     }
     
     func startAccelerometerUpdates(_ handler:CMAccelerometerHandler?) -> Void {
-        state = "starting accelerometer updates"
+        state = .startingAccelerometerUpdates
         motionManager.startAccelerometerUpdates(to: self.queue, withHandler:{
             (data, error) in
             if (handler != nil) {
@@ -78,13 +82,13 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     }
     
     func stopAccelerometerUpdates() {
-        state = "stopping accelerometer updates"
+        state = .stoppingAccelerometerUpdates
         motionManager.stopAccelerometerUpdates();
         accelerationUpdateActive = false;
     }
     
     func stopDeviceMotionUpdates() {
-        state = "stopping device motion updates"
+        state = .stoppingDeviceMotionUpdates
         motionManager.stopDeviceMotionUpdates();
         motionUpdateActive = false;
     }
