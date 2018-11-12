@@ -67,8 +67,6 @@ open class CrazyFlie: NSObject {
                 self?.state = .characteristics
             }
         }
-        
-        startTimer()
     }
     
     func connect(_ callback:((Bool) -> Void)?) {

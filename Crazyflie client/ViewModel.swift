@@ -92,8 +92,8 @@ final class ViewModel {
         if motionLink == nil {
             motionLink = MotionLink()
         }
-        motionLink?.startDeviceMotionUpdates(nil)
-        motionLink?.startAccelerometerUpdates(nil)
+        motionLink?.startDeviceMotionUpdates()
+        motionLink?.startAccelerometerUpdates()
     }
     
     private func stopMotionUpdate() {
@@ -126,8 +126,7 @@ final class ViewModel {
     }
     
     fileprivate func calibrateMotionIfNeeded() {
-        if (leftJoystickProvider.touchesChanged || rightJoystickProvider.touchesChanged)
-            && bothThumbsOnJoystick && controlMode == .tilt {
+        if leftJoystickProvider.touchesChanged || rightJoystickProvider.touchesChanged, controlMode == .tilt {
             motionLink?.calibrate()
         }
     }
