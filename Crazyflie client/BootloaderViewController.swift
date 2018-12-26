@@ -29,6 +29,8 @@ class BootloaderViewController : UIViewController {
     // MARK: - UI handling
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         //_closeButton.layer.borderColor = [_closeButton tintColor].CGColor;
         self.closeButton.layer.borderWidth = 1
         self.closeButton.layer.cornerRadius = 4
@@ -42,11 +44,19 @@ class BootloaderViewController : UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         self.state = .idle;
         
         self.progressIndicator.startAnimating()
         
         self.fetchFirmware();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     var state:State = .idle {
