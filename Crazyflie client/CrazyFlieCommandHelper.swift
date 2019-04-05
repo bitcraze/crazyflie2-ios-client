@@ -89,7 +89,7 @@ class SimpleCrazyFlieCommander: CrazyFlieCommander {
          yawProvider: CrazyFlieDataProvider,
          thrustProvider: CrazyFlieDataProvider,
          settings: Settings,
-         allowNegativeValues: Bool = false) {
+         allowNegativeValues: Bool = true) {
         
         self.pitchProvider = pitchProvider
         self.yawProvider = yawProvider
