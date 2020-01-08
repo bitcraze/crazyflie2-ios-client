@@ -140,5 +140,6 @@ open class CrazyFlie: NSObject {
         let commandPacket = CommanderPacket(header: CrazyFlieHeader.commander.rawValue, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
         let data = CommandPacketCreator.data(from: commandPacket)
         bluetoothLink.sendPacket(data!, callback: nil)
+        print("pitch: \(pitch) roll: \(roll) thrust: \(thrust) yaw: \(yaw)")
     }
 }
