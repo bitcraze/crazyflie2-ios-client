@@ -1,0 +1,7 @@
+- page_id: home
+- title: User Guides
+  subs:
+    - {page_id: user-instructions}
+- title: Development
+  subs:
+    - {page_id: getting-started}
