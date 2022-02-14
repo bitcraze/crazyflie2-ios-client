@@ -1,4 +1,7 @@
 - page_id: home
+- title: Installation
+  subs:
+    - {page_id: install}
 - title: User Guides
   subs:
     - {page_id: user-instructions}
