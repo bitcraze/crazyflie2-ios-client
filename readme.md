@@ -16,3 +16,5 @@ See the [installation instructions](docs/installation/install.md) in the github 
 
 Check out the [Bitcraze crazyflie2-ios-client documentation](https://www.bitcraze.io/documentation/repository/crazyflie2-ios-client/master/) on our website.
 
+## Contribute
+Go to the [contribute page](https://www.bitcraze.io/contribute/) on our website to learn more.
