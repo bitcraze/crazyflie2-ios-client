@@ -137,9 +137,8 @@ open class CrazyFlie: NSObject {
     }
     
     private func sendFlightData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
-        let commandPacket = CommanderPacket(header: CrazyFlieHeader.commander.rawValue, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
-        let data = CommandPacketCreator.data(from: commandPacket)
-        bluetoothLink.sendPacket(data!, callback: nil)
+        let commanderPacket = CommanderPacket(header: CrazyFlieHeader.commander.rawValue, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
+        bluetoothLink.sendPacket(commanderPacket.data, callback: nil)
         print("pitch: \(pitch) roll: \(roll) thrust: \(thrust) yaw: \(yaw)")
     }
 }
