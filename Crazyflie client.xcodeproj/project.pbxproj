@@ -65,10 +65,8 @@
 		3A003941198AE038001799A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A003945198AE038001799A4 /* Crazyflie client-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crazyflie client-Info.plist"; sourceTree = "<group>"; };
 		3A003947198AE038001799A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A003949198AE038001799A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Prefix.pch"; sourceTree = "<group>"; };
 		3A003950198AE038001799A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3A003952198AE038001799A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3A00395C198AE038001799A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		41A02DC2218A80CC0036DC36 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,8 +212,6 @@
 			children = (
 				3A003945198AE038001799A4 /* Crazyflie client-Info.plist */,
 				3A003946198AE038001799A4 /* InfoPlist.strings */,
-				3A003952198AE038001799A4 /* ViewController.h */,
-				3A003949198AE038001799A4 /* main.m */,
 				3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */,
 				5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */,
 			);
