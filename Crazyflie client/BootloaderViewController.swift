@@ -31,7 +31,6 @@ class BootloaderViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //_closeButton.layer.borderColor = [_closeButton tintColor].CGColor;
         self.closeButton.layer.borderWidth = 1
         self.closeButton.layer.cornerRadius = 4
         self.closeButton.layer.borderColor = self.closeButton.tintColor?.cgColor
