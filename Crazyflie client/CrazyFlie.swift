@@ -94,7 +94,7 @@ open class CrazyFlie: NSObject {
                     title = "Connection timeout"
                     body = "Could not find Crazyflie"
                 } else {
-                    title = "Error";
+                    title = "Error"
                     body = self?.bluetoothLink.getError()
                 }
                 

@@ -39,18 +39,18 @@ class BootloaderViewController : UIViewController {
         self.updateButton.layer.cornerRadius = 4
         self.updateButton.layer.borderColor = self.closeButton.tintColor?.cgColor
         
-        self.state = .idle;
+        self.state = .idle
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.shared.isIdleTimerDisabled = true
         
-        self.state = .idle;
+        self.state = .idle
         
         self.progressIndicator.startAnimating()
         
-        self.fetchFirmware();
+        self.fetchFirmware()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,7 +60,7 @@ class BootloaderViewController : UIViewController {
     
     var state:State = .idle {
         didSet {
-            OperationQueue.main.addOperation() { self.updateUI() };
+            OperationQueue.main.addOperation() { self.updateUI() }
         }
     }
     
@@ -74,7 +74,7 @@ class BootloaderViewController : UIViewController {
             self.updateButton.setTitle("Update", for: .normal)
             self.progressLabel.text = self.errorString
             self.progressIndicator.stopAnimating()
-            self.progressIndicator.isHidden = true;
+            self.progressIndicator.isHidden = true
         case .idle:
             self.updateButton.isEnabled = false
             self.closeButton.isEnabled = true
@@ -85,13 +85,13 @@ class BootloaderViewController : UIViewController {
             self.closeButton.isEnabled = true
             self.progressIndicator.stopAnimating()
             self.updateButton.setTitle("Update", for: .normal)
-            self.progressIndicator.isHidden = true;
+            self.progressIndicator.isHidden = true
             self.progressLabel.text = "Ready to Update"
         case .updating:
             self.updateButton.isEnabled = true
             self.closeButton.isEnabled = false
             self.progressIndicator.startAnimating()
-            self.progressIndicator.isHidden = false;
+            self.progressIndicator.isHidden = false
             self.updateButton.setTitle("Cancel update", for: .normal)
             self.progressLabel.text = "Updating ..."
         }

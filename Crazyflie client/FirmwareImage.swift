@@ -60,7 +60,7 @@ class FirmwareImage {
                             if name.hasSuffix(".zip") {
                                 fileName = name
                                 fileUrl = url
-                                break;
+                                break
                             }
                         }
                     }

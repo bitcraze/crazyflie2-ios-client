@@ -164,8 +164,8 @@ final class BCJoystick: UIControl {
         vProgress.progress = viewModel.thrustControl == .y ? 0 : 0.5
         
         hProgress.frame = CGRect(x: center.x - JSIZE, y: center.y - JSIZE - 4, width: 2 * JSIZE, height: 2 * JSIZE)
-        hProgress.progress = 0.5;
-        hLabel.center = CGPoint(x: center.x, y: center.y - JSIZE - 12);
+        hProgress.progress = 0.5
+        hLabel.center = CGPoint(x: center.x, y: center.y - JSIZE - 12)
         let path = UIBezierPath(rect: rect)
         self.path = path
         shapeLayer.path = path.cgPath
