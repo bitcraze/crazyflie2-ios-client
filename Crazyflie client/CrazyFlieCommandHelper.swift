@@ -1,5 +1,5 @@
 //
-//  CrazyFlieModes.swift
+//  CrazyFlieCommandHelper.swift
 //  Crazyflie client
 //
 //  Created by Martin Eberl on 21.01.17.
