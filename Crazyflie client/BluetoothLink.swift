@@ -272,7 +272,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 self.decoderPid = -1
                 self.decoderData = []
                 self.decoderLength = 0
-                NSLog("Bletooth link: Error while receiving long data: PID does not match!")
+                NSLog("Bluetooth link: Error while receiving long data: PID does not match!")
             }
         }
         
