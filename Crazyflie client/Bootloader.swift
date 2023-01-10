@@ -106,7 +106,7 @@ class Bootloader {
     fileprivate func fail(_ message: String) {
         self.state = .idle
         self.wd.stop()
-        let error = NSError(domain: "CrazyflieBoorloader", code: -1, userInfo: [NSLocalizedDescriptionKey: message])
+        let error = NSError(domain: "CrazyflieBootloader", code: -1, userInfo: [NSLocalizedDescriptionKey: message])
         OperationQueue.main.addOperation() {
             self.callback?(true, 0.0, "Canceled", error)
         }
