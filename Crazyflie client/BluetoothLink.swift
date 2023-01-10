@@ -23,7 +23,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     let crtpUpCharacteristicUuid = "00000203-1C7F-4F9E-947B-43B7C00A9A08"
     let crtpDownCharacteristicUuid = "00000204-1C7F-4F9E-947B-43B7C00A9A08"
     
-    // Structure that decode and encode crtpUp and crtpDown control byte (header)
+    // Structure that decodes and encodes crtpUp and crtpDown control byte (header)
     // See https://wiki.bitcraze.io/doc:crazyflie:ble:index#characteristics for format
     struct ControlByte {
         let start: Bool
