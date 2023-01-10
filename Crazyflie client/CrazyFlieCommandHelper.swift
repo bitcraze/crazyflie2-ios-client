@@ -110,7 +110,6 @@ class SimpleCrazyFlieCommander: CrazyFlieCommander {
     }
     var thrust: Float {
         return thrustBounds.value
-        
     }
     var yaw: Float {
         return yawBounds.value
@@ -160,9 +159,9 @@ class SimpleCrazyFlieCommander: CrazyFlieCommander {
     private func thrust(from control: Float) -> Float {
         var thrust: Float = 0
         if LINEAR_THRUST {
-            thrust = control * 65535 * (maxThrust/100)
+            thrust = control * 65535 * (maxThrust / 100)
         } else {
-            thrust = sqrt(control)*65535*(maxThrust/100)
+            thrust = sqrt(control) * 65535 * (maxThrust / 100)
         }
         if thrust > 65535 { thrust = 65535 }
         if thrust < 0 { thrust = 0 }
