@@ -357,10 +357,10 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             var packetArray = [UInt8](repeating: 0, count: packet.count)
             (packet as NSData).getBytes(&packetArray, length: packetArray.count)
             
-            var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.count).header)
+            var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.count).raw)
             let firstPacket = Data(packetArray[0..<19])
             
-            header = UInt8(ControlByte(start: false, pid: self.encoderPid, length: 0).header)
+            header = UInt8(ControlByte(start: false, pid: self.encoderPid, length: 0).raw)
             self.encodedSecondPacket = Data([header] + packetArray[19...])
             
             crazyflie!.writeValue(firstPacket, for: crtpUpCharacteristic, type: CBCharacteristicWriteType.withResponse)
