@@ -53,7 +53,7 @@ extension Observable {
     public func remove(observer: Observer) {
         cleanup()
         
-        guard let index = weakObservers.index(where: { $0.object === observer }) else {
+        guard let index = weakObservers.firstIndex(where: { $0.object === observer }) else {
             return
         }
         weakObservers.remove(at: index)
