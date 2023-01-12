@@ -13,7 +13,7 @@ enum ThrustControl {
     case y
 }
 
-protocol BCJoystickViewModelProtocol: class {
+protocol BCJoystickViewModelProtocol: AnyObject {
     func touchesBegan()
     func touchesEnded()
     func touches(movedTo xValue: Double, yValue: Double)

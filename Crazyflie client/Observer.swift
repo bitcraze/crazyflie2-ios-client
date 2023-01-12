@@ -15,10 +15,10 @@ public struct WeakBox {
     }
 }
 
-public protocol Observer: class  {
+public protocol Observer: AnyObject  {
 }
 
-public protocol Observable: class {
+public protocol Observable: AnyObject {
     associatedtype ConcreteObserver
     var weakObservers: [WeakBox] { get set }
 }

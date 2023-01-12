@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol BCJoystickViewModelDelegate: class {
+protocol BCJoystickViewModelDelegate: AnyObject {
     func didUpdate()
 }
 

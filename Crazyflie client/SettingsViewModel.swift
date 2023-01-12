@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SettingsViewModelDelegate: class {
+protocol SettingsViewModelDelegate: AnyObject {
     func didUpdate()
 }
 
