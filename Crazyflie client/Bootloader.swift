@@ -343,7 +343,7 @@ class Bootloader {
                 
                 self.curr_byte += byteToSend
                 
-                self.link.sendPacket(Data(bytes: packet)) { (success) in
+                self.link.sendPacket(Data(packet)) { (success) in
                     print("Page loaded, continuing")
                     
                     self.wd.reset()
