@@ -303,10 +303,9 @@
 			};
 			buildConfigurationList = 3A003935198AE038001799A4 /* Build configuration list for PBXProject "Crazyflie client" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
