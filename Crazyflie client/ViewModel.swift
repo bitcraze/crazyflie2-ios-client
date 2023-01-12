@@ -150,22 +150,16 @@ final class ViewModel {
         case .idle:
             progress = 0
             topButtonTitle = "Connect"
-            break
         case .scanning:
             progress = 0
-            break
         case .connecting:
             progress = 0.25
-            break
         case .services:
             progress = 0.5
-            break
         case .characteristics:
             progress = 0.75
-            break
         case .connected:
             progress = 1
-            break
         }
     }
 }

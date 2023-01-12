@@ -1,5 +1,5 @@
 //
-//  CommandSettings.swift
+//  Settings.swift
 //  Crazyflie client
 //
 //  Created by Martin Eberl on 23.01.17.

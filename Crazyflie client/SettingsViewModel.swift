@@ -1,5 +1,5 @@
 //
-//  SettinbsViewModel.swift
+//  SettinsViewModel.swift
 //  Crazyflie client
 //
 //  Created by Martin Eberl on 24.01.17.
