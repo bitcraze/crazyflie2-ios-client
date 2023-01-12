@@ -26,25 +26,18 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // Structure that decodes and encodes crtpUp and crtpDown control byte (header)
     // See https://wiki.bitcraze.io/doc:crazyflie:ble:index#characteristics for format
     struct ControlByte {
-        let start: Bool
-        let pid: Int
-        let length: Int
+        var start: Bool { (raw & 0x80) != 0 }
+        var pid: Int { Int((raw & 0b0110_0000) >> 5) }
+        var length: Int { Int(raw & 0b0001_1111) + 1 }
         
-        let header: Int
-        
-        init(_ header: Int) {
-            self.start = (header & 0x80) != 0
-            self.pid = (header & 0b0110_0000) >> 5
-            self.length = (header & 0b0001_1111)+1
-            self.header = header
+        let raw: UInt8
+
+        init(_ raw: UInt8) {
+            self.raw = raw
         }
-        
+
         init(start: Bool, pid: Int, length: Int) {
-            self.start = start
-            self.pid = pid
-            self.length = length
-            
-            self.header = (start ? 0x80:0x00) | ((pid&0x03)<<5) | ((length-1)&0x1f)
+            self.raw = (start ? 0x80 : 0x00) | UInt8((pid & 0x03) << 5) | UInt8(((length - 1) & 0x1f))
         }
     }
     
@@ -252,7 +245,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         var dataArray = [UInt8](repeating: 0, count: data.count)
         (data as NSData).getBytes(&dataArray, length: dataArray.count)
-        let header = ControlByte(Int(dataArray[0]))
+        let header = ControlByte(dataArray[0])
         
         if header.start {
             if header.length < 20 {
