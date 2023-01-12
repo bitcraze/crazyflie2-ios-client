@@ -223,8 +223,7 @@ class Bootloader {
         self.curr_fw = 0
         
         self.state = .fetchingNrfInfo
-        let pk: [UInt8] = [0xff, 0xfe, 0x10]
-        self.link.sendPacket(Data(bytes: UnsafePointer<UInt8>(pk), count: pk.count), callback: nil)
+        self.link.sendPacket(Data([0xff, 0xfe, 0x10] as [UInt8]), callback: nil)
         
         self.wd.start()
     }
@@ -251,8 +250,7 @@ class Bootloader {
             
             self.wd.reset()
             self.state = .fetchingStmInfo
-            let pk: [UInt8] = [0xff, Target.stm32.rawValue, getInfo]
-            self.link.sendPacket(Data(bytes: UnsafePointer<UInt8>(pk), count: pk.count), callback: nil)
+            self.link.sendPacket(Data([0xff, Target.stm32.rawValue, getInfo] as [UInt8]), callback: nil)
         case (.some(.stm32), getInfo, .fetchingStmInfo):
             print("Got STM32 info")
             
@@ -345,7 +343,7 @@ class Bootloader {
                 
                 self.curr_byte += byteToSend
                 
-                self.link.sendPacket(Data(bytes: UnsafePointer<UInt8>(packet), count: packet.count)) { (success) in
+                self.link.sendPacket(Data(bytes: packet)) { (success) in
                     print("Page loaded, continuing")
                     
                     self.wd.reset()
@@ -362,7 +360,7 @@ class Bootloader {
                 packet = packet + [1, 0]
                 
                 self.wd.reset(2)
-                self.link.sendPacket(Data(bytes: UnsafePointer<UInt8>(packet), count: packet.count), callback: nil)
+                self.link.sendPacket(Data(packet), callback: nil)
                 
                 self.flashState = .load
             }

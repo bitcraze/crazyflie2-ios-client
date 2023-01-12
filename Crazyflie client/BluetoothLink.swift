@@ -256,8 +256,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if header.start {
             if header.length < 20 {
-                let packet = Data(bytes: UnsafePointer<UInt8>(Array(dataArray[1..<dataArray.count])), count: dataArray.count-1)
-                self.rxCallback?(packet)
+                self.rxCallback?(Data(dataArray.dropFirst()))
             } else {
                 self.decoderData = Array(dataArray[1..<dataArray.count])
                 self.decoderPid = header.pid
@@ -265,9 +264,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
         } else {
             if header.pid == self.decoderPid {
-                let fullData = self.decoderData + Array(dataArray[1..<dataArray.count])
-                let packet = Data(bytes: UnsafePointer<UInt8>(fullData), count: fullData.count)
-                self.rxCallback?(packet)
+                self.rxCallback?(Data(self.decoderData + dataArray.dropFirst()))
             } else {
                 self.decoderPid = -1
                 self.decoderData = []
@@ -325,7 +322,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     fileprivate var encodedSecondPacket: Data! = nil
     fileprivate var encoderPid = 0
     
-    fileprivate let nullPacket: Data = Data(bytes: UnsafePointer<UInt8>([UInt8(0xff)]), count: 1)
+    fileprivate let nullPacket: Data = Data([UInt8(0xff)])
     
     /**
         Send a packet to Crazyflie
@@ -368,10 +365,10 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             (packet as NSData).getBytes(&packetArray, length: packetArray.count)
             
             var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.count).header)
-            let firstPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[0..<19])), count: 20)
+            let firstPacket = Data(packetArray[0..<19])
             
             header = UInt8(ControlByte(start: false, pid: self.encoderPid, length: 0).header)
-            self.encodedSecondPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[19..<packetArray.count])), count: packetArray.count-19)
+            self.encodedSecondPacket = Data([header] + packetArray[19...])
             
             crazyflie!.writeValue(firstPacket, for: crtpUpCharacteristic, type: CBCharacteristicWriteType.withResponse)
             
