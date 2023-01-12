@@ -52,19 +52,23 @@ open class CrazyFlie: NSObject {
         self.bluetoothLink = bluetoothLink
         super.init()
     
-        bluetoothLink?.onStateUpdated{[weak self] (state) in
-            if state.isEqual(to: "idle") {
-                self?.state = .idle
-            } else if state.isEqual(to: "connected") {
-                self?.state = .connected
-            } else if state.isEqual(to: "scanning") {
-                self?.state = .scanning
-            } else if state.isEqual(to: "connecting") {
-                self?.state = .connecting
-            } else if state.isEqual(to: "services") {
-                self?.state = .services
-            } else if state.isEqual(to: "characteristics") {
-                self?.state = .characteristics
+        bluetoothLink?.onStateUpdated { [weak self] (state) in
+            guard let self = self else { return }
+            switch state {
+            case "idle":
+                self.state = .idle
+            case "connected":
+                self.state = .connected
+            case "scanning":
+                self.state = .scanning
+            case "connecting":
+                self.state = .connecting
+            case "services":
+                self.state = .services
+            case "characteristics":
+                self.state = .characteristics
+            default:
+                break
             }
         }
     }
@@ -94,7 +98,7 @@ open class CrazyFlie: NSObject {
                     title = "Connection timeout"
                     body = "Could not find Crazyflie"
                 } else {
-                    title = "Error";
+                    title = "Error"
                     body = self?.bluetoothLink.getError()
                 }
                 

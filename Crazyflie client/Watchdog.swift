@@ -12,7 +12,7 @@ import UIKit
 /**
     Simple watchdog class based on NSTimer
 
-    After starting it, reset should be called periodically befor the
+    After starting it, reset should be called periodically before the
     period (in seconds) is expired. Otherwise the onTimeout function
     will be called.
 */

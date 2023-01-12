@@ -42,11 +42,11 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
             return nil
         }
         
-        var pitch:Double = ((accelerationDataCalibrate.y - a.y) * 4);
-        var roll:Double = ((a.x - accelerationDataCalibrate.x) * 4);
-        pitch = pitch < -25 ? -25 : pitch;
-        roll = roll < -25 ? -25 : roll;
-        roll = roll > 25 ? 25 : roll;
+        var pitch:Double = ((accelerationDataCalibrate.y - a.y) * 4)
+        var roll:Double = ((a.x - accelerationDataCalibrate.x) * 4)
+        pitch = pitch < -25 ? -25 : pitch
+        roll = roll < -25 ? -25 : roll
+        roll = roll > 25 ? 25 : roll
         return CMAcceleration(x: pitch, y: roll, z: (accelerationDataCalibrate.z - a.z))
     }
     
@@ -56,7 +56,7 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
         }
         
         state = .calibrating
-        accelerationDataCalibrate = deviceMotionData.gravity;
+        accelerationDataCalibrate = deviceMotionData.gravity
     }
     
     func startDeviceMotionUpdates() -> Void {
@@ -73,13 +73,13 @@ final class MotionLink: CrazyFlieYProvideable, CrazyFlieXProvideable {
     
     func stopAccelerometerUpdates() {
         state = .stoppingAccelerometerUpdates
-        motionManager.stopAccelerometerUpdates();
-        accelerationUpdateActive = false;
+        motionManager.stopAccelerometerUpdates()
+        accelerationUpdateActive = false
     }
     
     func stopDeviceMotionUpdates() {
         state = .stoppingDeviceMotionUpdates
-        motionManager.stopDeviceMotionUpdates();
-        motionUpdateActive = false;
+        motionManager.stopDeviceMotionUpdates()
+        motionUpdateActive = false
     }
 }

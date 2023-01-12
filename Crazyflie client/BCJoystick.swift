@@ -51,27 +51,27 @@ final class BCJoystick: UIControl {
         layer.addSublayer(shapeLayer)
         
         vProgress = UIProgressView(progressViewStyle: .default)
-        vProgress.center = CGPoint(x:0, y:0)
+        vProgress.center = .zero
         vProgress.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * -0.5)))
         vProgress.isHidden = true
         
         vLabel = UILabel(frame: frame)
         vLabel.text = "Pitch"
         vLabel.textColor = UIColor(red: 0, green: 122.0/255.0, blue: 1.0, alpha: 0.75)
-        vLabel.textAlignment = .center;
-        vLabel.center = CGPoint(x:0, y:0);
+        vLabel.textAlignment = .center
+        vLabel.center = .zero
         vLabel.transform = CGAffineTransform(rotationAngle: CGFloat(Double(.pi * -0.5)))
         vLabel.isHidden = true
         
         hProgress = UIProgressView(progressViewStyle: .default)
-        hProgress.center = CGPoint(x:0, y:0)
+        hProgress.center = .zero
         hProgress.isHidden = true
         
         hLabel = UILabel(frame: frame)
         hLabel.text = "Pitch"
         hLabel.textColor = UIColor(red: 0, green: 122.0/255.0, blue: 1.0, alpha: 0.75)
         hLabel.textAlignment = .center;
-        hLabel.center = CGPoint(x:0, y:0);
+        hLabel.center = .zero
         hLabel.isHidden = true
         
         addSubview(vProgress)
@@ -164,8 +164,8 @@ final class BCJoystick: UIControl {
         vProgress.progress = viewModel.thrustControl == .y ? 0 : 0.5
         
         hProgress.frame = CGRect(x: center.x - JSIZE, y: center.y - JSIZE - 4, width: 2 * JSIZE, height: 2 * JSIZE)
-        hProgress.progress = 0.5;
-        hLabel.center = CGPoint(x: center.x, y: center.y - JSIZE - 12);
+        hProgress.progress = 0.5
+        hLabel.center = CGPoint(x: center.x, y: center.y - JSIZE - 12)
         let path = UIBezierPath(rect: rect)
         self.path = path
         shapeLayer.path = path.cgPath

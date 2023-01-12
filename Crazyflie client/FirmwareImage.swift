@@ -37,7 +37,7 @@ class FirmwareImage {
                 return
             }
             
-            // Decoding the JSON and inithializing a new FirmwareImage object
+            // Decoding the JSON and initializing a new FirmwareImage object
             let json: JSON
             do {
                 json = try JSON(data: data)
@@ -60,7 +60,7 @@ class FirmwareImage {
                             if name.hasSuffix(".zip") {
                                 fileName = name
                                 fileUrl = url
-                                break;
+                                break
                             }
                         }
                     }

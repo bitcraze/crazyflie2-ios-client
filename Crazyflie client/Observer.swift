@@ -24,7 +24,7 @@ public protocol Observable: class {
 }
 extension Observable {
     private func cleanup() {
-        guard weakObservers.count > 0 else { return }
+        guard !weakObservers.isEmpty else { return }
         
         var array = [Int]()
         var i = 0

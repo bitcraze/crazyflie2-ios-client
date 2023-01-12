@@ -23,7 +23,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     let crtpUpCharacteristicUuid = "00000203-1C7F-4F9E-947B-43B7C00A9A08"
     let crtpDownCharacteristicUuid = "00000204-1C7F-4F9E-947B-43B7C00A9A08"
     
-    // Structure that decode and encode crtpUp and crtpDown control byte (header)
+    // Structure that decodes and encodes crtpUp and crtpDown control byte (header)
     // See https://wiki.bitcraze.io/doc:crazyflie:ble:index#characteristics for format
     struct ControlByte {
         var start: Bool { (raw & 0x80) != 0 }
@@ -92,15 +92,15 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             canBluetooth = central.state == CBManagerState.poweredOn
         } else {
             canBluetooth = central.state.rawValue == 5 // PoweredOn
-        };
+        }
         print("Bluetooth is now " + (canBluetooth ? "on" : "off"))
     }
     
     func connect(_ address: String?, callback: @escaping (Bool) -> ()) {
         if !canBluetooth || state != "idle" {
             error = canBluetooth ? "Already connected":"Bluetooth disabled"
-            callback(false);
-            return;
+            callback(false)
+            return
         }
         
         if address == nil {
@@ -116,16 +116,16 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         
         if let central = centralManager {
-            let connectedPeripheral = central.retrieveConnectedPeripherals(withServices: [CBUUID(string: crazyflieServiceUuid)]) ;
+            let connectedPeripheral = central.retrieveConnectedPeripherals(withServices: [CBUUID(string: crazyflieServiceUuid)])
             
             if connectedPeripheral.count > 0  && connectedPeripheral.first!.name != nil && connectedPeripheral.first!.name == self.address {
-                NSLog("Already connected, reusing peripheral");
-                connectingPeripheral = connectedPeripheral.first;
-                central.connect(connectingPeripheral!, options: nil);
-                state = "connecting";
+                NSLog("Already connected, reusing peripheral")
+                connectingPeripheral = connectedPeripheral.first
+                central.connect(connectingPeripheral!, options: nil)
+                state = "connecting"
             } else {
                 NSLog("Start scanning")
-                central.scanForPeripherals(withServices: nil, options: nil);
+                central.scanForPeripherals(withServices: nil, options: nil)
                 state = "scanning"
                 
                 scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(scanningTimeout), userInfo: nil, repeats: false)
@@ -137,7 +137,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     @objc
     private func scanningTimeout(timer: Timer) {
-        NSLog("Scan timeout, stop scan");
+        NSLog("Scan timeout, stop scan")
         centralManager!.stopScan()
         state = "idle"
         scanTimer?.invalidate()
@@ -176,7 +176,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         peripheral.discoverServices([CBUUID(string: crazyflieServiceUuid)])
         
-        state = "services";
+        state = "services"
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -196,7 +196,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if service.uuid.uuidString == crazyflieServiceUuid {
                 peripheral.discoverCharacteristics([CBUUID(string: crtpCharacteristicUuid),
                                                     CBUUID(string: crtpUpCharacteristicUuid),
-                                                    CBUUID(string: crtpDownCharacteristicUuid)], for: service);
+                                                    CBUUID(string: crtpDownCharacteristicUuid)], for: service)
                 state = "characteristics"
             }
         }
@@ -249,8 +249,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if header.start {
             if header.length < 20 {
-                let packet = Data(bytes: UnsafePointer<UInt8>(Array(dataArray[1..<dataArray.count])), count: dataArray.count-1)
-                self.rxCallback?(packet)
+                self.rxCallback?(Data(dataArray.dropFirst()))
             } else {
                 self.decoderData = Array(dataArray[1..<dataArray.count])
                 self.decoderPid = header.pid
@@ -258,14 +257,12 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
         } else {
             if header.pid == self.decoderPid {
-                let fullData = self.decoderData + Array(dataArray[1..<dataArray.count])
-                let packet = Data(bytes: UnsafePointer<UInt8>(fullData), count: fullData.count)
-                self.rxCallback?(packet)
+                self.rxCallback?(Data(self.decoderData + dataArray.dropFirst()))
             } else {
                 self.decoderPid = -1
                 self.decoderData = []
                 self.decoderLength = 0
-                NSLog("Bletooth link: Error while receiving long data: PID does not match!")
+                NSLog("Bluetooth link: Error while receiving long data: PID does not match!")
             }
         }
         
@@ -278,7 +275,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func disconnect() {
         switch state {
         case "scanning":
-            NSLog("Cancel scanning");
+            NSLog("Cancel scanning")
             centralManager!.stopScan()
             scanTimer?.invalidate()
         case "connecting", "services", "characteristics", "connected":
@@ -286,7 +283,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 centralManager?.cancelPeripheralConnection(peripheral)
             }
         default:
-            break;
+            break
         }
         
         connectingPeripheral = nil
@@ -318,7 +315,7 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     fileprivate var encodedSecondPacket: Data! = nil
     fileprivate var encoderPid = 0
     
-    fileprivate let nullPacket: Data = Data(bytes: UnsafePointer<UInt8>([UInt8(0xff)]), count: 1)
+    fileprivate let nullPacket: Data = Data([UInt8(0xff)])
     
     /**
         Send a packet to Crazyflie
@@ -360,12 +357,12 @@ class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             var packetArray = [UInt8](repeating: 0, count: packet.count)
             (packet as NSData).getBytes(&packetArray, length: packetArray.count)
             
-            var header: UInt8 = ControlByte(start: true, pid: self.encoderPid, length: packet.count).raw
-            let firstPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[0..<19])), count: 20)
-
-            header = ControlByte(start: false, pid: self.encoderPid, length: 0).raw
-            self.encodedSecondPacket = Data(bytes: UnsafePointer<UInt8>([header] + Array(packetArray[19..<packetArray.count])), count: packetArray.count-19)
-
+            var header: UInt8 = UInt8(ControlByte(start: true, pid: self.encoderPid, length: packet.count).header)
+            let firstPacket = Data(packetArray[0..<19])
+            
+            header = UInt8(ControlByte(start: false, pid: self.encoderPid, length: 0).header)
+            self.encodedSecondPacket = Data([header] + packetArray[19...])
+            
             crazyflie!.writeValue(firstPacket, for: crtpUpCharacteristic, type: CBCharacteristicWriteType.withResponse)
             
             self.encoderPid = (self.encoderPid+1)%4
