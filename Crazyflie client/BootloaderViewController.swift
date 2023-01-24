@@ -157,8 +157,7 @@ class BootloaderViewController : UIViewController {
                         self.state = .updating
                         self.update()
                     } else {
-                        let errorMessage = "Bootloader connection: \(self.link.getError())"
-                        UIAlertView(title: "Error", message: errorMessage, delegate: self, cancelButtonTitle: "Ok").show()
+                        self.showAlert(title: "Error", message: "Bootloader connection: \(self.link.getError())")
                         self.state = .imageFetched
                     }
                 }
@@ -173,13 +172,15 @@ class BootloaderViewController : UIViewController {
     fileprivate func update() {
         bootloader.update(self.firmware!) { (done, progress, status, error) in
             if done && error == nil {
-                UIAlertView(title: "Success", message: "Crazyflie successfuly updated!\n" +
-                                                       "Press the ON/OFF switch to start new firmware.",
-                            delegate: self, cancelButtonTitle: "Ok").show()
+                self.showAlert(
+                    title: "Success",
+                    message: "Crazyflie successfully updated!\n" +
+                             "Press the ON/OFF switch to start new firmware."
+                )
                 self.link.disconnect()
                 self.state = .imageFetched
             } else if done && error != nil {
-                UIAlertView(title: "Error updating", message: error!.localizedDescription, delegate: self, cancelButtonTitle: "Ok").show()
+                self.showAlert(title: "Error updating", message: error!.localizedDescription)
                 if self.link.getState() == "connected" {
                     self.link.disconnect()
                     self.state = .imageFetched
@@ -199,5 +200,11 @@ class BootloaderViewController : UIViewController {
             self.state = .idle
         }
         self.dismiss(animated: true, completion: nil)
+    }
+
+    fileprivate func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        show(alert, sender: self)
     }
 }

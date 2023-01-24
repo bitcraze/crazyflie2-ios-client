@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ViewModelDelegate: class {
+protocol ViewModelDelegate: AnyObject {
     func signalUpdate()
     func signalFailed(with title: String, message: String?)
 }
