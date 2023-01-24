@@ -37,7 +37,7 @@ enum CrazyFlieDataProvider {
     }
 }
 
-class SimpleXDataProvider: CrazyFlieDataProviderProtocol {
+final class SimpleXDataProvider: CrazyFlieDataProviderProtocol {
     let providable: CrazyFlieXProvideable
     
     init(_ providable: CrazyFlieXProvideable) {
@@ -49,7 +49,7 @@ class SimpleXDataProvider: CrazyFlieDataProviderProtocol {
     }
 }
 
-class SimpleYDataProvider: CrazyFlieDataProviderProtocol {
+final class SimpleYDataProvider: CrazyFlieDataProviderProtocol {
     let providable: CrazyFlieYProvideable
     
     init(_ providable: CrazyFlieYProvideable) {
@@ -61,7 +61,7 @@ class SimpleYDataProvider: CrazyFlieDataProviderProtocol {
     }
 }
 
-class SimpleCrazyFlieCommander: CrazyFlieCommander {
+final class SimpleCrazyFlieCommander: CrazyFlieCommander {
  
     struct BoundsValue {
         let minValue: Float

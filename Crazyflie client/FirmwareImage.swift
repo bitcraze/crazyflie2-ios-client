@@ -11,7 +11,7 @@ import UIKit
 import zipzap
 import SwiftyJSON
 
-class FirmwareImage {
+final class FirmwareImage {
     
     static let latestVersionUrl = "https://api.github.com/repos/bitcraze/crazyflie-release/releases/latest"
     

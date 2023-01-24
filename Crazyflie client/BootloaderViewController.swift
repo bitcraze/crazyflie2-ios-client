@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BootloaderViewController : UIViewController {
+final class BootloaderViewController : UIViewController {
     
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
