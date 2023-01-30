@@ -25,7 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Uses Bluetooth to connect to Crazyflie 2.0</string>
+	<string>Uses Bluetooth to connect to Crazyflie 2.X</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>

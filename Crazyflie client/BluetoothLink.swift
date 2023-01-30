@@ -10,10 +10,10 @@
 import Foundation
 import CoreBluetooth
 /**
-    Bluetooth connection link to a Crazyflie 2.0
+    Bluetooth connection link to a Crazyflie 2.X
 
     This class implements all logic to send and receive packet to and from the
-    Crazyflie 2.0. Documentation for the BTLE protocol can be found on the 
+    Crazyflie 2.X. Documentation for the BTLE protocol can be found on the
     Bitcraze Wiki: https://wiki.bitcraze.io/doc:crazyflie:ble:index
  */
 final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
