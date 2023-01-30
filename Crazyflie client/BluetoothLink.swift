@@ -16,7 +16,7 @@ import CoreBluetooth
     Crazyflie 2.0. Documentation for the BTLE protocol can be found on the 
     Bitcraze Wiki: https://wiki.bitcraze.io/doc:crazyflie:ble:index
  */
-class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     let crazyflieServiceUuid = "00000201-1C7F-4F9E-947B-43B7C00A9A08"
     let crtpCharacteristicUuid = "00000202-1C7F-4F9E-947B-43B7C00A9A08"

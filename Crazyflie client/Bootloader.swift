@@ -14,7 +14,7 @@ func decodeUint16(_ data:[UInt8], offset:Int) -> Int {
     return (msb<<8)+lsb
 }
 
-class Bootloader {
+final class Bootloader {
     func formatTimeInterval(_ interval: TimeInterval) -> String {
         var result  = ""
         var scaledInterval: TimeInterval
