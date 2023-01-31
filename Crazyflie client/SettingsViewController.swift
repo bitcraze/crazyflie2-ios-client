@@ -67,12 +67,15 @@ final class SettingsViewController: UIViewController {
         
         if let pitch = viewModel.pitch {
             pitchrollSensitivity.text = String(describing: pitch)
+            pitchrollSensitivity.isEnabled = viewModel.canEditValues
         }
         if let thrust = viewModel.thrust {
             thrustSensitivity.text = String(describing: thrust)
+            thrustSensitivity.isEnabled = viewModel.canEditValues
         }
         if let yaw = viewModel.yaw {
             yawSensitivity.text = String(describing: yaw)
+            yawSensitivity.isEnabled = viewModel.canEditValues
         }
     }
     
