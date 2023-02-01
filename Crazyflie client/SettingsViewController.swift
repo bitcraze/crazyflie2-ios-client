@@ -88,11 +88,23 @@ final class SettingsViewController: UIViewController {
     }
     
     @IBAction func closeClicked(_ sender: Any) {
+        if viewModel?.canEditValues == true {
+            [pitchrollSensitivity, thrustSensitivity, yawSensitivity].forEach { $0.resignFirstResponder() }
+        }
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onBootloaderClicked( _ sender: Any) {
         viewModel?.bootloaderClicked()
+    }
+
+    @objc func endEditing(_ force: Bool) -> Bool {
+        guard viewModel?.canEditValues == true else { return false }
+        // Called only for sensitivity text fields
+        viewModel?.sensitivity.settings?.pitchRate = pitchrollSensitivity.text.flatMap(Float.init) ?? 0.0
+        viewModel?.sensitivity.settings?.maxThrust = thrustSensitivity.text.flatMap(Float.init) ?? 0.0
+        viewModel?.sensitivity.settings?.yawRate = yawSensitivity.text.flatMap(Float.init) ?? 0.0
+        return true
     }
 }
 
