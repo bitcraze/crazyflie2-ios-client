@@ -200,11 +200,7 @@ final class Settings {
             return _pitchRate
         }
         set {
-            if newValue < minPitchRate {
-                _pitchRate = minPitchRate
-            } else if newValue > maxPitchRate {
-                _pitchRate = maxPitchRate
-            }
+            _pitchRate = min(max(newValue, minPitchRate), maxPitchRate)
         }
     }
     
@@ -213,11 +209,7 @@ final class Settings {
             return _maxThrust
         }
         set {
-            if newValue < minThrustRate {
-                _maxThrust = minThrustRate
-            } else if newValue > maxThrustRate {
-                _maxThrust = maxThrustRate
-            }
+            _maxThrust = min(max(newValue, minThrustRate), maxThrustRate)
         }
     }
     
@@ -226,11 +218,7 @@ final class Settings {
             return _yawRate
         }
         set {
-            if newValue < minYawRate {
-                _yawRate = minYawRate
-            } else if newValue > maxYawRate {
-                _yawRate = maxYawRate
-            }
+            _yawRate = min(max(newValue, minYawRate), maxYawRate)
         }
     }
 }
