@@ -3,13 +3,9 @@ title: Home
 page_id: home
 ---
 
+This repository contains code for the Crazyflie 2 client for iPhone.
 
-Crazyflie 2 iOS client
-======================
-
-Crazyflie 2 client for iPhone.
-
-Features
+## Features
 
 - Can connect and control a Crazyflie 2 via Bluetooth Smart
 - Choice of control mode and sensitivity
