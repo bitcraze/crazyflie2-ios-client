@@ -8,8 +8,8 @@
 
 import Foundation
 import UIKit
-import zipzap
 import SwiftyJSON
+import Zip
 
 final class FirmwareImage {
     
@@ -131,24 +131,30 @@ final class FirmwareImage {
     }
     
     fileprivate func extractTargets(_ path: String) -> Bool {
-
-        guard let archive = try? ZZArchive(url: URL(fileURLWithPath: path)) else {
-            NSLog("Error extracting archive from url \(path)")
+        
+        let destination = path.hasSuffix(".zip") ? path.replacingOccurrences(of: ".zip", with: "") : path
+        
+        try? Zip.unzipFile(
+            URL(filePath: path),
+            destination: URL(filePath: destination),
+            overwrite: true,
+            password: nil)
+        
+        let fileManager = FileManager.default
+        guard let entries = try? fileManager.contentsOfDirectory(atPath: destination) else {
             return false
         }
 
-
         // Find json and decode it
-        let entries = archive.entries
 
-        guard let manifestEntry = entries.first(where: { $0.fileName == "manifest.json" }) else {
+        guard let manifestEntry = entries.first(where: { $0 == "manifest.json" }) else {
             NSLog("Error extracting the image: no manifest.json")
             return false
         }
 
         let json: JSON
         do {
-            json = try JSON(data: manifestEntry.newData())
+            json = try JSON(data: Data(contentsOf: URL(filePath: destination + "/manifest.json")))
         } catch {
             NSLog("Error extracting the image: json malformed. Error: \(error)")
             return false
@@ -172,8 +178,8 @@ final class FirmwareImage {
                 return false
             }
             
-            for entry in entries where entry.fileName == name {
-                guard let data = try? entry.newData() else {
+            for entry in entries where entry == name {
+                guard let data = try? Data(contentsOf: URL(fileURLWithPath: destination + "/" + entry)) else {
                     NSLog("Error extracting the image: Malformed firmware for \(name)")
                     return false
                 }
