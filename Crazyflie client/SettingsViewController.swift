@@ -94,10 +94,6 @@ final class SettingsViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onBootloaderClicked( _ sender: Any) {
-        viewModel?.bootloaderClicked()
-    }
-
     @objc func endEditing(_ force: Bool) -> Bool {
         guard viewModel?.canEditValues == true else { return false }
         // Called only for sensitivity text fields

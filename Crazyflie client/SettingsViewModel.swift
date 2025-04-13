@@ -150,12 +150,6 @@ final class SettingsViewModel: Observable {
         return controlMode.titles
     }
     
-    func bootloaderClicked() {
-        if bluetoothLink.isConnected {
-            bluetoothLink.disconnect()
-        }
-    }
-    
     private func title(at index: Int) -> String? {
         guard controlMode.titles.indices.contains(index) else { return nil }
         
