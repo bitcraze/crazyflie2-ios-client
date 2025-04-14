@@ -20,7 +20,7 @@ final class Bootloader {
         var scaledInterval: TimeInterval
         
         if interval > 3600 {
-            result += "\(Int(interval/3600)):"
+            result += "\(interval/3600):"
             scaledInterval = interval.truncatingRemainder(dividingBy: 3600)
         } else {
             scaledInterval = interval
@@ -177,14 +177,12 @@ final class Bootloader {
         case nrf51 = 0xfe
         case stm32 = 0xff
         
-        var name :String {
-            get {
-                switch self {
-                case .nrf51:
-                    return "nrf51"
-                case .stm32:
-                    return "stm32"
-                }
+        var name: String {
+            switch self {
+            case .nrf51:
+                return "nrf51"
+            case .stm32:
+                return "stm32"
             }
         }
     }

@@ -25,6 +25,8 @@ final class BootloaderViewController : UIViewController {
     enum State {
         case idle, imageFetched , updating, error
     }
+    
+    let firmwareLoader = Dependency.default.firmwareLoader
 
     // MARK: - UI handling
     
@@ -79,7 +81,7 @@ final class BootloaderViewController : UIViewController {
             self.updateButton.isEnabled = false
             self.closeButton.isEnabled = true
             self.updateButton.setTitle("Update", for: .normal)
-            self.progressLabel.text = "Downloading latest firmware from the Internet"
+            self.progressLabel.text = "Downloading firmware versions from the Internet"
         case .imageFetched:
             self.updateButton.isEnabled = true
             self.closeButton.isEnabled = true
@@ -102,44 +104,80 @@ final class BootloaderViewController : UIViewController {
     var firmware: FirmwareImage? = nil
     
     func fetchFirmware() {
-        NSLog("Fetch clicked!")
+        NSLog("Fetch firmwares clicked!")
         
-        self.progressLabel.text = "Fetching latest version informations ..."
+        self.progressLabel.text = "Fetching all availabel firmware version informations ..."
         
-        FirmwareImage.fetchLatestWithCallback() { (firmware, nozip) in
-            self.firmware = firmware
-            if let firmware = self.firmware {
-                NSLog("New version fetched!")
-                self.versionLabel.text = firmware.version
-                self.descriptionLabel.text = (firmware.description.split { $0 == "\n" }.map { String($0) })[0]
-                
-                self.progressLabel.text = "Downloading firmware image ..."
-                firmware.download() { (success) in
-                    if success {
-                        self.state = .imageFetched
-                        var desc = ""
-                        for (name, data) in firmware.targetFirmwares {
-                            desc += "\(name): \(data.count/1024)KiB. "
-                        }
-                        self.descriptionLabel.text = desc
-                    } else {
-                        self.descriptionLabel.text =  "Error downloading firmware from the Internet."
-                        self.state = .error
+        firmwareLoader.fetchAvailableFirmwares {[weak self] result in
+            switch result {
+            case .success(let firmwares):
+                self?.progressLabel.text = "Successfully loaded firmware versions"
+                let alertController = UIAlertController(title: "Version", message: "Select a firmware version", preferredStyle: .actionSheet)
+                firmwares.forEach { firmware in
+                    let action = UIAlertAction(title: firmware.name, style: .default) { action in
+                        self?.download(firmware: firmware)
                     }
+                    alertController.addAction(action)
                 }
-                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                alertController.addAction(cancelAction)
+                self?.present(alertController, animated: true)
+            case .failure(let error):
+                self?.progressLabel.text = "Failed to load firmware versions"
+            }
+        }
+    }
+     
+    func download(firmware: Firmware) {
+        guard let url = firmware.asset.first(where: { asset in
+            asset.browserDownloadUrl != nil
+        })?.browserDownloadUrl else {
+            NSLog("No url from firware")
+            return
+        }
+        NSLog("Download firmware clicked!")
+        
+        firmwareLoader.fetchFirmware(url: url) { [weak self] result in
+            switch result {
+            case .success(let image):
+                self?.onFirmwareImageFetched(image)
+            case .failure(let error):
+                NSLog("Failed to download image: \(error)")
+                self?.onFirmwareImageFailedLoading(error)
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func onFirmwareImageFetched(_ image: FirmwareImage) {
+        self.firmware = image
+    
+        NSLog("New version fetched!")
+        self.versionLabel.text = image.version
+        self.descriptionLabel.text = (image.description.split { $0 == "\n" }.map { String($0) })[0]
+        
+        self.progressLabel.text = "Downloading firmware image ..."
+        firmwareLoader.download(image: image) { zipFilePath in
+            if zipFilePath != nil {
+                self.state = .imageFetched
+                var desc = ""
+                /*for (name, data) in firmware.targetFirmwares {
+                    desc += "\(name): \(data.count/1024)KiB. "
+                }*/
+                self.descriptionLabel.text = desc
             } else {
-                self.versionLabel.text = "N/A"
-                self.descriptionLabel.text =  "N/A"
-                
-                if nozip {
-                    self.errorString = "No new firmware available."
-                } else {
-                    self.errorString = "Error fetching version from the Internet."
-                }
+                self.descriptionLabel.text =  "Error downloading firmware from the Internet."
                 self.state = .error
             }
         }
+    }
+    
+    private func onFirmwareImageFailedLoading(_ error: Error) {
+        self.versionLabel.text = "N/A"
+        self.descriptionLabel.text =  "N/A"
+        self.errorString = "Error fetching version from the Internet."
+        self.state = .error
     }
     
     // MARK: - Bootloader logic
@@ -149,23 +187,23 @@ final class BootloaderViewController : UIViewController {
     lazy var bootloader: Bootloader = { Bootloader(link: self.link) }()
     
     @IBAction func onUpdateClicked(_ sender: AnyObject) {
-        if self.state == .imageFetched && self.link.getState() == "idle" {
-            self.progressLabel.text = "Connecting bootloader ..."
-            self.link.connect(self.bootloaderName) { (connected) in
-                OperationQueue.main.addOperation() {
+        if state == .imageFetched && link.state == .idle {
+            progressLabel.text = "Connecting bootloader ..."
+            link.connect(self.bootloaderName) { (connected) in
+                OperationQueue.main.addOperation() { [weak self] in
                     if connected {
-                        self.state = .updating
-                        self.update()
+                        self?.state = .updating
+                        self?.update()
                     } else {
-                        self.showAlert(title: "Error", message: "Bootloader connection: \(self.link.getError())")
-                        self.state = .imageFetched
+                        self?.showAlert(title: "Error", message: "Bootloader connection: \(self?.link.error ?? "Unknown")")
+                        self?.state = .imageFetched
                     }
                 }
             }
         } else if self.state == .updating {
-            self.bootloader.cancel()
-            self.link.disconnect()
-            self.state = .imageFetched
+            bootloader.cancel()
+            link.disconnect()
+            state = .imageFetched
         }
     }
     
@@ -181,7 +219,7 @@ final class BootloaderViewController : UIViewController {
                 self.state = .imageFetched
             } else if done && error != nil {
                 self.showAlert(title: "Error updating", message: error!.localizedDescription)
-                if self.link.getState() == "connected" {
+                if self.link.state == .connected {
                     self.link.disconnect()
                     self.state = .imageFetched
                 } else {
@@ -195,7 +233,7 @@ final class BootloaderViewController : UIViewController {
     }
     
     @IBAction func onCloseClicked(_ sender: AnyObject) {
-        if self.link.getState() == "connected" {
+        if self.link.state == .connected {
             self.link.disconnect()
             self.state = .idle
         }
