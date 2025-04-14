@@ -92,7 +92,8 @@ final class FirmwareLoader {
     func download(firmware: Firmware,
                   progress: @escaping (String) -> Void,
                   callback: @escaping (Result<Firmware, Error>) -> Void) {
-        guard let url = firmware.assets.first(where: { $0.browserDownloadUrl != nil })?.browserDownloadUrl else {
+        // only use assets from CF2
+        guard let url = firmware.assets.first(where: { $0.type == .CF2 })?.browserDownloadUrl else {
             callback(.failure(MissingDataError()))
             return
         }
