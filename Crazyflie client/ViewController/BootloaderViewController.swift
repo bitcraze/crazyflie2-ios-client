@@ -129,18 +129,15 @@ final class BootloaderViewController : UIViewController {
     }
      
     func download(firmware: Firmware) {
-        guard let url = firmware.asset.first(where: { asset in
-            asset.browserDownloadUrl != nil
-        })?.browserDownloadUrl else {
-            NSLog("No url from firware")
-            return
-        }
         NSLog("Download firmware clicked!")
         
-        firmwareLoader.fetchFirmware(url: url) { [weak self] result in
+        firmwareLoader.download(firmware: firmware,
+                                progress: { [weak self] progress in
+            self?.progressLabel.text = progress
+        }) { [weak self] result in
             switch result {
-            case .success(let image):
-                self?.onFirmwareImageFetched(image)
+            case .success(let newFirmware):
+                self?.onFirmwareImageFetched(newFirmware)
             case .failure(let error):
                 NSLog("Failed to download image: \(error)")
                 self?.onFirmwareImageFailedLoading(error)
@@ -150,33 +147,23 @@ final class BootloaderViewController : UIViewController {
     
     // MARK: - Private
     
-    private func onFirmwareImageFetched(_ image: FirmwareImage) {
-        self.firmware = image
+    private func onFirmwareImageFetched(_ firmware: Firmware) {
+        self.firmware = firmware
     
         NSLog("New version fetched!")
-        self.versionLabel.text = image.version
-        self.descriptionLabel.text = (image.description.split { $0 == "\n" }.map { String($0) })[0]
+        self.versionLabel.text = firmware.name
         
-        self.progressLabel.text = "Downloading firmware image ..."
-        firmwareLoader.download(image: image) { zipFilePath in
-            if zipFilePath != nil {
-                self.state = .imageFetched
-                var desc = ""
-                /*for (name, data) in firmware.targetFirmwares {
-                    desc += "\(name): \(data.count/1024)KiB. "
-                }*/
-                self.descriptionLabel.text = desc
-            } else {
-                self.descriptionLabel.text =  "Error downloading firmware from the Internet."
-                self.state = .error
-            }
-        }
+        self.state = .imageFetched
+        let description = firmware.targetFirmwares.map { "\($0.0): \($0.1.count/1024)KiB" }.joined(separator: "\n")
+        self.descriptionLabel.text = description
+        
+        self.progressLabel.text = "Download complete. Ready to update!"
     }
     
     private func onFirmwareImageFailedLoading(_ error: Error) {
         self.versionLabel.text = "N/A"
         self.descriptionLabel.text =  "N/A"
-        self.errorString = "Error fetching version from the Internet."
+        self.errorString = "Error downloading version from the Internet."
         self.state = .error
     }
     
@@ -208,7 +195,9 @@ final class BootloaderViewController : UIViewController {
     }
     
     fileprivate func update() {
-        bootloader.update(self.firmware!) { (done, progress, status, error) in
+        guard let firmware = firmware else { return }
+        
+        bootloader.update(firmware) { (done, progress, status, error) in
             if done && error == nil {
                 self.showAlert(
                     title: "Success",
