@@ -171,13 +171,7 @@ final class FirmwareLoader {
             throw ImageManifestError(description: "Image Version malformed. Try a different version")
         }
 
-        let version =  manifest.version
         let files = manifest.files
-        
-        if version != 1 {
-            NSLog("Error extracting the image: Wrong version")
-            throw ImageManifestError(description: "Version not supported. Try a different version")
-        }
         
         var targetFirmwares = [String: Data]()
         
