@@ -42,22 +42,21 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         }
     }
     
-    var canBluetooth = false
+    private var centralManager: CBCentralManager?
+    private var peripheralBLE: CBPeripheral?
+    private var connectingPeripheral: CBPeripheral?
+    private var crazyflie: CBPeripheral?
+    private var crtpCharacteristic: CBCharacteristic! = nil
+    private var crtpUpCharacteristic:CBCharacteristic! = nil
+    private var crtpDownCharacteristic:CBCharacteristic! = nil
+    private var btQueue: DispatchQueue
+    private var pollTimer: Timer?
     
-    var stateCallback: ((CrazyFlieState) -> ())?
-    var txCallback: ((Bool) -> ())?
+    private(set) var canBluetooth = false
+    private(set) var stateCallback: ((CrazyFlieState) -> ())?
+    private(set) var txCallback: ((Bool) -> ())?
+    
     var rxCallback: ((Data) -> ())?
-    
-    fileprivate var centralManager: CBCentralManager?
-    fileprivate var peripheralBLE: CBPeripheral?
-    fileprivate var connectingPeripheral: CBPeripheral?
-    fileprivate var crazyflie: CBPeripheral?
-    fileprivate var crtpCharacteristic: CBCharacteristic! = nil
-    fileprivate var crtpUpCharacteristic:CBCharacteristic! = nil
-    fileprivate var crtpDownCharacteristic:CBCharacteristic! = nil
-    
-    fileprivate var btQueue: DispatchQueue
-    fileprivate var pollTimer: Timer?
 
     
     private(set) var state: CrazyFlieState = .idle {
