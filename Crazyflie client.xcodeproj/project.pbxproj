@@ -178,6 +178,7 @@
 				3A00394F198AE038001799A4 /* Main.storyboard */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
 				3A003944198AE038001799A4 /* Supporting Files */,
+				58EF051A2DAD9AF700D259B2 /* Bootloader */,
 				58EF05192DAD929800D259B2 /* Device */,
 				58EF05152DAD7B8000D259B2 /* Bluetooth */,
 				58EF05182DAD918700D259B2 /* Gyroscope */,
@@ -260,7 +261,6 @@
 			children = (
 				58EF05042DA8397700D259B2 /* Dependency.swift */,
 				58B89C7F1E539F0000750790 /* AppDelegate.swift */,
-				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -305,6 +305,14 @@
 				58B89C881E539F3700750790 /* CrazyFlie.swift */,
 			);
 			path = Device;
+			sourceTree = "<group>";
+		};
+		58EF051A2DAD9AF700D259B2 /* Bootloader */ = {
+			isa = PBXGroup;
+			children = (
+				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
+			);
+			path = Bootloader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,12 +446,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,7 +651,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -676,7 +682,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
