@@ -141,10 +141,12 @@ final class FirmwareLoader {
     private func extractTargets(_ path: String) throws -> [String: Data] {
         
         let destination = path.hasSuffix(".zip") ? path.replacingOccurrences(of: ".zip", with: "") : path
+        let zipFileUrl = URL(fileURLWithPath: path)
+        let destinationPath = URL(fileURLWithPath: destination)
         
         try? Zip.unzipFile(
-            URL(filePath: path),
-            destination: URL(filePath: destination),
+            zipFileUrl,
+            destination: destinationPath,
             overwrite: true,
             password: nil)
         
@@ -162,7 +164,7 @@ final class FirmwareLoader {
 
         let manifest: ImageManifest
         do {
-            manifest = try JSONDecoder().decode(ImageManifest.self, from: Data(contentsOf: URL(filePath: destination + "/manifest.json")))
+            manifest = try JSONDecoder().decode(ImageManifest.self, from: Data(contentsOf: URL(fileURLWithPath: destination + "/manifest.json")))
         } catch {
             NSLog("Error extracting the image: json malformed. Error: \(error)")
             throw ImageManifestError(description: "Image Version malformed. Try a different version")
