@@ -9,8 +9,13 @@
 import Foundation
 import Zip
 
+struct ImageFolderMalformed: Error {}
 struct MissingDataError: Error {}
 struct WebserverError: Error {}
+struct ExtractingDataError: Error {}
+struct ImageManifestError: Error {
+    let description: String
+}
 
 final class FirmwareLoader {
     private let releaseUrl = "https://api.github.com/repos/bitcraze/crazyflie-release/releases"
