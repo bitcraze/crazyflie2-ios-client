@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Settings {
+final class Settings {
     enum Names: String {
         case pitchRate = "pitchRate"
         case maxThrust = "maxThrust"
