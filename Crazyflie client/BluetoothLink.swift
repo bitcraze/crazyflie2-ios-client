@@ -149,7 +149,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if let name = peripheral.name  {
-            if name == self.address {
+            if name.starts(with: self.address) {
                 scanTimer?.invalidate()
                 central.stopScan()
                 NSLog("Stop scanning")
@@ -291,6 +291,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         crtpCharacteristic = nil
         
         state = "idle"
+        error = "Disconnected"
         print("Connection IDLE")
     }
     
