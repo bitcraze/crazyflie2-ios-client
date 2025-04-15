@@ -97,6 +97,9 @@ open class CrazyFlie: NSObject {
                 } else if self?.bluetoothLink.getError() == "Timeout" {
                     title = "Connection timeout"
                     body = "Could not find Crazyflie"
+                } else if self?.bluetoothLink.getError() == "Disconnected" {
+                    // Disconnected request, this is not an error
+                    return
                 } else {
                     title = "Error"
                     body = self?.bluetoothLink.getError()
