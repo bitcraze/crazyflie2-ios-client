@@ -1,4 +1,4 @@
-# IOS android Client Privacy policy
+# IOS Crazyflie 2 Client Privacy policy
 
 The Crazyflie IOS client (the app) is intended to be used to control the Crazyflie 2.x family of quadcopters from an iPhone or iPad.
 
