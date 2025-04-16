@@ -101,7 +101,7 @@ final class BootloaderViewController : UIViewController {
     
     // MARK: - Image handling
     
-    var firmware: FirmwareImage? = nil
+    private var firmware: Firmware? = nil
     
     func fetchFirmware() {
         NSLog("Fetch firmwares clicked!")
