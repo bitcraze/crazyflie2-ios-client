@@ -28,36 +28,49 @@ final class FirmwareLoader {
             }
             
             if let error = error  {
-                callback(.failure(error))
+                DispatchQueue.main.async {
+                    callback(.failure(error))
+                }
             }
             
             do {
                 let firmwares = try JSONDecoder().decode([Firmware].self, from: data)
-                callback(.success(firmwares))
+                DispatchQueue.main.async {
+                    callback(.success(firmwares))
+                }
             } catch let e {
-                callback(.failure(e))
+                DispatchQueue.main.async {
+                    callback(.failure(e))
+                }
             }
         }
+        task.resume()
     }
     
     func fetchFirmware(url: URL, _ callback: @escaping (Result<FirmwareImage, Error>)->()) {
         let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
             guard let data = data else {
                 NSLog("Error no data for firmware.")
-                OperationQueue.main.addOperation { callback(.failure(MissingDataError())) }
+                DispatchQueue.main.async {
+                    callback(.failure(MissingDataError()))
+                }
                 return
             }
             
             if let error = error  {
                 NSLog("Error requesting latest version from github. Error: \(error.localizedDescription)")
-                OperationQueue.main.addOperation() { callback(.failure(error)) }
+                DispatchQueue.main.async {
+                    callback(.failure(error))
+                }
                 return
             }
             
             let httpResponse = response as! HTTPURLResponse
             if httpResponse.statusCode != 200 {
                 NSLog("Error requesting latest version from github. Response code: \(httpResponse.statusCode)")
-                OperationQueue.main.addOperation() { callback(.failure(WebserverError())) }
+                DispatchQueue.main.async {
+                    callback(.failure(WebserverError()))
+                }
                 return
             }
             
@@ -76,34 +89,56 @@ final class FirmwareLoader {
         task.resume()
     }
     
-    func download(image: FirmwareImage, _ callback: @escaping (String?) -> Void) {
-        let task = URLSession.shared.dataTask(with: image.browserDownloadUrl, completionHandler: {(data, response, error) in
+    func download(firmware: Firmware,
+                  progress: @escaping (String) -> Void,
+                  callback: @escaping (Result<Firmware, Error>) -> Void) {
+        guard let url = firmware.assets.first(where: { $0.browserDownloadUrl != nil })?.browserDownloadUrl else {
+            callback(.failure(MissingDataError()))
+            return
+        }
+        progress("Start downloading firmware")
+        
+        let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
             guard let data = data else {
                 NSLog("Error empty firmware data)")
+                callback(.failure(MissingDataError()))
                 return
             }
             
             if let error = error {
-                OperationQueue.main.addOperation() { callback(nil) }
+                DispatchQueue.main.async {
+                    callback(.failure(error))
+                }
                 NSLog("Error downloading the firmware: \(error.localizedDescription)")
                 return
             }
             
-            let path = NSTemporaryDirectory() + image.fileName
+            DispatchQueue.main.async {
+                progress("Firmware downloaded .. extracting ..")
+            }
+            
+            let path = NSTemporaryDirectory() + firmware.name + ".zip"
             let downloadPath = URL(fileURLWithPath: path)
             
-            if let _ = try? data.write(to: downloadPath, options: []),
-                let firmwareData = self.extractTargets(path) {
-                OperationQueue.main.addOperation() { callback(path) }
-            } else {
-                OperationQueue.main.addOperation() { callback(nil) }
+            do {
+                try data.write(to: downloadPath, options: [])
+                let firmwareData = try self.extractTargets(path)
+                DispatchQueue.main.async {
+                    var newFirmware = Firmware(name: firmware.name, assets: firmware.assets)
+                    newFirmware.targetFirmwares = firmwareData
+                    callback(.success(newFirmware))
+                }
+            } catch let e {
+                DispatchQueue.main.async {
+                    callback(.failure(ExtractingDataError()))
+                }
             }
         })
         
         task.resume()
     }
     
-    private func extractTargets(_ path: String) -> [String: Data]? {
+    private func extractTargets(_ path: String) throws -> [String: Data] {
         
         let destination = path.hasSuffix(".zip") ? path.replacingOccurrences(of: ".zip", with: "") : path
         
@@ -115,50 +150,45 @@ final class FirmwareLoader {
         
         let fileManager = FileManager.default
         guard let entries = try? fileManager.contentsOfDirectory(atPath: destination) else {
-            return nil
+            throw ImageFolderMalformed()
         }
 
         // Find json and decode it
 
-        guard let manifestEntry = entries.first(where: { $0 == "manifest.json" }) else {
+        guard entries.first(where: { $0 == "manifest.json" }) != nil else {
             NSLog("Error extracting the image: no manifest.json")
-            return nil
+            throw ImageFolderMalformed()
         }
 
-        let json: JSON
+        let manifest: ImageManifest
         do {
-            json = try JSON(data: Data(contentsOf: URL(filePath: destination + "/manifest.json")))
+            manifest = try JSONDecoder().decode(ImageManifest.self, from: Data(contentsOf: URL(filePath: destination + "/manifest.json")))
         } catch {
             NSLog("Error extracting the image: json malformed. Error: \(error)")
-            return nil
+            throw ImageManifestError(description: "Image Version malformed. Try a different version")
         }
 
-        let version =  json["version"].int
-        let files = json["files"].dictionary
+        let version =  manifest.version
+        let files = manifest.files
         
-        if version == nil || version != 1 || files == nil {
-            NSLog("Error extracting the image: Wrong version or malformed manifest")
-            return nil
+        if version != 1 {
+            NSLog("Error extracting the image: Wrong version")
+            throw ImageManifestError(description: "Version not supported. Try a different version")
         }
         
         var targetFirmwares = [String: Data]()
         
-        for (name, content) in files! {
-            let platform: String! = content["platform"].string
-            let target: String! = content["target"].string
-            let type: String! = content["type"].string
-            
-            if platform == nil || target == nil || type == nil {
-                NSLog("Error extracting the image: Malformed manifest")
-                return nil
-            }
+        for (name, content) in files {
+            let platform = content.platform
+            let target = content.target
+            let type = content.type
             
             for entry in entries where entry == name {
                 guard let data = try? Data(contentsOf: URL(fileURLWithPath: destination + "/" + entry)) else {
                     NSLog("Error extracting the image: Malformed firmware for \(name)")
-                    return nil
+                    throw ImageManifestError(description: "Malformed firmware for \(name)")
                 }
-                targetFirmwares["\(platform!)-\(target!)-\(type!)"] = data
+                targetFirmwares["\(platform)-\(target)-\(type)"] = data
             }
         }
         
