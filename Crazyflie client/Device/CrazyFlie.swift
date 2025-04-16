@@ -80,7 +80,7 @@ final class CrazyFlie {
                 } else if self?.bluetoothLink.error == "Timeout" {
                     title = "Connection timeout"
                     body = "Could not find Crazyflie"
-                } else if self?.bluetoothLink.getError() == "Disconnected" {
+                } else if self?.bluetoothLink.error == "Disconnected" {
                     // Disconnected request, this is not an error
                     return
                 } else {
