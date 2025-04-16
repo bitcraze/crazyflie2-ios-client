@@ -33,6 +33,7 @@
 		58B89C941E539F4500750790 /* FlightControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */; };
 		58B89C951E539F4500750790 /* FlightControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8F1E539F4500750790 /* FlightControllerViewModel.swift */; };
 		58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */; };
+		58E2C31F2DAFA0CC0042859B /* BootloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */; };
 		58EF05052DA8397F00D259B2 /* Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05042DA8397700D259B2 /* Dependency.swift */; };
 		58EF05072DA83A7C00D259B2 /* FirmwareLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05062DA83A7600D259B2 /* FirmwareLoader.swift */; };
 		58EF05092DA83A8600D259B2 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05082DA83A8300D259B2 /* Firmware.swift */; };
@@ -85,6 +86,7 @@
 		58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightControllerViewController.swift; sourceTree = "<group>"; };
 		58B89C8F1E539F4500750790 /* FlightControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightControllerViewModel.swift; sourceTree = "<group>"; };
 		58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieCommandHelper.swift; sourceTree = "<group>"; };
+		58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootloaderViewController.swift; sourceTree = "<group>"; };
 		58EF05042DA8397700D259B2 /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
 		58EF05062DA83A7600D259B2 /* FirmwareLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareLoader.swift; sourceTree = "<group>"; };
 		58EF05082DA83A8300D259B2 /* Firmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
@@ -166,8 +168,8 @@
 				58EF05002DA837FF00D259B2 /* Model */,
 				58EF050F2DAD70AD00D259B2 /* View */,
 				58EF05102DAD70BB00D259B2 /* ViewModel */,
-				58EF05022DA8386400D259B2 /* Helper */,
 				58EF05012DA8382100D259B2 /* ViewController */,
+				58EF05022DA8386400D259B2 /* Helper */,
 				51E178231A27762900BB2AF7 /* Assets */,
 			);
 			path = "Crazyflie client";
@@ -217,6 +219,7 @@
 		58EF05012DA8382100D259B2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */,
 				58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */,
 				58B89C8C1E539F4500750790 /* SettingsViewController.swift */,
 			);
@@ -476,6 +479,7 @@
 				58B89C951E539F4500750790 /* FlightControllerViewModel.swift in Sources */,
 				58B89C831E539F0C00750790 /* BCJoystick.swift in Sources */,
 				9C974A881CAE58840002418A /* MotionLink.swift in Sources */,
+				58E2C31F2DAFA0CC0042859B /* BootloaderViewController.swift in Sources */,
 				35EAA9BC296E00DF008CF0B7 /* CommanderPacket.swift in Sources */,
 				58B89C891E539F3700750790 /* CrazyFlie.swift in Sources */,
 				58B89C931E539F4500750790 /* SettingsViewModel.swift in Sources */,

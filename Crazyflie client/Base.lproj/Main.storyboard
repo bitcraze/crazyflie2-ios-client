@@ -296,14 +296,15 @@
                                     <action selector="closeClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="Uzi-di-edx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-GE-Wiy">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-GE-Wiy">
                                 <rect key="frame" x="497" y="343" width="150" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="contentEdgeInsets" minX="9" minY="3" maxX="9" maxY="3"/>
                                 <state key="normal" title="Update Crazyflie ...">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="onBootloaderClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="cvl-bg-PcJ"/>
+                                    <action selector="onBootloaderClicked:" destination="yUo-2Y-gx5" eventType="touchUpInside" id="9H4-gD-hR0"/>
                                     <segue destination="YBo-1h-R5I" kind="modal" id="Frp-zP-CPI"/>
                                 </connections>
                             </button>
