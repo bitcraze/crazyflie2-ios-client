@@ -47,7 +47,7 @@ final class FirmwareLoader {
         task.resume()
     }
     
-    func fetchFirmware(url: URL, _ callback: @escaping (Result<FirmwareImage, Error>)->()) {
+    func fetchFirmware(url: URL, _ callback: @escaping (Result<Firmware, Error>)->()) {
         let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
             guard let data = data else {
                 NSLog("Error no data for firmware.")
@@ -77,7 +77,7 @@ final class FirmwareLoader {
             // Decoding the JSON and initializing a new FirmwareImage object
             
             do {
-                let image = try JSONDecoder().decode(FirmwareImage.self, from: data)
+                let image = try JSONDecoder().decode(Firmware.self, from: data)
                 OperationQueue.main.addOperation { callback(.success(image)) }
             } catch let error {
                     NSLog("Error, the data is not json. Data: \(data): \(error)")
@@ -131,7 +131,7 @@ final class FirmwareLoader {
                 }
             } catch let e {
                 DispatchQueue.main.async {
-                    callback(.failure(ExtractingDataError()))
+                    callback(.failure(e))
                 }
             }
         })
