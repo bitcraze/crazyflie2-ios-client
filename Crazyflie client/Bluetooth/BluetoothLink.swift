@@ -287,12 +287,8 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         crazyflie = nil
         crtpCharacteristic = nil
         
-<<<<<<< HEAD:Crazyflie client/Bluetooth/BluetoothLink.swift
         state = .idle
-=======
-        state = "idle"
         error = "Disconnected"
->>>>>>> master:Crazyflie client/BluetoothLink.swift
         print("Connection IDLE")
     }
     
