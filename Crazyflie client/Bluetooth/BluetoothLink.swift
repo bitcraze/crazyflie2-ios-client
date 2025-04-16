@@ -18,6 +18,7 @@ import CoreBluetooth
  */
 final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
+    let crazyflieClientCharacteristicsConfig = "00002902-0000-1000-8000-00805f9b34fb"
     let crazyflieServiceUuid = "00000201-1C7F-4F9E-947B-43B7C00A9A08"
     let crtpCharacteristicUuid = "00000202-1C7F-4F9E-947B-43B7C00A9A08"
     let crtpUpCharacteristicUuid = "00000203-1C7F-4F9E-947B-43B7C00A9A08"
@@ -43,7 +44,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     
     var canBluetooth = false
     
-    var stateCallback: ((NSString) -> ())?
+    var stateCallback: ((CrazyFlieState) -> ())?
     var txCallback: ((Bool) -> ())?
     var rxCallback: ((Data) -> ())?
     
@@ -57,14 +58,14 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     
     fileprivate var btQueue: DispatchQueue
     fileprivate var pollTimer: Timer?
+
     
-    
-    fileprivate var state = "idle" {
+    private(set) var state: CrazyFlieState = .idle {
         didSet {
-            stateCallback?(state as NSString)
+            stateCallback?(state)
         }
     }
-    fileprivate var error = ""
+    private(set) var error = ""
     
     fileprivate var scanTimer: Timer?
     
@@ -84,7 +85,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
             canBluetooth = centralManager!.state.rawValue == 5 // PoweredOn
         }
         
-        state = "idle"
+        state = .idle
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -97,49 +98,43 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     }
     
     func connect(_ address: String?, callback: @escaping (Bool) -> ()) {
-        if !canBluetooth || state != "idle" {
+        guard canBluetooth && state == .idle else {
             error = canBluetooth ? "Already connected":"Bluetooth disabled"
             callback(false)
             return
         }
+        guard let central = centralManager else { return }
         
-        if address == nil {
-            self.address = "Crazyflie"
-        } else {
-            self.address = address!
-        }
+        self.address = address ?? "Crazyflie"
         
         // Reseting characteristics
         self.crtpCharacteristic = nil
         self.crtpUpCharacteristic = nil
         self.crtpDownCharacteristic = nil
         
-        
-        if let central = centralManager {
-            let connectedPeripheral = central.retrieveConnectedPeripherals(withServices: [CBUUID(string: crazyflieServiceUuid)])
+        let connectedPeripheral = central.retrieveConnectedPeripherals(withServices: [CBUUID(string: crazyflieServiceUuid)])
             
-            if connectedPeripheral.count > 0  && connectedPeripheral.first!.name != nil && connectedPeripheral.first!.name == self.address {
-                NSLog("Already connected, reusing peripheral")
-                connectingPeripheral = connectedPeripheral.first
-                central.connect(connectingPeripheral!, options: nil)
-                state = "connecting"
-            } else {
-                NSLog("Start scanning")
-                central.scanForPeripherals(withServices: nil, options: nil)
-                state = "scanning"
-                
-                scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(scanningTimeout), userInfo: nil, repeats: false)
-            }
+        if connectedPeripheral.count > 0  && connectedPeripheral.first!.name != nil && connectedPeripheral.first!.name == self.address {
+            NSLog("Already connected, reusing peripheral")
+            connectingPeripheral = connectedPeripheral.first
+            central.connect(connectingPeripheral!, options: nil)
+            state = .connecting
+        } else {
+            NSLog("Start scanning")
+            central.scanForPeripherals(withServices: nil, options: nil)
+            state = .scanning
             
-            connectCallback = callback
+            scanTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(scanningTimeout), userInfo: nil, repeats: false)
         }
+        
+        connectCallback = callback
     }
     
     @objc
     private func scanningTimeout(timer: Timer) {
         NSLog("Scan timeout, stop scan")
         centralManager!.stopScan()
-        state = "idle"
+        state = .idle
         scanTimer?.invalidate()
         scanTimer = nil
         
@@ -148,22 +143,21 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let name = peripheral.name  {
-            if name == self.address {
-                scanTimer?.invalidate()
-                central.stopScan()
-                NSLog("Stop scanning")
-                connectingPeripheral = peripheral
-                state = "connecting"
-                
-                central.connect(peripheral, options: nil)
-            }
-        }
+        
+        guard let name = peripheral.name, name == self.address else { return }
+        
+        scanTimer?.invalidate()
+        central.stopScan()
+        NSLog("Stop scanning")
+        connectingPeripheral = peripheral
+        state = .connecting
+        
+        central.connect(peripheral, options: nil)
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         self.error = "Failed to connect"
-        state = "idle"
+        state = .idle
         connectCallback?(false)
     }
     
@@ -176,7 +170,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         
         peripheral.discoverServices([CBUUID(string: crazyflieServiceUuid)])
         
-        state = "services"
+        state = .services
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -192,36 +186,39 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {return }
         
-        for service in services {
-            if service.uuid.uuidString == crazyflieServiceUuid {
+        services.forEach {
+            if $0.uuid.uuidString == crazyflieServiceUuid {
                 peripheral.discoverCharacteristics([CBUUID(string: crtpCharacteristicUuid),
                                                     CBUUID(string: crtpUpCharacteristicUuid),
-                                                    CBUUID(string: crtpDownCharacteristicUuid)], for: service)
-                state = "characteristics"
+                                                    CBUUID(string: crtpDownCharacteristicUuid)], for: $0)
+                state = .characteristics
             }
         }
+        
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         
-        for characteristic in characteristics  {
-            if characteristic.uuid.uuidString == crtpCharacteristicUuid {
-                self.crtpCharacteristic = characteristic
-            } else if characteristic.uuid.uuidString == crtpUpCharacteristicUuid {
-                self.crtpUpCharacteristic = characteristic
-            } else if characteristic.uuid.uuidString == crtpDownCharacteristicUuid {
-                self.crtpDownCharacteristic = characteristic
-                peripheral.setNotifyValue(true, for: characteristic)
+        characteristics.forEach {
+            switch $0.uuid.uuidString {
+            case crtpCharacteristicUuid:
+                self.crtpCharacteristic = $0
+            case crtpUpCharacteristicUuid:
+                self.crtpUpCharacteristic = $0
+            case crtpDownCharacteristicUuid:
+                self.crtpDownCharacteristic = $0
+                peripheral.setNotifyValue(true, for: $0)
+            default: return
             }
+        }
             
-            if self.crtpCharacteristic != nil && self.crtpUpCharacteristic != nil && crtpDownCharacteristic != nil {
-                state = "connected"
-                connectCallback?(true)
-                // Start the packet polling
-                self.btQueue.async {
-                    self.sendAPacket()
-                }
+        if self.crtpCharacteristic != nil && self.crtpUpCharacteristic != nil && crtpDownCharacteristic != nil {
+            state = .connected
+            connectCallback?(true)
+            // Start the packet polling
+            self.btQueue.async {
+                self.sendAPacket()
             }
         }
     }
@@ -269,16 +266,16 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     }
     
     var isConnected: Bool {
-        return state == "connected"
+        return state == .connected
     }
     
     func disconnect() {
         switch state {
-        case "scanning":
+        case .scanning:
             NSLog("Cancel scanning")
             centralManager!.stopScan()
             scanTimer?.invalidate()
-        case "connecting", "services", "characteristics", "connected":
+        case .connecting, .services, .characteristics, .connected:
             if let peripheral = connectingPeripheral {
                 centralManager?.cancelPeripheralConnection(peripheral)
             }
@@ -290,19 +287,11 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         crazyflie = nil
         crtpCharacteristic = nil
         
-        state = "idle"
+        state = .idle
         print("Connection IDLE")
     }
     
-    func getState() -> NSString {
-        return state as NSString
-    }
-    
-    func getError() -> String {
-        return error
-    }
-    
-    func onStateUpdated(_ callback: @escaping (NSString) -> ()) {
+    func onStateUpdated(_ callback: @escaping (CrazyFlieState) -> ()) {
         stateCallback = callback
     }
     
@@ -342,7 +331,7 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
             callback = nil
         }
         
-        if state != "connected" {
+        if !isConnected {
             callback?(false)
             return
         }
