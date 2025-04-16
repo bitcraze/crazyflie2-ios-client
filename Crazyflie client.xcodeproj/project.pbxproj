@@ -258,7 +258,7 @@
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
 					3A003939198AE038001799A4 = {
-						DevelopmentTeam = 2D27KY2HT6;
+						DevelopmentTeam = ZZ3RP82Z38;
 						LastSwiftMigration = "";
 					};
 					41A02DC1218A80CC0036DC36 = {
@@ -318,6 +318,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6D4A87C9CD765300B15F5E2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crazyflie client-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		801C50ACC3629D1619543712 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3A003936198AE038001799A4 /* Sources */ = {
@@ -499,7 +540,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2D27KY2HT6;
+				DEVELOPMENT_TEAM = ZZ3RP82Z38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
@@ -513,6 +554,7 @@
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.emart-software.Crazyflie-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -531,7 +573,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2D27KY2HT6;
+				DEVELOPMENT_TEAM = ZZ3RP82Z38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
@@ -545,6 +587,7 @@
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.emart-software.Crazyflie-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
