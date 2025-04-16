@@ -199,9 +199,9 @@ final class Bootloader {
     
     fileprivate var callback: CallbackType? = nil
     
-    var firmware: FirmwareImage! = nil
+    var firmware: Firmware! = nil
     
-    func update(_ firmware: FirmwareImage, callback: @escaping CallbackType) {
+    func update(_ firmware: Firmware, callback: @escaping CallbackType) {
         self.callback = callback
         self.firmware = firmware
         
