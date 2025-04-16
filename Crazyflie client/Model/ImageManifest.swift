@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+struct ImageManifest: Decodable {
+    let version: Int
+    let files: [String: File]
+    
+    struct File: Decodable {
+        let platform: String
+        let target: String
+        let type: String
+    }
+}
