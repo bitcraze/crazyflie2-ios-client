@@ -21,7 +21,22 @@ struct FirmwareAsset: Decodable {
     let browserDownloadUrl: URL
 }
 
-struct Firmware: Decodable {
+struct Firmware {
     let name: String
-    let asset: [FirmwareAsset]
+    let assets: [FirmwareAsset]
+    
+    var targetFirmwares = [String: Data]()
+}
+
+extension Firmware: Decodable {
+    enum CodingKeys: CodingKey {
+        case name
+        case assets
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.assets = try container.decode([FirmwareAsset].self, forKey: .assets)
+    }
 }
