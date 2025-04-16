@@ -9,7 +9,6 @@
 import Foundation
 
 struct ImageManifest: Decodable {
-    let version: Int
     let files: [String: File]
     
     struct File: Decodable {
