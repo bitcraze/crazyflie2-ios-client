@@ -161,6 +161,7 @@ final class FlightControllerViewModel {
             progress = 0.75
         case .connected:
             progress = 1
+            topButtonTitle = "Disconnect"
         }
     }
 }

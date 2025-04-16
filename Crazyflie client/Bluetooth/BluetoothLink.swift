@@ -142,16 +142,17 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        
-        guard let name = peripheral.name, name == self.address else { return }
-        
-        scanTimer?.invalidate()
-        central.stopScan()
-        NSLog("Stop scanning")
-        connectingPeripheral = peripheral
-        state = .connecting
-        
-        central.connect(peripheral, options: nil)
+        if let name = peripheral.name  {
+            if name.starts(with: self.address) {
+                scanTimer?.invalidate()
+                central.stopScan()
+                NSLog("Stop scanning")
+                connectingPeripheral = peripheral
+                state = .connecting
+                
+                central.connect(peripheral, options: nil)
+            }
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -286,7 +287,12 @@ final class BluetoothLink : NSObject, CBCentralManagerDelegate, CBPeripheralDele
         crazyflie = nil
         crtpCharacteristic = nil
         
+<<<<<<< HEAD:Crazyflie client/Bluetooth/BluetoothLink.swift
         state = .idle
+=======
+        state = "idle"
+        error = "Disconnected"
+>>>>>>> master:Crazyflie client/BluetoothLink.swift
         print("Connection IDLE")
     }
     
