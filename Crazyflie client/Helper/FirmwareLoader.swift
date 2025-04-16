@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Zip
 
 struct MissingDataError: Error {}
