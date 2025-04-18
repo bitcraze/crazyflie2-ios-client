@@ -15,19 +15,13 @@
 		3A003951198AE038001799A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A00394F198AE038001799A4 /* Main.storyboard */; };
 		3ACFD047199632BA00FDF11A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFD046199632B900FDF11A /* CoreBluetooth.framework */; };
 		41A02DC5218A80CC0036DC36 /* Crazyflie_clientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A02DC4218A80CC0036DC36 /* Crazyflie_clientTests.swift */; };
+		41D721C201C5CF6BD18F5B0E /* Pods_Crazyflie_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E635E4FCC9B98ED90519059 /* Pods_Crazyflie_client.framework */; };
 		516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516212D71AE7D6B40044BC2B /* BluetoothLink.swift */; };
 		5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5199641D1A0E11D7008A6D72 /* DefaultPreferences.plist */; };
 		519AB5E51B6B75BB007BDE9B /* Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519AB5E41B6B75BB007BDE9B /* Watchdog.swift */; };
 		51E178251A27766C00BB2AF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E178241A27766C00BB2AF7 /* Images.xcassets */; };
 		51E1783B1A27796B00BB2AF7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */; };
-		51E178441A277AE100BB2AF7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783C1A277AE100BB2AF7 /* Default-568h@2x.png */; };
-		51E178451A277AE100BB2AF7 /* Default-667h@2x 15-46-19-170.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783D1A277AE100BB2AF7 /* Default-667h@2x 15-46-19-170.png */; };
-		51E178461A277AE100BB2AF7 /* Default-Landscape-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783E1A277AE100BB2AF7 /* Default-Landscape-736h@3x.png */; };
-		51E178471A277AE100BB2AF7 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E1783F1A277AE100BB2AF7 /* Default-Landscape@2x.png */; };
-		51E178481A277AE100BB2AF7 /* Default-Portrait 15-46-22-446.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178401A277AE100BB2AF7 /* Default-Portrait 15-46-22-446.png */; };
-		51E178491A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178411A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png */; };
-		51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */; };
-		51E1784B1A277AE100BB2AF7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E178431A277AE100BB2AF7 /* Default.png */; };
+		51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F9501E1B691AC7008A7D8A /* Bootloader.swift */; };
 		58B89C801E539F0000750790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C7F1E539F0000750790 /* AppDelegate.swift */; };
 		58B89C831E539F0C00750790 /* BCJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C811E539F0C00750790 /* BCJoystick.swift */; };
 		58B89C841E539F0C00750790 /* BCJoystickViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */; };
@@ -36,9 +30,17 @@
 		58B89C911E539F4500750790 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8B1E539F4500750790 /* Settings.swift */; };
 		58B89C921E539F4500750790 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8C1E539F4500750790 /* SettingsViewController.swift */; };
 		58B89C931E539F4500750790 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8D1E539F4500750790 /* SettingsViewModel.swift */; };
-		58B89C941E539F4500750790 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8E1E539F4500750790 /* ViewController.swift */; };
-		58B89C951E539F4500750790 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8F1E539F4500750790 /* ViewModel.swift */; };
+		58B89C941E539F4500750790 /* FlightControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */; };
+		58B89C951E539F4500750790 /* FlightControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C8F1E539F4500750790 /* FlightControllerViewModel.swift */; };
 		58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */; };
+		58E2C31F2DAFA0CC0042859B /* BootloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */; };
+		58EF05052DA8397F00D259B2 /* Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05042DA8397700D259B2 /* Dependency.swift */; };
+		58EF05072DA83A7C00D259B2 /* FirmwareLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05062DA83A7600D259B2 /* FirmwareLoader.swift */; };
+		58EF05092DA83A8600D259B2 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05082DA83A8300D259B2 /* Firmware.swift */; };
+		58EF050D2DA8421A00D259B2 /* Decodable+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF050C2DA8421300D259B2 /* Decodable+Helper.swift */; };
+		58EF05122DAD78AE00D259B2 /* ControlMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05112DAD78AE00D259B2 /* ControlMode.swift */; };
+		58EF05142DAD78D400D259B2 /* Sensitivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05132DAD78D400D259B2 /* Sensitivity.swift */; };
+		58EF05172DAD8AED00D259B2 /* ImageManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EF05162DAD8AED00D259B2 /* ImageManifest.swift */; };
 		9C974A881CAE58840002418A /* MotionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C974A871CAE58840002418A /* MotionLink.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,7 @@
 		3A00394B198AE038001799A4 /* Crazyflie client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crazyflie client-Prefix.pch"; sourceTree = "<group>"; };
 		3A003950198AE038001799A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3ACFD046199632B900FDF11A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3F9C29F59B707AD33F285739 /* Pods-Crazyflie client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.debug.xcconfig"; path = "Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.debug.xcconfig"; sourceTree = "<group>"; };
 		41A02DC2218A80CC0036DC36 /* Crazyflie clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Crazyflie clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41A02DC4218A80CC0036DC36 /* Crazyflie_clientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crazyflie_clientTests.swift; sourceTree = "<group>"; };
 		41A02DC6218A80CC0036DC36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,14 +74,7 @@
 		519AB5E41B6B75BB007BDE9B /* Watchdog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watchdog.swift; sourceTree = "<group>"; };
 		51E178241A27766C00BB2AF7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
-		51E1783C1A277AE100BB2AF7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "images/Default-568h@2x.png"; sourceTree = "<group>"; };
-		51E1783D1A277AE100BB2AF7 /* Default-667h@2x 15-46-19-170.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-667h@2x 15-46-19-170.png"; path = "images/Default-667h@2x 15-46-19-170.png"; sourceTree = "<group>"; };
-		51E1783E1A277AE100BB2AF7 /* Default-Landscape-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape-736h@3x.png"; path = "images/Default-Landscape-736h@3x.png"; sourceTree = "<group>"; };
-		51E1783F1A277AE100BB2AF7 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
-		51E178401A277AE100BB2AF7 /* Default-Portrait 15-46-22-446.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait 15-46-22-446.png"; path = "images/Default-Portrait 15-46-22-446.png"; sourceTree = "<group>"; };
-		51E178411A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-03-260.png"; path = "images/Default-Portrait@2x 15-46-03-260.png"; sourceTree = "<group>"; };
-		51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x 15-46-54-404.png"; path = "images/Default-Portrait@2x 15-46-54-404.png"; sourceTree = "<group>"; };
-		51E178431A277AE100BB2AF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
+		51F9501E1B691AC7008A7D8A /* Bootloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bootloader.swift; sourceTree = "<group>"; };
 		58B89C7F1E539F0000750790 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58B89C811E539F0C00750790 /* BCJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystick.swift; sourceTree = "<group>"; };
 		58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCJoystickViewModel.swift; sourceTree = "<group>"; };
@@ -87,10 +83,20 @@
 		58B89C8B1E539F4500750790 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		58B89C8C1E539F4500750790 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		58B89C8D1E539F4500750790 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		58B89C8E1E539F4500750790 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		58B89C8F1E539F4500750790 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightControllerViewController.swift; sourceTree = "<group>"; };
+		58B89C8F1E539F4500750790 /* FlightControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightControllerViewModel.swift; sourceTree = "<group>"; };
 		58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrazyFlieCommandHelper.swift; sourceTree = "<group>"; };
+		58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootloaderViewController.swift; sourceTree = "<group>"; };
+		58EF05042DA8397700D259B2 /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
+		58EF05062DA83A7600D259B2 /* FirmwareLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareLoader.swift; sourceTree = "<group>"; };
+		58EF05082DA83A8300D259B2 /* Firmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
+		58EF050C2DA8421300D259B2 /* Decodable+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+Helper.swift"; sourceTree = "<group>"; };
+		58EF05112DAD78AE00D259B2 /* ControlMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlMode.swift; sourceTree = "<group>"; };
+		58EF05132DAD78D400D259B2 /* Sensitivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensitivity.swift; sourceTree = "<group>"; };
+		58EF05162DAD8AED00D259B2 /* ImageManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManifest.swift; sourceTree = "<group>"; };
+		6E635E4FCC9B98ED90519059 /* Pods_Crazyflie_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crazyflie_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C974A871CAE58840002418A /* MotionLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionLink.swift; sourceTree = "<group>"; };
+		C9185EEA7B5F83E2306EF5E8 /* Pods-Crazyflie client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crazyflie client.release.xcconfig"; path = "Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,7 @@
 				3A003940198AE038001799A4 /* CoreGraphics.framework in Frameworks */,
 				3A003942198AE038001799A4 /* UIKit.framework in Frameworks */,
 				3A00393E198AE038001799A4 /* Foundation.framework in Frameworks */,
+				41D721C201C5CF6BD18F5B0E /* Pods_Crazyflie_client.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +129,7 @@
 				41A02DC3218A80CC0036DC36 /* Crazyflie clientTests */,
 				3A00393C198AE038001799A4 /* Frameworks */,
 				3A00393B198AE038001799A4 /* Products */,
+				BC588DDF0B53A6B5D837C792 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +149,7 @@
 				3A00393D198AE038001799A4 /* Foundation.framework */,
 				3A00393F198AE038001799A4 /* CoreGraphics.framework */,
 				3A003941198AE038001799A4 /* UIKit.framework */,
+				6E635E4FCC9B98ED90519059 /* Pods_Crazyflie_client.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,26 +157,20 @@
 		3A003943198AE038001799A4 /* Crazyflie client */ = {
 			isa = PBXGroup;
 			children = (
-				58B89C7F1E539F0000750790 /* AppDelegate.swift */,
+				58EF05032DA8396700D259B2 /* Application */,
 				3A00394F198AE038001799A4 /* Main.storyboard */,
 				51E1783A1A27796B00BB2AF7 /* Launch Screen.xib */,
-				51E178241A27766C00BB2AF7 /* Images.xcassets */,
 				3A003944198AE038001799A4 /* Supporting Files */,
-				51E178231A27762900BB2AF7 /* images */,
-				58B89C811E539F0C00750790 /* BCJoystick.swift */,
-				58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */,
-				58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */,
-				58B89C881E539F3700750790 /* CrazyFlie.swift */,
-				58B89C8A1E539F4500750790 /* Observer.swift */,
-				58B89C8B1E539F4500750790 /* Settings.swift */,
-				58B89C8C1E539F4500750790 /* SettingsViewController.swift */,
-				58B89C8D1E539F4500750790 /* SettingsViewModel.swift */,
-				58B89C8E1E539F4500750790 /* ViewController.swift */,
-				58B89C8F1E539F4500750790 /* ViewModel.swift */,
-				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
-				9C974A871CAE58840002418A /* MotionLink.swift */,
-				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
-				35EAA9BB296E00DF008CF0B7 /* CommanderPacket.swift */,
+				58EF051A2DAD9AF700D259B2 /* Bootloader */,
+				58EF05192DAD929800D259B2 /* Device */,
+				58EF05152DAD7B8000D259B2 /* Bluetooth */,
+				58EF05182DAD918700D259B2 /* Gyroscope */,
+				58EF05002DA837FF00D259B2 /* Model */,
+				58EF050F2DAD70AD00D259B2 /* View */,
+				58EF05102DAD70BB00D259B2 /* ViewModel */,
+				58EF05012DA8382100D259B2 /* ViewController */,
+				58EF05022DA8386400D259B2 /* Helper */,
+				51E178231A27762900BB2AF7 /* Assets */,
 			);
 			path = "Crazyflie client";
 			sourceTree = "<group>";
@@ -192,19 +195,115 @@
 			path = "Crazyflie clientTests";
 			sourceTree = "<group>";
 		};
-		51E178231A27762900BB2AF7 /* images */ = {
+		51E178231A27762900BB2AF7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				51E1783C1A277AE100BB2AF7 /* Default-568h@2x.png */,
-				51E1783D1A277AE100BB2AF7 /* Default-667h@2x 15-46-19-170.png */,
-				51E1783E1A277AE100BB2AF7 /* Default-Landscape-736h@3x.png */,
-				51E1783F1A277AE100BB2AF7 /* Default-Landscape@2x.png */,
-				51E178401A277AE100BB2AF7 /* Default-Portrait 15-46-22-446.png */,
-				51E178411A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png */,
-				51E178421A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png */,
-				51E178431A277AE100BB2AF7 /* Default.png */,
+				51E178241A27766C00BB2AF7 /* Images.xcassets */,
 			);
-			name = images;
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		58EF05002DA837FF00D259B2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				58B89C8B1E539F4500750790 /* Settings.swift */,
+				58EF05082DA83A8300D259B2 /* Firmware.swift */,
+				35EAA9BB296E00DF008CF0B7 /* CommanderPacket.swift */,
+				58EF05112DAD78AE00D259B2 /* ControlMode.swift */,
+				58EF05132DAD78D400D259B2 /* Sensitivity.swift */,
+				58EF05162DAD8AED00D259B2 /* ImageManifest.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		58EF05012DA8382100D259B2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58E2C31E2DAFA0CC0042859B /* BootloaderViewController.swift */,
+				58B89C8E1E539F4500750790 /* FlightControllerViewController.swift */,
+				58B89C8C1E539F4500750790 /* SettingsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		58EF05022DA8386400D259B2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				58EF050C2DA8421300D259B2 /* Decodable+Helper.swift */,
+				58EF05062DA83A7600D259B2 /* FirmwareLoader.swift */,
+				58B89C961E539F9A00750790 /* CrazyFlieCommandHelper.swift */,
+				519AB5E41B6B75BB007BDE9B /* Watchdog.swift */,
+				58B89C8A1E539F4500750790 /* Observer.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		58EF05032DA8396700D259B2 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				58EF05042DA8397700D259B2 /* Dependency.swift */,
+				58B89C7F1E539F0000750790 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		58EF050F2DAD70AD00D259B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				58B89C811E539F0C00750790 /* BCJoystick.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		58EF05102DAD70BB00D259B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				58B89C8F1E539F4500750790 /* FlightControllerViewModel.swift */,
+				58B89C821E539F0C00750790 /* BCJoystickViewModel.swift */,
+				58B89C8D1E539F4500750790 /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		58EF05152DAD7B8000D259B2 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				516212D71AE7D6B40044BC2B /* BluetoothLink.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		58EF05182DAD918700D259B2 /* Gyroscope */ = {
+			isa = PBXGroup;
+			children = (
+				9C974A871CAE58840002418A /* MotionLink.swift */,
+			);
+			path = Gyroscope;
+			sourceTree = "<group>";
+		};
+		58EF05192DAD929800D259B2 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				58B89C881E539F3700750790 /* CrazyFlie.swift */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		58EF051A2DAD9AF700D259B2 /* Bootloader */ = {
+			isa = PBXGroup;
+			children = (
+				51F9501E1B691AC7008A7D8A /* Bootloader.swift */,
+			);
+			path = Bootloader;
+			sourceTree = "<group>";
+		};
+		BC588DDF0B53A6B5D837C792 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3F9C29F59B707AD33F285739 /* Pods-Crazyflie client.debug.xcconfig */,
+				C9185EEA7B5F83E2306EF5E8 /* Pods-Crazyflie client.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,9 +313,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A00396C198AE038001799A4 /* Build configuration list for PBXNativeTarget "Crazyflie client" */;
 			buildPhases = (
+				B8B4946FE44E1B83F6ABBB98 /* [CP] Check Pods Manifest.lock */,
 				3A003936198AE038001799A4 /* Sources */,
 				3A003937198AE038001799A4 /* Frameworks */,
 				3A003938198AE038001799A4 /* Resources */,
+				7DF291F2AA7A27364E33DBEA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -258,7 +359,7 @@
 				ORGANIZATIONNAME = Bitcraze;
 				TargetAttributes = {
 					3A003939198AE038001799A4 = {
-						DevelopmentTeam = 2D27KY2HT6;
+						DevelopmentTeam = ZZ3RP82Z38;
 						LastSwiftMigration = "";
 					};
 					41A02DC1218A80CC0036DC36 = {
@@ -294,19 +395,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51E178481A277AE100BB2AF7 /* Default-Portrait 15-46-22-446.png in Resources */,
 				5199641E1A0E11D7008A6D72 /* DefaultPreferences.plist in Resources */,
 				51E178251A27766C00BB2AF7 /* Images.xcassets in Resources */,
 				3A003948198AE038001799A4 /* InfoPlist.strings in Resources */,
 				3A003951198AE038001799A4 /* Main.storyboard in Resources */,
-				51E178471A277AE100BB2AF7 /* Default-Landscape@2x.png in Resources */,
-				51E178451A277AE100BB2AF7 /* Default-667h@2x 15-46-19-170.png in Resources */,
-				51E1784B1A277AE100BB2AF7 /* Default.png in Resources */,
-				51E178461A277AE100BB2AF7 /* Default-Landscape-736h@3x.png in Resources */,
-				51E1784A1A277AE100BB2AF7 /* Default-Portrait@2x 15-46-54-404.png in Resources */,
-				51E178491A277AE100BB2AF7 /* Default-Portrait@2x 15-46-03-260.png in Resources */,
 				51E1783B1A27796B00BB2AF7 /* Launch Screen.xib in Resources */,
-				51E178441A277AE100BB2AF7 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,26 +412,78 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7DF291F2AA7A27364E33DBEA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Crazyflie client/Pods-Crazyflie client-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B8B4946FE44E1B83F6ABBB98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crazyflie client-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3A003936198AE038001799A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58EF05092DA83A8600D259B2 /* Firmware.swift in Sources */,
 				58B89C901E539F4500750790 /* Observer.swift in Sources */,
 				58B89C801E539F0000750790 /* AppDelegate.swift in Sources */,
+				58EF05052DA8397F00D259B2 /* Dependency.swift in Sources */,
+				58EF050D2DA8421A00D259B2 /* Decodable+Helper.swift in Sources */,
+				58EF05122DAD78AE00D259B2 /* ControlMode.swift in Sources */,
+				58EF05142DAD78D400D259B2 /* Sensitivity.swift in Sources */,
 				516212D81AE7D6B40044BC2B /* BluetoothLink.swift in Sources */,
 				58B89C911E539F4500750790 /* Settings.swift in Sources */,
+				51F9501F1B691AC7008A7D8A /* Bootloader.swift in Sources */,
+				58EF05072DA83A7C00D259B2 /* FirmwareLoader.swift in Sources */,
 				519AB5E51B6B75BB007BDE9B /* Watchdog.swift in Sources */,
 				58B89C841E539F0C00750790 /* BCJoystickViewModel.swift in Sources */,
 				58B89C971E539F9A00750790 /* CrazyFlieCommandHelper.swift in Sources */,
 				58B89C921E539F4500750790 /* SettingsViewController.swift in Sources */,
-				58B89C941E539F4500750790 /* ViewController.swift in Sources */,
-				58B89C951E539F4500750790 /* ViewModel.swift in Sources */,
+				58B89C941E539F4500750790 /* FlightControllerViewController.swift in Sources */,
+				58B89C951E539F4500750790 /* FlightControllerViewModel.swift in Sources */,
 				58B89C831E539F0C00750790 /* BCJoystick.swift in Sources */,
 				9C974A881CAE58840002418A /* MotionLink.swift in Sources */,
+				58E2C31F2DAFA0CC0042859B /* BootloaderViewController.swift in Sources */,
 				35EAA9BC296E00DF008CF0B7 /* CommanderPacket.swift in Sources */,
 				58B89C891E539F3700750790 /* CrazyFlie.swift in Sources */,
 				58B89C931E539F4500750790 /* SettingsViewModel.swift in Sources */,
+				58EF05172DAD8AED00D259B2 /* ImageManifest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +560,7 @@
 				DEVELOPMENT_TEAM = 2D27KY2HT6;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -473,7 +618,7 @@
 				DEVELOPMENT_TEAM = 2D27KY2HT6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -493,17 +638,18 @@
 		};
 		3A00396D198AE038001799A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F9C29F59B707AD33F285739 /* Pods-Crazyflie client.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2D27KY2HT6;
+				DEVELOPMENT_TEAM = ZZ3RP82Z38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -513,6 +659,7 @@
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.emart-software.Crazyflie-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -525,17 +672,18 @@
 		};
 		3A00396E198AE038001799A4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9185EEA7B5F83E2306EF5E8 /* Pods-Crazyflie client.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2D27KY2HT6;
+				DEVELOPMENT_TEAM = ZZ3RP82Z38;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crazyflie client/Crazyflie client-Prefix.pch";
 				INFOPLIST_FILE = "Crazyflie client/Crazyflie client-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -545,6 +693,7 @@
 					"\"$(PROJECT_DIR)/Crazyflie client\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.bitcraze.${PRODUCT_NAME:rfc1034identifier}";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.emart-software.Crazyflie-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

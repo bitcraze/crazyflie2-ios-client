@@ -142,6 +142,12 @@ final class SettingsViewModel: Observable {
         return settings.maxThrust
     }
     
+    func bootloaderClicked() {
+        if bluetoothLink.isConnected {
+            bluetoothLink.disconnect()
+        }
+    }
+    
     var sensitivityTitles: [String] {
         return ["Slow", "Fast", "Custom"]
     }

@@ -8,13 +8,14 @@
 
 import Foundation
 
-protocol ViewModelDelegate: AnyObject {
+protocol FlightControllerViewModelDelegate: AnyObject {
     func signalUpdate()
     func signalFailed(with title: String, message: String?)
 }
 
-final class ViewModel {
-    weak var delegate: ViewModelDelegate?
+final class FlightControllerViewModel {
+    
+    weak var delegate: FlightControllerViewModelDelegate?
     let leftJoystickProvider: BCJoystickViewModel
     let rightJoystickProvider: BCJoystickViewModel
     
@@ -165,7 +166,9 @@ final class ViewModel {
     }
 }
 
-extension ViewModel: BCJoystickViewModelObserver {
+//MARK: - BCJoystickViewModelObserver
+
+extension FlightControllerViewModel: BCJoystickViewModelObserver {
     func didUpdateState() {
         calibrateMotionIfNeeded()
         
@@ -173,14 +176,17 @@ extension ViewModel: BCJoystickViewModelObserver {
     }
 }
 
-extension ViewModel: SettingsViewModelObserver {
+//MARK: - SettingsViewModelObserver
+
+extension FlightControllerViewModel: SettingsViewModelObserver {
     func didUpdate(controlMode: ControlMode) {
         changed(controlMode: controlMode)
     }
 }
 
-//MARK: - Crazyflie
-extension ViewModel: CrazyFlieDelegate {
+//MARK: - CrazyFlieDelegate
+
+extension FlightControllerViewModel: CrazyFlieDelegate {
     func didSend() {
         
     }
