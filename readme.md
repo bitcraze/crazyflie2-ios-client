@@ -1,20 +1,17 @@
-Crazyflie 2 iOS client
-======================
+# Crazyflie 2 iOS Client
 
-Features:
-
-* Can connect and control a Crazyflie 2 via Bluetooth Smart
-* Choice of control mode and sensitivity
-* Can update Crazyflie with the latest firmware version
-
-This app requires iOS 8 or higher.
+This app lets you control a **Crazyflie 2.0 or 2.1** from an iOS device via **Bluetooth Low Energy (BLE)**.  
+**Note:** The app does **not** support the **Crazyflie 2.1 Brushless**.
 
 ## Installation
-See the [installation instructions](docs/installation/install.md) in the github docs folder.
 
-## Official Documentation
+See the [installation instructions](docs/installation/install.md) in the GitHub docs folder.
 
-Check out the [Bitcraze crazyflie2-ios-client documentation](https://www.bitcraze.io/documentation/repository/crazyflie2-ios-client/master/) on our website.
+## Documentation
+
+Official documentation is available at:  
+https://www.bitcraze.io/documentation/repository/crazyflie2-ios-client/master/
 
 ## Contribute
-Go to the [contribute page](https://www.bitcraze.io/contribute/) on our website to learn more.
+
+To contribute, visit our [contribute page](https://www.bitcraze.io/contribute/).
