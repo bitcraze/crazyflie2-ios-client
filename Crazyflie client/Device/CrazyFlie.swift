@@ -31,7 +31,7 @@ protocol CrazyFlieDelegate {
     func didFail(with title: String, message: String?)
 }
 
-open class CrazyFlie: NSObject {
+final class CrazyFlie {
     
     private(set) var state:CrazyFlieState {
         didSet {
@@ -50,26 +50,9 @@ open class CrazyFlie: NSObject {
         self.delegate = delegate
         
         self.bluetoothLink = bluetoothLink
-        super.init()
     
-        bluetoothLink?.onStateUpdated { [weak self] (state) in
-            guard let self = self else { return }
-            switch state {
-            case "idle":
-                self.state = .idle
-            case "connected":
-                self.state = .connected
-            case "scanning":
-                self.state = .scanning
-            case "connecting":
-                self.state = .connecting
-            case "services":
-                self.state = .services
-            case "characteristics":
-                self.state = .characteristics
-            default:
-                break
-            }
+        bluetoothLink?.onStateUpdated { [weak self] state in
+            self?.state = state
         }
     }
     
@@ -91,18 +74,18 @@ open class CrazyFlie: NSObject {
                 var body:String?
                 
                 // Find the reason and prepare a message
-                if self?.bluetoothLink.getError() == "Bluetooth disabled" {
+                if self?.bluetoothLink.error == "Bluetooth disabled" {
                     title = "Bluetooth disabled"
                     body = "Please enable Bluetooth to connect a Crazyflie"
-                } else if self?.bluetoothLink.getError() == "Timeout" {
+                } else if self?.bluetoothLink.error == "Timeout" {
                     title = "Connection timeout"
                     body = "Could not find Crazyflie"
-                } else if self?.bluetoothLink.getError() == "Disconnected" {
+                } else if self?.bluetoothLink.error == "Disconnected" {
                     // Disconnected request, this is not an error
                     return
                 } else {
                     title = "Error"
-                    body = self?.bluetoothLink.getError()
+                    body = self?.bluetoothLink.error
                 }
                 
                 self?.delegate?.didFail(with: title, message: body)
@@ -146,6 +129,6 @@ open class CrazyFlie: NSObject {
     private func sendFlightData(_ roll:Float, pitch:Float, thrust:Float, yaw:Float) {
         let commanderPacket = CommanderPacket(header: CrazyFlieHeader.commander.rawValue, roll: roll, pitch: pitch, yaw: yaw, thrust: UInt16(thrust))
         bluetoothLink.sendPacket(commanderPacket.data, callback: nil)
-        print("pitch: \(pitch) roll: \(roll) thrust: \(thrust) yaw: \(yaw)")
+        //print("pitch: \(pitch) roll: \(roll) thrust: \(thrust) yaw: \(yaw)")
     }
 }
