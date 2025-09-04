@@ -6,4 +6,4 @@ The app is published by Bitcraze AB on the Apple App Store.
 
 The app is not collecting, storing or transmitting any personal information.
 
-If you have any question please send an email to Bitcraze AB at contact@bitcraze.io.
+If you have any questions, please send an email to Bitcraze AB at contact@bitcraze.io.
