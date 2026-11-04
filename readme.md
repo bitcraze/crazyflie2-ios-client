@@ -13,5 +13,6 @@ Official documentation is available at:
 https://www.bitcraze.io/documentation/repository/crazyflie2-ios-client/master/
 
 ## Contribute
+Before you open a pull request, please read our [General guidelines for code contributions](https://www.bitcraze.io/development/contribute/general-guidelines/).
 
-To contribute, visit our [contribute page](https://www.bitcraze.io/contribute/).
+For other ways to contribute, see the [contribute page](https://www.bitcraze.io/development/contribute/).
