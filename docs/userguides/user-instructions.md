@@ -3,7 +3,7 @@ title: User intructions IOS client
 page_id: user-instructions
 ---
 
-The Crazyflie iPhone client supports only Crazyflie 2.X with Bluetooth LE communication. It is compatible with iPhone 4s+ and iOS 7.1+. 
+The Crazyflie iPhone client supports only Crazyflie 2.X with Bluetooth LE communication. It requires iOS 12 or later.
 
 
 ## User documentation 
