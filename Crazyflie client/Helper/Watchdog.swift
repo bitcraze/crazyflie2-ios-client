@@ -16,12 +16,13 @@ import UIKit
     period (in seconds) is expired. Otherwise the onTimeout function
     will be called.
 */
-class Watchdog : NSObject
+final class Watchdog
 {
-    fileprivate var started = false
-    fileprivate var timer: Timer! = nil
-    var onTimeout: (()->())?
-    var period: Double
+    private var started = false
+    private var timer: Timer! = nil
+    
+    private let onTimeout: (()->())?
+    private let period: Double
     
     init(period: Double, onTimeout: @escaping ()->()) {
         self.period = period
@@ -30,12 +31,10 @@ class Watchdog : NSObject
     
     /// Start the watchdog
     func start() {
-        if self.started {
-            return
-        }
+        guard !started else { return }
         
-        self.timer = Timer.scheduledTimer(timeInterval: self.period, target:self, selector: #selector(timeout), userInfo: nil, repeats: false)
-        self.started = true
+        timer = Timer.scheduledTimer(timeInterval: self.period, target:self, selector: #selector(timeout), userInfo: nil, repeats: false)
+        started = true
     }
     
     @objc
@@ -46,9 +45,7 @@ class Watchdog : NSObject
     
     /// Stop the watchdog
     func stop() {
-        if !self.started {
-            return
-        }
+        guard started else  { return }
         
         self.timer.invalidate()
         self.timer = nil

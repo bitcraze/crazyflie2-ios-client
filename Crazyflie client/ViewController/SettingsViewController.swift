@@ -79,6 +79,10 @@ final class SettingsViewController: UIViewController {
         }
     }
     
+    @IBAction func onBootloaderClicked(_ sender: Any) {
+        viewModel?.bootloaderClicked()
+    }
+    
     @IBAction func sensitivityModeChanged(_ sender: Any) {
         viewModel?.didSetSensitivityMode(at: sensitivitySelector.selectedSegmentIndex)
     }

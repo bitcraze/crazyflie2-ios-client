@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class FlightControllerViewController: UIViewController {
     private var leftJoystick: BCJoystick?
     private var rightJoystick: BCJoystick?
     
-    private var viewModel: ViewModel?
+    private var viewModel: FlightControllerViewModel?
     private var settingsViewController: SettingsViewController?
     
     @IBOutlet weak var unlockLabel: UILabel!
@@ -26,7 +26,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         if viewModel == nil {
-            viewModel = ViewModel()
+            viewModel = FlightControllerViewModel()
             viewModel?.delegate = self
         }
         
@@ -111,7 +111,7 @@ final class ViewController: UIViewController {
 
 }
 
-extension ViewController: ViewModelDelegate {
+extension FlightControllerViewController: FlightControllerViewModelDelegate {
     func signalUpdate() {
         updateUI()
     }
